@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz 90s — HOST</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root{--fg:#0f0;--bg:#000;--border:#0f0}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{background:var(--bg);color:var(--fg);font-family:'Press Start 2P',monospace;}
+    .grid{min-height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:1.5vh;padding:2vh 2vw}
+    header{display:flex;gap:1rem;align-items:center;justify-content:space-between}
+    h1{font-size:clamp(22px,4.5vw,54px)}
+    .btn{border:2px solid var(--border);background:transparent;color:var(--fg);padding:1rem 1.4rem;border-radius:12px;cursor:pointer;font-size:clamp(14px,1.6vw,22px)}
+    .btn:hover{background:var(--fg);color:#000}
+    .board{display:grid;grid-template-columns:1.2fr .8fr;gap:2vw;align-items:start}
+    .card{border:2px solid var(--border);border-radius:18px;padding:2.2vh 2vw}
+    #question{font-size:clamp(22px,3.8vw,52px);line-height:1.3;margin-bottom:2vh}
+    #options{display:grid;gap:1.2vh}
+    .opt{font-size:clamp(18px,2.8vw,38px);padding:1vh 1vw;border:2px dashed var(--border);border-radius:12px}
+    #results{display:grid;gap:1vh;margin-top:2vh}
+    .bar{height:clamp(22px,3.2vh,48px);display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center}
+    .bar .track{width:100%;height:100%;border:2px solid var(--border);border-radius:10px;position:relative}
+    .bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--fg);opacity:.2}
+    .bar span{font-size:clamp(14px,1.8vw,26px)}
+    #ranking p{font-size:clamp(16px,2.2vw,34px)}
+    #qrcode{display:block;margin:1vh auto}
+    footer{display:flex;justify-content:center;gap:1rem}
+    #error{display:none;margin-top:1rem;color:#fff;background:#c00;padding:1rem;border-radius:12px;font-size:clamp(12px,1.6vw,18px)}
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <header>
+      <h1>Quiz 90s — HOST</h1>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <a class="btn" href="index.html">⬅️ Voltar aos Slides</a>
+        <button class="btn" id="btn-full">⛶ Tela inteira</button>
+        <button class="btn" id="next">Próxima pergunta</button>
+      </div>
+    </header>
+
+    <main class="board">
+      <section class="card">
+        <div id="question">Clique em “Próxima pergunta” para começar.</div>
+        <div id="options"></div>
+        <div id="results"></div>
+        <div id="error"></div>
+      </section>
+      <aside class="card">
+        <h2 style="font-size:clamp(18px,2.8vw,36px);margin-bottom:1vh">Ranking</h2>
+        <div id="ranking"></div>
+        <h3 style="font-size:clamp(16px,2.4vw,30px);margin-top:2vh">Entre no jogo (player)</h3>
+        <canvas id="qrcode"></canvas>
+        <p id="game-link" style="text-align:center;font-size:clamp(12px,1.6vw,20px)"></p>
+      </aside>
+    </main>
+
+    <footer><small>As barras mostram porcentagem por alternativa. A resposta correta fica em destaque.</small></footer>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue, remove, runTransaction, onChildAdded, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDffGKwazMR-P2Bb6459T7IrT_gehEdjwo",
+      authDomain: "works-63725.firebaseapp.com",
+      projectId: "works-63725",
+      databaseURL: "https://works-63725-default-rtdb.firebaseio.com",
+      storageBucket: "works-63725.firebasestorage.app",
+      messagingSenderId: "314958421674",
+      appId: "1:314958421674:web:b5db4802ef3a0375d37ad3",
+      measurementId: "G-4V14Z21393"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+
+    const quizData = [
+      { q:"Qual protocolo popularizou a Internet nos anos 90?", opts:["HTTP","TCP/IP","FTP"], a:1 },
+      { q:"Qual é a linguagem de marcação base da World Wide Web, desenvolvida originalmente por Tim Berners-Lee?", opts:["HTML","XML","SGML"], a:0 },
+      { q:"Qual foi a principal inovação arquitetural do processador Intel Pentium em relação à geração 486?", opts:["Barramento de memória de 128 bits","Dual-pipeline superscalar","Conjunto de instruções RISC"], a:1 },
+      { q:"Qual a quantidade de armazenamento tinha um CD-ROM?", opts:["2kb","10GB","700MB"], a:2 }
+    ];
+
+    let currentIndex = -1;
+    let showingResults = false;
+
+    const elQ    = document.getElementById('question');
+    const elOpts = document.getElementById('options');
+    const elRes  = document.getElementById('results');
+    const elRank = document.getElementById('ranking');
+
+    function renderQuestion(){
+      const q = quizData[currentIndex];
+      elQ.textContent = q.q;
+      elOpts.innerHTML = '';
+      q.opts.forEach((o,idx)=>{
+        const div = document.createElement('div');
+        div.className = 'opt';
+        div.textContent = `${idx+1}) ${o}`;
+        elOpts.appendChild(div);
+      });
+      elRes.innerHTML = '';
+    }
+
+    async function loadQuestion(){
+      if(showingResults){
+        showingResults = false;
+        await nextQuestion();
+      } else {
+        showingResults = true;
+        updateBars();
+      }
+    }
+
+    async function nextQuestion(){
+      currentIndex++;
+      if(currentIndex >= quizData.length){
+        await set(ref(db,'gameOver'),true);
+        elQ.textContent = "🎉 Fim de jogo!";
+        elOpts.innerHTML = '';
+        elRes.innerHTML = '';
+        return;
+      }
+      const q = quizData[currentIndex];
+      await set(ref(db,'currentQuestion'),{question:q.q,options:q.opts,index:currentIndex,answer:q.a});
+      await remove(ref(db,'answers'));
+      await set(ref(db,'gameOver'),false);
+      renderQuestion();
+    }
+
+    document.getElementById('next').onclick = loadQuestion;
+
+    onChildAdded(ref(db,'answers'), async snap=>{
+      const ans = snap.val();
+      const qSnap = await get(ref(db,'currentQuestion'));
+      const curr = qSnap.val();
+      if(!curr) return;
+      if(ans.qIndex !== curr.index) return;
+      if(ans.option === quizData[curr.index].a && ans.player){
+        await runTransaction(ref(db,'scores/'+ans.player), (val)=> (val||0)+1 );
+      }
+    });
+
+    function updateBars(){
+      get(ref(db,'answers')).then(snap=>{
+        const data=snap.val()||{}; const vals=Object.values(data);
+        const q=quizData[currentIndex];
+        const counts=Array(q.opts.length).fill(0);
+        vals.forEach(a=>{ if(a.qIndex===currentIndex) counts[a.option]++; });
+        const total = Math.max(1, counts.reduce((s,n)=>s+n,0));
+
+        const results = counts.map((c,idx)=>{
+          const pct=((c/total)*100).toFixed(1);
+          return { text: (idx+1)+") "+q.opts[idx], pct:parseFloat(pct), correct: idx===q.a };
+        });
+
+        set(ref(db,'results/'+currentIndex), results);
+
+        elRes.innerHTML = results.map(r=>
+          `<div class="bar"><span>${r.text}</span><div class="track"><div class="fill" style="width:${r.pct}%"></div></div><span>${r.pct}%${r.correct?" ✅":""}</span></div>`
+        ).join('');
+      });
+    }
+
+    onValue(ref(db,'scores'), snap=>{
+      const data=snap.val()||{};
+      const list=Object.entries(data).sort((a,b)=>b[1]-a[1]);
+      elRank.innerHTML=list.map(([n,p])=>`<p>${n}: ${p}${p>=4?" 🏆":""}</p>`).join('') || '<p>Ninguém pontuou ainda.</p>';
+    });
+
+    const playerUrl = new URL('player.html', location.href).href;
+    document.getElementById('game-link').textContent = playerUrl;
+    if (window.QRCode && document.getElementById('qrcode')) {
+      QRCode.toCanvas(document.getElementById('qrcode'), playerUrl, { width: 220 });
+    }
+  </script>
+</body>
+</html>

@@ -1,252 +1,349 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tópicos 90s — Apresentação</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-:root{
---fg:#0f0; --bg:#000; --border:#0f0;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{background:var(--bg);color:var(--fg);font-family:'Press Start 2P',monospace;}
-.app{min-height:100%;display:flex;flex-direction:column}
-header{position:sticky;top:0;display:flex;gap:1rem;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:2px solid var(--border);background:rgba(0,0,0,.85);backdrop-filter: blur(2px)}
-header h1{font-size:clamp(18px,2.4vw,28px);letter-spacing:1px}
-.btn{border:2px solid var(--border);background:transparent;color:var(--fg);padding:.9rem 1.2rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;border-radius:10px;font-size:clamp(12px,1.4vw,16px)}
-.btn:hover{background:var(--fg);color:#000}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OurBus</title>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
+  <!-- Firebase v10 (modular CDN) -->
+  <script type="module" crossorigin src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
+  <script type="module" crossorigin src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
+  <script type="module" crossorigin src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"></script>
 
-.stage{flex:1;display:grid;place-items:center;padding:2rem}
-.slide{width: min(1200px, 92vw);min-height:60vh;border:2px solid var(--border);border-radius:18px;padding:clamp(16px,3vw,42px);display:grid;grid-template-rows:auto 1fr auto;gap:clamp(12px,2.5vw,28px);
-box-shadow:0 0 40px rgba(0,255,0,.12);}
-.title{font-size:clamp(22px,4vw,48px);text-align:center}
-.content{font-size:clamp(14px,2.2vw,26px);line-height:1.6;text-align:center}
-.media{display:grid;place-items:center}
-.media img{max-width:100%;height:auto;border:2px solid var(--border);border-radius:12px}
-
-
-.nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
-.nav .btn{font-size:clamp(14px,2vw,20px);padding:1rem 1.4rem}
-   
-#refs-panel {
-      position: fixed;
-      bottom: 3.5rem;
-      left: 1rem;
-      width: 260px;
-      max-height: 60vh;
-      overflow-y: auto;
-      background: rgba(0, 0, 0, 0.95);
-      border: 2px solid #0f0;
-      padding: 1rem;
-      font-size: 0.7rem;
-      font-family: 'Press Start 2P', monospace;
-      color: #0f0;
-      display: none;
-      z-index: 10000;
+  <style>
+    /* Paleta baseada nos mockups: laranja topo, azul escuro base, cinza claro como fundo */
+    :root{
+      --orange:#ff9020; /* topo, botões principais */
+      --blue:#0b4c7b;   /* barras e rodapé */
+      --bg:#e9ecef;     /* fundo neutro da página */
+      --card-bg:#ffffff; /* cartões e mapa */
+      --text:#0f172a;
+      --muted:#64748b;
+      --success:#2dd4bf;
+      --danger:#ff9020;
     }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 16px 16px}
 
-    #refs-panel h4 {
-      margin: 0 0 0.5rem;
-      font-size: 0.8rem;
+    /* Top bar */
+    .topbar{position:sticky;top:0;z-index:1000;background:var(--orange);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .topbar-inner{display:flex;align-items:center;gap:12px;padding:12px 16px}
+    .burger{width:28px;height:2px;background:#fff;position:relative;border-radius:2px}
+    .burger::before,.burger::after{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;border-radius:2px}
+    .burger::before{top:-8px}.burger::after{top:8px}
+    .brand{font-weight:800;font-size:22px;letter-spacing:.3px}
+
+    /* Card do mapa seguindo seu layout */
+    .map-card{background:var(--card-bg);margin:18px auto;border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.18);max-width:900px}
+    #map{height:64vh;min-height:420px;width:100%}
+
+    /* Barra inferior estilo mockup */
+    .bottombar{background:var(--blue);padding:14px;display:flex;gap:16px;justify-content:center;align-items:center;border-radius:0 0 22px 22px}
+    .pill-btn{background:#000;color:#fff;border:0;padding:12px 22px;border-radius:999px;font-weight:700;cursor:pointer}
+
+    /* Botões de ação flutuantes (mobile-first) */
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px auto;max-width:900px}
+    .btn{border:0;border-radius:16px;padding:10px 14px;background:var(--orange);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 16px rgba(0,0,0,.12)}
+    .btn.secondary{background:#111}
+    .btn.ghost{background:#fff;color:#111;border:2px solid #111}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+
+    /* Painel info */
+    .panel{background:#fff;border-radius:16px;padding:12px 16px;max-width:900px;margin:0 auto 10px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .badge{background:#f1f5f9;color:#0f172a;padding:6px 10px;border-radius:999px;font-size:12px}
+
+    /* Avatar marker (foto do usuário no mapa) */
+    .avatar-marker{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.25);background:#cbd5e1;overflow:hidden}
+    .avatar-marker img{width:100%;height:100%;object-fit:cover}
+
+    /* Ícone do ônibus como DivIcon com animação leve */
+    .bus-marker{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--orange);box-shadow:0 4px 12px rgba(0,0,0,.25)}
+    .bus-marker svg{width:24px;height:24px}
+
+    /* Popup visual */
+    .popup h4{margin:.2rem 0}
+
+    @media (max-width:640px){
+      #map{min-height:360px}
     }
-
-    #refs-panel ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1rem;
-    }
-
-    #refs-panel a {
-      color: #0f0;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    #refs-panel a:hover {
-      color: #fff;
-    }
-
-footer{padding:1rem;text-align:center;opacity:.8;font-size:12px}
-</style>
+  </style>
 </head>
 <body>
-<div class="app">
-<header>
-<h1>Década de 90 — Slides</h1>
-<div style="display:flex;gap:.6rem;flex-wrap:wrap">
-<a class="btn" href="adm.html">🏁 HOST JOGO</a>
-<a class="btn" href="player.html">📱 Jogar no celular</a>
-<a class="btn" href="https://youtu.be/onIjvfWzN-0">Arquitetura em Cloud & Evolução da Profissão</a>
-<button class="btn" id="btn-full">⛶ Tela inteira</button>
-</div>
-</header>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="burger" aria-hidden="true"></div>
+      <div class="brand">OurBus</div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <img id="avatarTop" src="" alt="avatar" style="width:30px;height:30px;border-radius:50%;display:none;border:2px solid #fff"/>
+        <button id="googleBtn" class="btn secondary">Entrar com Google</button>
+        <button id="logoutBtn" class="btn ghost" style="display:none">Sair</button>
+      </div>
+    </div>
+  </div>
 
+  <main class="wrap">
+    <section class="map-card">
+      <div id="map"></div>
+      <div class="bottombar">
+        <button id="waitBtn" class="pill-btn">ESTOU CHEGANDO!</button>
+      </div>
+    </section>
 
+    <div class="actions">
+      <select id="route" class="btn ghost">
+        <option value="Interno">Interno (dentro da sede)</option>
+        <option value="Intercampi">Intercampi (Sede ↔ CI/CTDR)</option>
+      </select>
+      <button id="shareBtn" class="btn">Estou no ônibus</button>
+      <button id="clearTrailBtn" class="btn secondary">Limpar trilha</button>
+    </div>
 
+    <section class="panel">
+      <div class="row">
+        <span class="badge">Status: <span id="status">offline</span></span>
+        <span class="badge">Usuário: <span id="uid">-</span></span>
+        <span class="badge">Rota: <span id="routeLabel">Interno</span></span>
+      </div>
+    </section>
+  </main>
 
-<main class="stage">
-<section class="slide" id="slide">
-<h2 class="title" id="s-title"></h2>
-<p class="content" id="s-text"></p>
-<div class="media"><img id="s-img" alt="" loading="lazy"></div>
-<div class="nav">
-<button class="btn" id="prev">Anterior</button>
-<button class="btn" id="next">Próximo</button>
-</div>
-</section>
-</main>
-  
-<style>
-#refs-btn {
-  background-color: #0f0;
-  color: rgb(0, 0, 0);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: 0.3s;
-}
+  <audio id="ding" preload="auto"></audio>
 
-#refs-btn:hover {
-  background-color: rgb(1, 107, 1);
-}
+  <script type="module">
+    // ====== CONFIG FIREBASE – troque pelo seu (corrigindo storageBucket *.appspot.com) ======
+    const firebaseConfig = {
+      apiKey: "AIzaSyDh1wQX2Mu-AdJ841kMS6t1tq1qhI90yfA",
+      authDomain: "ourbus-a9ef4.firebaseapp.com",
+      projectId: "ourbus-a9ef4",
+      storageBucket: "ourbus-a9ef4.appspot.com",
+      messagingSenderId: "612533394400",
+      appId: "1:612533394400:web:52f2b08b3c887b8ea0a985",
+      measurementId: "G-V2MTHGSY45"
+    };
 
-/* Painel de referências */
-#refs-panel {
-  display: none;
-  margin-top: 10px;
-  padding: 12px;
-  border: 1px solid #0f0;
-  border-radius: 10px;
-  background-color: #000000;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  max-width: 350px;
-}
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp, onSnapshot, query, orderBy, limit, where, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-#refs-panel h4 {
-  margin-top: 0;
-  font-size: 16px;
-  color: #ffffff;
-}
+    const appFB = initializeApp(firebaseConfig);
+    const auth = getAuth(appFB);
+    const db = getFirestore(appFB);
 
-#refs-panel ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+    // ===== UI refs =====
+    const googleBtn = document.getElementById('googleBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const waitBtn = document.getElementById('waitBtn');
+    const clearTrailBtn = document.getElementById('clearTrailBtn');
+    const statusEl = document.getElementById('status');
+    const uidEl = document.getElementById('uid');
+    const routeSel = document.getElementById('route');
+    const routeLabel = document.getElementById('routeLabel');
+    const avatarTop = document.getElementById('avatarTop');
+    const dingEl = document.getElementById('ding');
 
-#refs-panel li {
-  margin: 6px 0;
-}
+    // pequeno beep (gerado por dataURI) estilo notificação
+    dingEl.src = 'data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA...'; // base64 encurtado propositalmente
 
-#refs-panel a {
-  color: #0f0;
-  text-decoration: none;
-  font-weight: 500;
-}
+    // ===== MAPA =====
+    const map = L.map('map');
+    const defaultPos = { lat: -7.135742, lng: -34.845412 }; // UFPB - Sede João Pessoa
+    map.setView(defaultPos, 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '&copy; OpenStreetMap' }).addTo(map);
 
-#refs-panel a:hover {
-  text-decoration: underline;
-}
-</style>
+    // Layers
+    const layerBusTrail = L.polyline([], { color: '#0ea5e9', weight: 4, opacity: .9 }).addTo(map); // trilha do ônibus
+    let busMarker = null; // marcador do ônibus (centro dos pings)
+    const layerPeople = L.layerGroup().addTo(map); // pessoas no ônibus (pings individuais opcionais)
+    const layerWaits = L.layerGroup().addTo(map); // "Espera eu!"
 
-<button id="refs-btn">Referências</button>
-<div id="refs-panel" style="display: none;">
-  <h4>Mini Jogo 8-bit</h4>
-  <ul>
-    <li><a href="https://pt.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank">FTP (Wikipedia)</a></li>
-    <li><a href="https://pt.wikipedia.org/wiki/Internet" target="_blank">Internet (Wikipedia)</a></li>
-    <li><a href="https://www.hostinger.com.br/tutoriais/o-que-e-http" target="_blank">O que é HTTP (Hostinger)</a></li>
-    <li><a href="https://aws.amazon.com/pt/what-is/dns/" target="_blank">O que é DNS (AWS)</a></li>
-    <li><a href="https://pt.wikipedia.org/wiki/HTML" target="_blank">HTML (Wikipedia)</a></li>
-    <li><a href="https://pt.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">CSS (Wikipedia)</a></li>
-    <li><a href="https://pt.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript (Wikipedia)</a></li>
-    <li><a href="https://pt.wikipedia.org/wiki/TCP/IP" target="_blank">TCP/IP (Wikipedia)</a></li>
-    <li><a href="https://www.cloudflare.com/pt-br/learning/ddos/glossary/domain-name-system-dns/" target="_blank">DNS (Cloudflare)</a></li>
-  </ul>
-</div>
+    // State
+    let currentUser = null;
+    let sharing = false;   // compartilhando como ônibus
+    let shareWatchId = null;
+    let waitActive = false; // modo Espera Eu ativo para este usuário
+    let waitWatchId = null;
 
-<script>
-  document.getElementById("refs-btn").addEventListener("click", () => {
-    const panel = document.getElementById("refs-panel");
-    panel.style.display = panel.style.display === "none" ? "block" : "none";
-  });
-</script>
+    // ===== AUTH Google =====
+    const provider = new GoogleAuthProvider();
+    googleBtn.addEventListener('click', async()=>{
+      try { await signInWithPopup(auth, provider); } catch(e){ alert('Falha ao entrar: '+e.message); }
+    });
+    logoutBtn.addEventListener('click', ()=> signOut(auth));
 
-<script>
-const slides=[
-{t:"Expansão da Internet",x:"No início dos anos 90, a conexão dial‑up popularizou o acesso doméstico. ISPs locais, BBS e chat rooms se espalharam.",i:"https://files.tecnoblog.net/wp-content/uploads/2018/10/internet-discada-768x384.gif"},
-{t:"Web",x:"Tim Berners‑Lee lança o primeiro browser (1990). HTML 2.0 e CSS 1.0 começam a padronizar o layout.",i:"https://s2-extra.glbimg.com/gm2qU0nUhd2HcEge6rzTn64bhes=/0x0:1240x826/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f551ea7087a47f39ead75f64041559a/internal_photos/bs/2024/a/k/DmobYPSYCw0aBoXTNN4Q/tim-berners-lee.jpg"},
-{t:"Pentium (1993)",x:"A Intel lança o Pentium, abrindo caminho para aplicações multimídia e CAD mais rápidas.",i:"https://t.ctcdn.com.br/NfmXyQrmEwyOB8gSuiaWxuQHyXA=/1024x576/smart/i965305.png"},
-{t:"Multimídia",x:"CD‑ROMs, editores de imagem como Photoshop 1.0 e players de MIDI mudam o consumo de mídia.",i:"https://s2-techtudo.glbimg.com/wQeODptBLAYEh8DMi3FHJTxWju0=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2025/7/j/RjTL3WTBSHFUTBHrnWxw/windows-media-player.png"}
-];
-let i=0;const elT=document.getElementById('s-title');const elX=document.getElementById('s-text');const elI=document.getElementById('s-img');
-function render(){const s=slides[i];elT.textContent=s.t;elX.textContent=s.x;elI.src=s.i;elI.alt=s.t}
-document.getElementById('prev').onclick=()=>{i=(i-1+slides.length)%slides.length;render()};
-document.getElementById('next').onclick=()=>{i=(i+1)%slides.length;render()};
-render();
+    onAuthStateChanged(auth, (user)=>{
+      currentUser = user;
+      statusEl.textContent = user? 'online' : 'offline';
+      uidEl.textContent = user? (user.displayName || user.email || user.uid.slice(0,6)+'…') : '-';
+      googleBtn.style.display = user? 'none':'inline-flex';
+      logoutBtn.style.display = user? 'inline-flex':'none';
+      avatarTop.style.display = user && user.photoURL? 'inline-block':'none';
+      if (user && user.photoURL) avatarTop.src = user.photoURL;
+      shareBtn.disabled = !user;
+      waitBtn.disabled = !user;
+    });
 
-
-const fullBtn=document.getElementById('btn-full');
-fullBtn.onclick=()=>{const r=document.documentElement;if(!document.fullscreenElement){r.requestFullscreen?.()}else{document.exitFullscreen?.()}}
-
-    // Partículas em Canvas
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w, h, particles = [];
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+    // ===== Helpers =====
+    const nowMs = ()=>Date.now();
+    const SECS = n=>n*1000;
+    const haversine = (a,b)=>{ // metros
+      const R=6371000; const toRad=x=>x*Math.PI/180;
+      const dLat=toRad(b.lat-a.lat), dLng=toRad(b.lng-a.lng);
+      const la1=toRad(a.lat), la2=toRad(b.lat);
+      const h=Math.sin(dLat/2)**2 + Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)**2;
+      return 2*R*Math.asin(Math.sqrt(h));
     }
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2;
+
+    const busDivIcon = ()=> L.divIcon({
+      className:'',
+      html:`<div class="bus-marker" title="Ônibus colaborativo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 16V7.5C5 5.567 6.567 4 8.5 4h7C17.433 4 19 5.567 19 7.5V16m-14 0h14m-14 0v1.5A1.5 1.5 0 006.5 19h11a1.5 1.5 0 001.5-1.5V16M7 12h3m4 0h3M8 19v1m8-1v1" stroke="#ff9020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>`,
+      iconSize:[46,46], iconAnchor:[23,23]
+    });
+
+    const avatarIcon = (url)=> L.divIcon({
+      className:'',
+      html:`<div class="avatar-marker">${url?`<img src="${url}"/>`:''}</div>`,
+      iconSize:[42,42], iconAnchor:[21,21]
+    });
+
+    // ===== Compartilhar como ÔNIBUS (pings contínuos + trilha) =====
+    shareBtn.addEventListener('click', ()=>{
+      if (!currentUser) return alert('Entre com Google primeiro.');
+      sharing = !sharing;
+      shareBtn.textContent = sharing? 'Parar de compartilhar' : 'Estou no ônibus';
+      if (sharing) startShareBus(); else stopShareBus();
+    });
+
+    function startShareBus(){
+      if (!('geolocation' in navigator)) { alert('Geolocalização não suportada'); return; }
+      shareWatchId = navigator.geolocation.watchPosition(async pos=>{
+        const { latitude:lat, longitude:lng, accuracy } = pos.coords;
+        try{
+          await addDoc(collection(db,'bus_pings'),{
+            uid: currentUser.uid,
+            name: currentUser.displayName || null,
+            photoURL: currentUser.photoURL || null,
+            route: routeSel.value,
+            lat,lng,accuracy, ts: serverTimestamp()
+          });
+        }catch(e){ console.error(e); }
+      }, err=>console.warn(err), { enableHighAccuracy:true, maximumAge:3000, timeout:15000 });
+    }
+    function stopShareBus(){
+      if (shareWatchId!==null) navigator.geolocation.clearWatch(shareWatchId);
+      shareWatchId=null;
+    }
+
+    routeSel.addEventListener('change', ()=>{ routeLabel.textContent = routeSel.value; });
+
+    // ===== Listener BUS: calcula centro e trilha a partir dos últimos pings =====
+    onSnapshot(query(collection(db,'bus_pings'), orderBy('ts','desc'), limit(300)), snap=>{
+      const cutoff = nowMs()-SECS(120);
+      const pts = [];
+      layerPeople.clearLayers();
+      snap.docs.forEach(d=>{
+        const x=d.data();
+        if (x.route!==routeSel.value) return;
+        const t = x.ts?.toMillis?.() ?? 0; if (t<cutoff) return;
+        pts.push([x.lat,x.lng]);
+        if (x.photoURL){
+          L.marker([x.lat,x.lng], { icon: avatarIcon(x.photoURL) })
+            .bindPopup(`<div class="popup"><h4>Passageiro no ônibus</h4>${x.name||'Aluno'}</div>`)
+            .addTo(layerPeople);
+        }
+      });
+      // trilha
+      layerBusTrail.setLatLngs(pts.reverse()); // ordem cronológica
+      // marcador central móvel (usa último ponto válido)
+      const last = pts.length? pts[pts.length-1] : null;
+      if (last){
+        if (!busMarker){ busMarker = L.marker(last, { icon: busDivIcon() }).addTo(map); }
+        busMarker.setLatLng(last);
       }
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
+    });
+
+    // ===== ESPERA EU! (com rota dinâmica até o ônibus + foto/nome) =====
+    waitBtn.addEventListener('click', ()=>{
+      if (!currentUser) return alert('Entre com Google primeiro.');
+      waitActive = !waitActive;
+      waitBtn.textContent = waitActive? 'Cancelar pedido' : 'ESTOU CHEGANDO!';
+      if (waitActive) startWait(); else stopWait();
+    });
+
+    async function startWait(){
+      if (!('geolocation' in navigator)) { alert('Geolocalização não suportada'); return; }
+      // tocar aviso local também ao iniciar
+      try{ dingEl.currentTime=0; dingEl.play().catch(()=>{}); }catch{}
+      // acompanhar posição do solicitante em tempo real (documento por uid+rota)
+      const id = `${currentUser.uid}_${routeSel.value}`;
+      const ref = doc(db,'wait_requests', id);
+      waitWatchId = navigator.geolocation.watchPosition(async pos=>{
+        const { latitude:lat, longitude:lng, accuracy } = pos.coords;
+        try{
+          await setDoc(ref,{
+            uid: currentUser.uid,
+            name: currentUser.displayName || null,
+            photoURL: currentUser.photoURL || null,
+            route: routeSel.value,
+            lat,lng,accuracy, ts: serverTimestamp()
+          }, { merge:true });
+        }catch(e){ console.error(e); }
+      }, err=>console.warn(err), { enableHighAccuracy:true, maximumAge:2000, timeout:12000 });
+    }
+    async function stopWait(){
+      if (waitWatchId!==null) navigator.geolocation.clearWatch(waitWatchId);
+      waitWatchId=null; waitActive=false; waitBtn.textContent='ESTOU CHEGANDO!';
+      if (currentUser){
+        const id = `${currentUser.uid}_${routeSel.value}`;
+        try{ await deleteDoc(doc(db,'wait_requests', id)); }catch{}
       }
-      draw() {
-        ctx.fillStyle = '#0f0';
-        ctx.fillRect(this.x, this.y, this.size, this.size);
-      }
     }
-    function initParticles(count = 150) {
-      particles = [];
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    window.addEventListener('resize', () => { resize(); initParticles(); });
-    resize(); initParticles(); animate();
 
-    // Botão de Referências
-const refsBtn = document.getElementById("refs-btn");
-const refsPanel = document.getElementById("refs-panel");
+    // desenhar esperas e linha até o ônibus (desaparece quando se aproxima) + notificação sonora a todos
+    let waitsMap = new Map(); // id -> { marker, line }
+    onSnapshot(query(collection(db,'wait_requests'), orderBy('ts','desc'), limit(200)), (snap)=>{
+      const changes = snap.docChanges();
+      // som para novos pedidos
+      changes.forEach(ch=>{ if (ch.type==='added'){ try{ dingEl.currentTime=0; dingEl.play().catch(()=>{});}catch{} } });
 
-refsBtn.addEventListener("click", () => {
-  if (refsPanel.style.display === "block") {
-    refsPanel.style.display = "none";
-  } else {
-    refsPanel.style.display = "block";
-  }
-});
+      // redesenhar todos os atuais da rota
+      layerWaits.clearLayers(); waitsMap.clear();
+      const cutoff = nowMs()-SECS(600); // até 10 min visível
+      snap.docs.forEach(d=>{
+        const x=d.data(); const t=x.ts?.toMillis?.()??0; if (t<cutoff) return; if (x.route!==routeSel.value) return;
+        const id=d.id; const p={lat:x.lat,lng:x.lng};
+        // marker com avatar + nome
+        const m = L.marker([x.lat,x.lng], { icon: avatarIcon(x.photoURL) })
+          .bindPopup(`<div class="popup"><h4>${x.name||'Aluno'}</h4><div>Espera eu!</div></div>`) 
+          .addTo(layerWaits);
+        // desenha linha até o ônibus (último ponto)
+        const last = layerBusTrail.getLatLngs();
+        if (last && last.length){
+          const bus = last[last.length-1];
+          const line = L.polyline([p, bus], { color:'#111', weight:3, dashArray:'6 4' }).addTo(layerWaits);
+          // se aproxima do ônibus, remove
+          const dist = haversine(p,{lat:bus.lat,lng:bus.lng});
+          if (dist < 35){ // ~35m
+            // se for meu pedido, cancelo automático
+            if (currentUser && id.startsWith(currentUser.uid+"_")) stopWait();
+            else deleteDoc(doc(db,'wait_requests', id)).catch(()=>{});
+          }
+          waitsMap.set(id,{marker:m,line});
+        }
+      });
+    });
 
-
-</script>
+    // Limpar trilha manualmente (apenas visual)
+    clearTrailBtn.addEventListener('click', ()=> layerBusTrail.setLatLngs([]));
+  </script>
 </body>
 </html>
-
