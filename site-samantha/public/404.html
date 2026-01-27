@@ -1,0 +1,78 @@
+<!--
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: 404.html
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Página não encontrada | Samantha Ferreira</title>
+  <meta name="description" content="Página não encontrada." />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/estilos.css" />
+</head>
+
+<body>
+  <header class="cabecalho">
+    <div class="miolo cabecalho__miolo">
+      <a class="marca" href="index.html" aria-label="Ir para a página inicial">
+        <img class="marca__logo" src="assets/img/logo-samantha.png" alt="Samantha Ferreira" />
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a class="menu-principal__link" href="index.html">Início</a>
+        <a class="menu-principal__link" href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque" href="contato.html">Contato</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="sessao sessao--404" aria-label="Página não encontrada">
+      <div class="miolo">
+        <div class="cartao cartao--404">
+          <h1 class="titulo-pagina">Página não encontrada</h1>
+          <p class="texto-secao">
+            O link que você tentou acessar não existe ou foi alterado.
+            Para não perder tempo, você pode voltar ao início ou falar direto pelo WhatsApp.
+          </p>
+
+          <div class="acao-centralizada">
+            <a class="botao" href="index.html">Ir para o início</a>
+            <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Caí numa página inexistente no site e preciso de ajuda.">
+              Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape__miolo">
+      <div class="rodape__linha">
+        <div class="rodape__assinatura">
+          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+        </div>
+
+        <div class="rodape__redes">
+          <a class="rodape__icone" data-whats aria-label="WhatsApp"><img src="assets/img/icone-whats.png" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Preciso de orientação empresarial.">
+    <span aria-hidden="true">💬</span>
+    <span class="botao-whats-fixo__texto">WhatsApp</span>
+  </a>
+
+  <script src="assets/js/principal.js"></script>
+</body>
+</html>

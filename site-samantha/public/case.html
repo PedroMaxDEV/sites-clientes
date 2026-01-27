@@ -1,0 +1,129 @@
+<!--
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: case.html
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case | Samantha Ferreira</title>
+  <meta name="description" content="Detalhe do case e resultados alcançados com atuação em advocacia empresarial." />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/estilos.css" />
+</head>
+
+<body>
+  <header class="cabecalho">
+    <div class="miolo cabecalho__miolo">
+      <a class="marca" href="index.html" aria-label="Ir para a página inicial">
+        <img class="marca__logo" src="assets/img/logo-samantha.png" alt="Samantha Ferreira" />
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a class="menu-principal__link" href="index.html">Início</a>
+        <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
+        <a class="menu-principal__link" href="servicos.html">Serviços</a>
+        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link" href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Quero falar sobre um case parecido com o meu cenário.">
+          Contato
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="banner-interno banner-interno--detalhe-case" aria-label="Detalhe do case">
+      <div class="miolo banner-interno__miolo">
+        <div class="banner-interno__texto">
+          <p class="caminho">
+            <a href="cases.html">Cases</a> <span aria-hidden="true">›</span> <span id="titulo-breadcrumb">Detalhe</span>
+          </p>
+          <h1 class="titulo-pagina" id="titulo-case">Carregando case…</h1>
+          <p class="texto-secao" id="resumo-case">
+            Estou puxando as informações do case pelo parâmetro <code>?id=</code>.
+          </p>
+        </div>
+
+        <div class="banner-interno__foto">
+          <!-- inserir imagem do case (opcional): assets/img/case-detalhe.jpg -->
+          <img src="assets/img/case-detalhe.jpg" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="sessao">
+      <div class="miolo">
+        <div class="bloco-detalhe">
+          <div class="bloco-detalhe__coluna">
+            <h2 class="titulo-secao">Contexto</h2>
+            <p class="texto-secao" id="case-contexto">—</p>
+
+            <h2 class="titulo-secao">Desafio</h2>
+            <p class="texto-secao" id="case-desafio">—</p>
+          </div>
+
+          <div class="bloco-detalhe__coluna">
+            <h2 class="titulo-secao">O que foi feito</h2>
+            <div id="case-o-que-foi-feito">
+              <!-- entra via JS -->
+            </div>
+
+            <h2 class="titulo-secao">Resultados</h2>
+            <p class="texto-secao" id="case-resultado">—</p>
+
+            <h2 class="titulo-secao">Ganhos</h2>
+            <div id="case-ganhos">
+              <!-- entra via JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="faixa-cta">
+          <div class="faixa-cta__texto">
+            <h3 class="faixa-cta__titulo">Quer aplicar uma solução parecida no seu negócio?</h3>
+            <p class="faixa-cta__descricao">Eu te faço perguntas objetivas e a gente organiza o caminho.</p>
+          </div>
+          <div class="faixa-cta__acoes">
+            <a class="botao botao--destaque" id="cta-case-whats" data-whats data-mensagem="Olá, Dra. Samantha! Vi um case no seu site e quero falar sobre um cenário parecido.">
+              Chamar no WhatsApp
+            </a>
+            <a class="botao" href="cases.html">Voltar para cases</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape__miolo">
+      <div class="rodape__linha">
+        <div class="rodape__assinatura">
+          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+        </div>
+
+        <div class="rodape__redes">
+          <a class="rodape__icone" href="#" aria-label="Instagram"><img src="assets/img/icone-instagram.png" alt="" /></a>
+          <a class="rodape__icone" href="#" aria-label="LinkedIn"><img src="assets/img/icone-linkedin.png" alt="" /></a>
+          <a class="rodape__icone" data-whats aria-label="WhatsApp"><img src="assets/img/icone-whats.png" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre um case.">
+    <span aria-hidden="true">💬</span>
+    <span class="botao-whats-fixo__texto">WhatsApp</span>
+  </a>
+
+  <script src="assets/js/principal.js"></script>
+  <script src="assets/js/dados-cases.js"></script>
+  <script src="assets/js/detalhe-case.js"></script>
+</body>
+</html>

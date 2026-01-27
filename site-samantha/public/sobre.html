@@ -1,0 +1,141 @@
+<!--
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: sobre.html
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quem sou eu? | Samantha Ferreira</title>
+  <meta name="description" content="Conheça a atuação e o propósito profissional da advogada empresarial Samantha Ferreira." />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/estilos.css" />
+</head>
+
+<body>
+  <header class="cabecalho">
+    <div class="miolo cabecalho__miolo">
+      <a class="marca" href="index.html" aria-label="Ir para a página inicial">
+        <img class="marca__logo" src="assets/img/logo-samantha.png" alt="Samantha Ferreira" />
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a class="menu-principal__link" href="index.html">Início</a>
+        <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
+        <a class="menu-principal__link" href="servicos.html">Serviços</a>
+        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link" href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Quero falar sobre uma consultoria.">
+          Contato
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Banner interno (pegada igual às prints: fundo claro e foto do lado) -->
+    <section class="banner-interno banner-interno--sobre" aria-label="Quem sou eu">
+      <div class="miolo banner-interno__miolo">
+        <div class="banner-interno__texto">
+          <h1 class="titulo-pagina">Quem sou eu?</h1>
+
+          <!--
+            IMPORTANTE:
+            Aqui você vai colar o texto do DOCX (parte "Quem sou eu") assim que anexar.
+            Eu deixei um texto base coerente só pra não ficar vazio.
+          -->
+          <p class="texto-secao">
+            Sou advogada com atuação voltada ao <strong>Direito Empresarial</strong>, dedicada a oferecer soluções estratégicas e personalizadas para empresas.
+            Trabalho com Compliance e Defesa Trabalhista, Acordos Societários, Contratos Empresariais, Proteção de Dados, Registro de Marcas e Gestão de Riscos,
+            além de ministrar Mentorias e Treinamentos em Gestão e Liderança.
+          </p>
+
+          <p class="frase-destaque">
+            Meu propósito é fortalecer a segurança jurídica, o crescimento e a sustentabilidade dos negócios,
+            unindo técnica, ética e visão empresarial.
+          </p>
+        </div>
+
+        <div class="banner-interno__foto">
+          <!-- inserir foto da advogada: assets/img/sobre-advogada.jpg -->
+          <img src="assets/img/sobre-advogada.png" alt="Foto da advogada" />
+        </div>
+      </div>
+    </section>
+
+    <section class="sessao">
+      <div class="miolo">
+        <h2 class="titulo-secao">Informações profissionais</h2>
+
+        <div class="grade-informacoes">
+          <div class="cartao cartao--info">
+            <h3 class="cartao__titulo">Registro</h3>
+            <p class="cartao__texto"><strong>OAB/PE:</strong> 66010</p>
+          </div>
+
+          <div class="cartao cartao--info">
+            <h3 class="cartao__titulo">Áreas de atuação</h3>
+            <p class="cartao__texto">
+              Direito Empresarial, Compliance Trabalhista, Contratos, LGPD, Marcas, Gestão de Riscos, Societário.
+            </p>
+          </div>
+
+          <div class="cartao cartao--info">
+            <h3 class="cartao__titulo">Atuação complementar</h3>
+            <p class="cartao__texto">
+              Mentorias e treinamentos voltados para gestão, liderança e fortalecimento de rotinas internas.
+            </p>
+          </div>
+        </div>
+
+        <div class="faixa-cta">
+          <div class="faixa-cta__texto">
+            <h3 class="faixa-cta__titulo">Quer uma orientação inicial?</h3>
+            <p class="faixa-cta__descricao">Me diga o que está acontecendo e eu te explico o próximo passo.</p>
+          </div>
+          <div class="faixa-cta__acoes">
+            <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Vim pela página 'Quem sou eu' e gostaria de uma orientação inicial.">
+              Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape__miolo">
+      <div class="rodape__linha">
+        <div class="rodape__assinatura">
+          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+        </div>
+
+        <div class="rodape__redes">
+          <a class="rodape__icone" href="#" aria-label="Instagram">
+            <img src="assets/img/icone-instagram.png" alt="" />
+          </a>
+          <a class="rodape__icone" href="#" aria-label="LinkedIn">
+            <img src="assets/img/icone-linkedin.png" alt="" />
+          </a>
+          <a class="rodape__icone" data-whats aria-label="WhatsApp">
+            <img src="assets/img/icone-whats.png" alt="" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre Direito Empresarial.">
+    <span aria-hidden="true">💬</span>
+    <span class="botao-whats-fixo__texto">WhatsApp</span>
+  </a>
+
+  <script src="assets/js/principal.js"></script>
+</body>
+</html>

@@ -1,0 +1,2596 @@
+/*
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: estilos.css
+
+  Ajustes desta versão:
+  - Corrigi o “escorregão” da seção Informações profissionais (centralização + largura segura)
+  - Mobile com a MESMA experiência visual do desktop (sem “quebrar tudo”):
+      > em vez de virar 1 coluna gigante, os grids viram “carrossel” horizontal (swipe)
+      > hero só empilha quando realmente não cabe
+      > tamanhos/ritmo reduzidos via variáveis (fica igual, só menor)
+  - Animações mais presentes no site todo (entrada + microinterações), mantendo cara premium
+  - Paleta concentrada no :root (fácil editar as cores)
+*/
+
+/* =========================
+   1) BASE / VARIÁVEIS
+   ========================= */
+
+:root{
+  /* =========================
+     PALETA (edite aqui)
+     ========================= */
+
+  /* Base institucional (azuis) */
+  --cor-primaria: #061738;
+  --cor-primaria-2: #061738;
+  --cor-bloco: #061738;
+  --cor-bloco-2: #0e416f;
+
+  /* Premium (bege/areia) */
+  --cor-destaque: #face8b;
+  --cor-clara: #face8b;
+  --cor-areia: #face8b;
+
+  /* Texto em fundo escuro */
+  --cor-branco: #ffffff;
+  --cor-texto: rgba(255,255,255,.92);
+  --cor-texto-suave: rgba(255,255,255,.82);
+  --cor-borda: rgba(255,255,255,.12);
+
+  /* Texto em fundo claro */
+  --cor-texto-escuro: #1b1b1b;
+  --cor-texto-escuro-suave: rgba(0,0,0,.74);
+
+  /* =========================
+     COMPAT (mantém seu CSS antigo funcionando)
+     ========================= */
+  --azul-fundo: var(--cor-primaria);
+  --azul-fundo-2: var(--cor-primaria-2);
+  --azul-bloco: var(--cor-bloco);
+  --azul-bloco-2: var(--cor-bloco-2);
+
+  --bege-destaque: var(--cor-destaque);
+  --bege-claro: var(--cor-clara);
+  --areia: var(--cor-areia);
+
+  --branco: var(--cor-branco);
+  --texto-claro: var(--cor-texto);
+  --texto-suave: var(--cor-texto-suave);
+  --borda-suave: var(--cor-borda);
+
+  --texto-escuro: var(--cor-texto-escuro);
+  --texto-escuro-suave: var(--cor-texto-escuro-suave);
+
+  /* Sombras (bem discretas) */
+  --sombra-1: 0 10px 30px rgba(0,0,0,.18);
+  --sombra-2: 0 16px 50px rgba(0,0,0,.25);
+
+  /* Tipografia */
+  --fonte-titulo: Georgia, "Times New Roman", Times, serif;
+  --fonte-texto: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Medidas */
+  --miolo: 1120px;
+  --raio: 14px;
+  --raio-grande: 18px;
+
+  /* Ritmo (desktop) */
+  --esp-1: 8px;
+  --esp-2: 12px;
+  --esp-3: 16px;
+  --esp-4: 22px;
+  --esp-5: 30px;
+  --esp-6: 44px;
+  --esp-7: 64px;
+
+  /* Layout “seguro” */
+  --gutter: clamp(16px, 3vw, 22px);
+  --respiro-texto: 6px;
+
+  /* Velocidade */
+  --transicao: 180ms ease;
+
+  /* Para a experiência ficar “igual, só menor” no mobile
+     (vou ajustar essas variáveis em media queries) */
+  --fator-mobile: 1;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: var(--fonte-texto);
+  background: var(--azul-fundo);
+  color: var(--texto-claro);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden; /* evita qualquer “escorregada” lateral */
+}
+
+main{
+  overflow-x: hidden;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline: 2px solid rgba(209,165,122,.9);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: rgba(255,255,255,.08);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+/* Miolo padrão (o “container” do site) */
+.miolo{
+  max-width: var(--miolo);
+  width: min(var(--miolo), 100%);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Se por acaso alguma seção ficou sem .miolo,
+   isso impede o conteúdo de “cair da tela” e melhora a centralização. */
+.sessao > *{
+  max-width: 100%;
+}
+
+/* Um respiro bom entre seções */
+.sessao{
+  padding: var(--esp-7) 0;
+}
+
+.sessao--institucional{
+  background: linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+}
+
+.sessao--vitrine{
+  background: var(--azul-fundo);
+}
+
+.linha-separadora{
+  height: 1px;
+  background: var(--borda-suave);
+  margin: var(--esp-6) 0;
+}
+
+/* =========================
+   2) TIPOGRAFIA / TÍTULOS
+   ========================= */
+
+.titulo-pagina,
+.titulo-secao{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  color: var(--branco);
+  letter-spacing: .3px;
+}
+
+.titulo-pagina{
+  font-size: clamp(30px, 4vw, 48px);
+  margin: 0 0 var(--esp-3) 0;
+}
+
+.titulo-secao{
+  font-size: clamp(22px, 2.8vw, 32px);
+  margin: 0 0 var(--esp-3) 0;
+}
+
+/* Correção objetiva: quando um título estiver “solto” (fora do .miolo),
+   ele não fica colado na esquerda. */
+.sessao > .titulo-secao,
+.sessao > .titulo-pagina{
+  padding: 0 var(--gutter);
+  max-width: var(--miolo);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.texto-secao{
+  margin: 0 0 var(--esp-3) 0;
+  color: var(--texto-claro);
+  text-align: justify;
+  padding-right: var(--respiro-texto);
+}
+
+/* Frase com “cara de destaque” */
+.frase-destaque{
+  margin-top: var(--esp-4);
+  padding: calc(var(--esp-4) + 2px);
+  border-left: 4px solid var(--bege-destaque);
+  background: rgba(255,255,255,.06);
+  border-radius: var(--raio);
+  color: rgba(255,255,255,.94);
+  font-style: italic;
+  text-align: justify;
+}
+
+/* =========================
+   3) CABEÇALHO / MENU
+   ========================= */
+
+.cabecalho{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.cabecalho__miolo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  min-height: 72px;
+}
+
+.marca{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: 10px 0;
+}
+
+.marca__logo{
+  width: 130px;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.12));
+}
+
+.menu-principal{
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+}
+
+.menu-principal__link{
+  font-family: var(--fonte-titulo);
+  font-size: 16px;
+  color: rgba(255,255,255,.92);
+  padding: 10px 8px;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transicao), color var(--transicao), transform var(--transicao);
+  white-space: nowrap;
+}
+
+.menu-principal__link:hover{
+  color: var(--branco);
+  border-bottom-color: rgba(209,165,122,.65);
+  transform: translateY(-1px);
+}
+
+.menu-principal__link--ativo{
+  color: var(--branco);
+  border-bottom-color: var(--bege-destaque);
+}
+
+.cabecalho__acoes{
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+/* =========================
+   4) BOTÕES
+   ========================= */
+
+.botao{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  color: var(--branco);
+  background: rgba(255,255,255,.08);
+  transition: transform var(--transicao), background var(--transicao), border-color var(--transicao), box-shadow var(--transicao);
+  cursor: pointer;
+  font-family: var(--fonte-titulo);
+  letter-spacing: .2px;
+}
+
+.botao:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.26);
+  box-shadow: 0 10px 24px rgba(0,0,0,.16);
+}
+
+.botao:active{ transform: translateY(0); }
+
+.botao--destaque{
+  background: var(--bege-destaque);
+  border-color: rgba(0,0,0,.12);
+  color: #1c1c1c;
+  box-shadow: 0 10px 22px rgba(209,165,122,.18);
+}
+
+.botao--destaque:hover{ background: #ddb089; }
+
+.botao--grande{
+  padding: 14px 20px;
+  font-size: 16px;
+}
+
+/* =========================
+   5) HERO (HOME)
+   ========================= */
+
+.hero{
+  padding: calc(var(--esp-7) - 10px) 0 var(--esp-7) 0;
+  background:
+    radial-gradient(1200px 500px at 70% 30%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+}
+
+.hero__miolo{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: var(--esp-6);
+  align-items: center;
+}
+
+.hero__foto{
+  border-radius: var(--raio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-2);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.hero__foto:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 22px 60px rgba(0,0,0,.28);
+}
+
+.hero__foto img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__conteudo{
+  padding-right: var(--esp-2);
+}
+
+.hero__rotulo{
+  margin: 0 0 var(--esp-2) 0;
+  font-family: var(--fonte-titulo);
+  color: rgba(255,255,255,.88);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.hero__titulo{
+  margin: 0 0 var(--esp-3) 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 56px);
+  color: var(--branco);
+  line-height: 1.05;
+}
+
+.hero__oab{
+  font-family: var(--fonte-texto);
+  font-weight: 500;
+  color: rgba(255,255,255,.82);
+  font-size: clamp(14px, 1.4vw, 18px);
+}
+
+.hero__texto{
+  margin: 0 0 var(--esp-4) 0;
+  color: var(--texto-claro);
+  text-align: justify;
+  max-width: 52ch;
+}
+
+.hero__botoes{
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--esp-5);
+}
+
+.hero__telefone{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.07);
+  transition: background var(--transicao), transform var(--transicao), box-shadow var(--transicao);
+}
+
+.hero__telefone:hover{
+  background: rgba(255,255,255,.11);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.14);
+}
+
+.hero__telefone-icone{ font-size: 16px; opacity: .95; }
+
+.hero__telefone-texto{
+  font-family: var(--fonte-titulo);
+  letter-spacing: .3px;
+}
+
+.hero__selos{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-3);
+}
+
+.selo{
+  padding: var(--esp-3);
+  border-radius: var(--raio);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  transition: transform var(--transicao), background var(--transicao), border-color var(--transicao);
+}
+
+.selo:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.16);
+}
+
+.selo__titulo{
+  margin: 0 0 6px 0;
+  font-family: var(--fonte-titulo);
+  color: var(--branco);
+  font-weight: 700;
+}
+
+.selo__texto{
+  margin: 0;
+  color: var(--texto-suave);
+  text-align: justify;
+  font-size: 14px;
+}
+
+/* =========================
+   6) CARDS / GRADES
+   ========================= */
+
+.cartao{
+  border-radius: var(--raio-grande);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  box-shadow: var(--sombra-1);
+  overflow: hidden;
+  transition: transform var(--transicao), background var(--transicao), border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.cartao:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 18px 45px rgba(0,0,0,.22);
+}
+
+.cartao__midia{
+  background: rgba(0,0,0,.12);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.cartao__midia img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.cartao__conteudo{
+  padding: calc(var(--esp-4) + 4px);
+}
+
+.cartao__titulo{
+  margin: 0 0 var(--esp-2) 0;
+  font-family: var(--fonte-titulo);
+  font-size: 20px;
+  color: var(--branco);
+}
+
+.cartao__texto{
+  margin: 0 0 var(--esp-2) 0;
+  color: var(--texto-claro);
+  text-align: justify;
+  font-size: 14.6px;
+}
+
+.cartao__acoes{
+  margin-top: var(--esp-3);
+}
+
+.cartao--beneficio{
+  padding: calc(var(--esp-4) + 4px);
+}
+
+.cartao--beneficio .cartao__titulo{ font-size: 18px; }
+
+/* Grids (desktop) */
+.grade-beneficios{
+  margin-top: var(--esp-5);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-4);
+}
+
+.grade-servicos{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-4);
+  margin-top: var(--esp-5);
+}
+
+.grade-servicos--pagina{
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grade-cases{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--esp-4);
+  margin-top: var(--esp-4);
+}
+
+.acao-centralizada{
+  margin-top: var(--esp-5);
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   7) LISTAS CURTAS / DETALHE
+   ========================= */
+
+.lista-curta{
+  margin: var(--esp-3) 0 0 18px;
+  padding: 0;
+  color: rgba(255,255,255,.88);
+}
+
+.lista-curta li{
+  margin: 8px 0;
+  text-align: justify;
+}
+
+.lista-detalhe{
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(255,255,255,.90);
+}
+
+.lista-detalhe li{
+  margin: 10px 0;
+  text-align: justify;
+}
+
+/* =========================
+   8) FAIXA CTA
+   ========================= */
+
+.faixa-cta{
+  margin-top: var(--esp-6);
+  padding: var(--esp-5);
+  border-radius: var(--raio-grande);
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));
+  border: 1px solid rgba(255,255,255,.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  transition: transform var(--transicao), border-color var(--transicao);
+}
+
+.faixa-cta:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+}
+
+.faixa-cta__titulo{
+  margin: 0 0 8px 0;
+  font-family: var(--fonte-titulo);
+  color: var(--branco);
+  font-size: 22px;
+}
+
+.faixa-cta__descricao{
+  margin: 0;
+  color: rgba(255,255,255,.86);
+  text-align: justify;
+}
+
+.faixa-cta__acoes{
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* =========================
+   9) BANNERS INTERNOS (sobre/serviços/cases/contato)
+   ========================= */
+
+.banner-interno{
+  padding: var(--esp-7) 0 var(--esp-6) 0;
+  background:
+    linear-gradient(90deg, rgba(240,223,205,.97) 0%, rgba(240,223,205,.97) 58%, rgba(255,255,255,0) 58%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.banner-interno .titulo-pagina,
+.banner-interno .titulo-secao{
+  color: var(--texto-escuro);
+  text-shadow: 0 1px 0 rgba(255,255,255,.35);
+}
+
+.banner-interno__miolo{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: var(--esp-6);
+  align-items: center;
+}
+
+.banner-interno__texto{
+  color: var(--texto-escuro);
+  padding-right: var(--esp-2);
+}
+
+.banner-interno__texto .texto-secao{
+  color: var(--texto-escuro-suave);
+  text-align: justify;
+}
+
+.banner-interno__foto{
+  border-radius: var(--raio-grande);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 18px 40px rgba(0,0,0,.22);
+  background: rgba(0,0,0,.06);
+}
+
+.banner-interno__foto img{
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.banner-interno .frase-destaque{
+  background: rgba(0,0,0,.06);
+  color: rgba(0,0,0,.76);
+  border-left-color: rgba(209,165,122,.95);
+}
+
+.banner-interno__foto--faixa{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,.06);
+}
+
+.banner-interno__foto--faixa img{
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* =========================
+   10) BARRA DE FILTROS (cases.html)
+   ========================= */
+
+.barra-filtros{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  align-items: flex-end;
+  padding: calc(var(--esp-4) + 2px);
+  border-radius: var(--raio-grande);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.campo{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.campo--curto{ max-width: 320px; }
+
+.campo__rotulo{
+  font-family: var(--fonte-titulo);
+  color: rgba(255,255,255,.94);
+  font-size: 14px;
+}
+
+.campo__controle{
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.07);
+  color: var(--branco);
+  outline: none;
+  transition: border-color var(--transicao), background var(--transicao);
+}
+
+.campo__controle:focus{
+  border-color: rgba(209,165,122,.9);
+  background: rgba(255,255,255,.10);
+}
+
+.campo__controle option{
+  background: #0b2f52;
+  color: #fff;
+}
+
+.aviso-lista-vazia{
+  grid-column: 1 / -1;
+  padding: var(--esp-5);
+  border-radius: var(--raio-grande);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+}
+
+/* =========================
+   11) DETALHE DO CASE (case.html)
+   ========================= */
+
+.caminho{
+  margin: 0 0 var(--esp-2) 0;
+  color: rgba(0,0,0,.70);
+  font-family: var(--fonte-texto);
+}
+
+.caminho a{
+  color: rgba(0,0,0,.78);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bloco-detalhe{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-6);
+}
+
+.bloco-detalhe__coluna .titulo-secao{ margin-top: 0; }
+
+.bloco-detalhe__coluna .texto-secao{
+  color: rgba(255,255,255,.90);
+}
+
+.banner-interno--detalhe-case{
+  background:
+    linear-gradient(90deg, rgba(240,223,205,.97) 0%, rgba(240,223,205,.97) 56%, rgba(255,255,255,0) 56%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+}
+
+/* =========================
+   12) CONTATO (layout e formulário)
+   ========================= */
+
+.grade-contato{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-6);
+  align-items: start;
+}
+
+.bloco-whats, .bloco-formulario{
+  padding: calc(var(--esp-5) + 4px);
+  border-radius: var(--raio-grande);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  box-shadow: var(--sombra-1);
+}
+
+.botoes-grandes{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--esp-3);
+  margin: var(--esp-4) 0;
+}
+
+.formulario{
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.formulario__linha{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-3);
+}
+
+.formulario__acoes{
+  margin-top: var(--esp-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formulario__aviso{
+  margin: 0;
+  color: rgba(255,255,255,.86);
+  font-size: 13.5px;
+  text-align: justify;
+}
+
+/* =========================
+   13) RODAPÉ
+   ========================= */
+
+.rodape{
+  margin-top: var(--esp-7);
+  padding: var(--esp-6) 0;
+  background: var(--areia);
+  color: #1c1c1c;
+}
+
+.rodape__linha{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  flex-wrap: wrap;
+}
+
+.rodape__nome{
+  margin: 0 0 6px 0;
+  font-family: var(--fonte-titulo);
+  font-size: 16px;
+  letter-spacing: .2px;
+}
+
+.rodape__oab{
+  font-family: var(--fonte-texto);
+  font-weight: 500;
+}
+
+.rodape__direitos{
+  margin: 0;
+  font-size: 13.5px;
+  color: rgba(0,0,0,.72);
+}
+
+.rodape__redes{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rodape__icone{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(0,0,0,.10);
+  transition: transform var(--transicao), background var(--transicao);
+}
+
+.rodape__icone:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.75);
+}
+
+.rodape__icone img{
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* =========================
+   14) BOTÃO WHATS FIXO
+   ========================= */
+
+.botao-whats-fixo{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: var(--bege-destaque);
+  color: #1c1c1c;
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 16px 35px rgba(0,0,0,.24);
+  transition: transform var(--transicao), background var(--transicao), box-shadow var(--transicao);
+}
+
+.botao-whats-fixo:hover{
+  transform: translateY(-2px);
+  background: #ddb089;
+  box-shadow: 0 22px 45px rgba(0,0,0,.28);
+}
+
+.botao-whats-fixo__texto{
+  font-family: var(--fonte-titulo);
+  letter-spacing: .2px;
+}
+
+/* =========================
+   15) PÁGINA 404
+   ========================= */
+
+.sessao--404{
+  min-height: calc(100vh - 140px);
+  display: flex;
+  align-items: center;
+}
+
+.cartao--404{
+  padding: var(--esp-6);
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cartao--404 .texto-secao{
+  text-align: center;
+}
+
+/* =========================
+   16) ANIMAÇÕES (site todo)
+   ========================= */
+
+@media (prefers-reduced-motion: no-preference){
+
+  @keyframes surgir-suave{
+    from{ opacity: 0; transform: translateY(10px); filter: blur(2px); }
+    to{ opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  @keyframes revelar-pagina{
+    from{ opacity: 0; }
+    to{ opacity: 1; }
+  }
+
+  /* Entrada da página (bem sutil) */
+  body{
+    animation: revelar-pagina 420ms ease both;
+  }
+
+  /* Elementos principais surgindo */
+  .cabecalho,
+  .hero,
+  .banner-interno,
+  .sessao,
+  .rodape{
+    animation: surgir-suave 520ms ease both;
+  }
+
+  .titulo-pagina,
+  .titulo-secao,
+  .texto-secao,
+  .botao,
+  .hero__telefone,
+  .cartao,
+  .faixa-cta,
+  .bloco-whats,
+  .bloco-formulario,
+  .barra-filtros{
+    animation: surgir-suave 650ms ease both;
+  }
+
+  /* Sequência dentro do hero e banner (fica “premium”) */
+  .hero__conteudo > *{ animation: surgir-suave 740ms ease both; }
+  .hero__conteudo > *:nth-child(1){ animation-delay: 40ms; }
+  .hero__conteudo > *:nth-child(2){ animation-delay: 110ms; }
+  .hero__conteudo > *:nth-child(3){ animation-delay: 170ms; }
+  .hero__conteudo > *:nth-child(4){ animation-delay: 230ms; }
+  .hero__conteudo > *:nth-child(5){ animation-delay: 290ms; }
+
+  .banner-interno__texto > *{ animation: surgir-suave 720ms ease both; }
+  .banner-interno__texto > *:nth-child(1){ animation-delay: 40ms; }
+  .banner-interno__texto > *:nth-child(2){ animation-delay: 110ms; }
+  .banner-interno__texto > *:nth-child(3){ animation-delay: 170ms; }
+  .banner-interno__texto > *:nth-child(4){ animation-delay: 230ms; }
+}
+
+/* =========================
+   17) RESPONSIVIDADE
+   (mesma experiência do desktop, só menor)
+   ========================= */
+
+/* Tablet: reduz ritmo e mantém layout por mais tempo */
+@media (max-width: 980px){
+
+  :root{
+    /* “fica igual, só menor” */
+    --esp-7: 54px;
+    --esp-6: 38px;
+    --esp-5: 26px;
+    --esp-4: 20px;
+  }
+
+  /* mantém 2 colunas no hero, mas com gap menor */
+  .hero__miolo{
+    gap: var(--esp-5);
+    grid-template-columns: 1.05fr .95fr;
+  }
+
+  /* grids diminuem para 2 colunas (sem virar “um paredão” de 1 coluna) */
+  .grade-beneficios{ grid-template-columns: repeat(2, 1fr); }
+  .grade-servicos,
+  .grade-servicos--pagina{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile: mesma cara do desktop, porém:
+   - hero empilha só quando realmente não cabe
+   - cards em linha com swipe (carrossel elegante)
+   - menu continua visível (scroll lateral discreto)
+*/
+@media (max-width: 720px){
+
+  :root{
+    --esp-7: 46px;
+    --esp-6: 34px;
+    --esp-5: 22px;
+    --esp-4: 18px;
+    --esp-3: 14px;
+  }
+
+  .cabecalho{
+    background: rgba(6, 43, 78, .97);
+  }
+
+  .cabecalho__miolo{
+    gap: 10px;
+    min-height: 66px;
+  }
+
+  .marca__logo{
+    width: 112px;
+  }
+
+  .menu-principal{
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+    max-width: 56vw;
+  }
+
+  .menu-principal::-webkit-scrollbar{ height: 6px; }
+  .menu-principal::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,.18);
+    border-radius: 999px;
+  }
+
+  .menu-principal__link{
+    font-size: 15px;
+    padding: 8px 6px;
+  }
+
+  /* Hero: a partir daqui, empilha (é o único jeito de “ajustar a tela” sem esmagar texto) */
+  .hero__miolo{
+    grid-template-columns: 1fr;
+  }
+  .hero__selos{
+    grid-template-columns: 1fr 1fr; /* mantém “cara desktop” */
+  }
+
+  /* Carrossel premium (mantém sensação igual ao desktop) */
+  .grade-beneficios,
+  .grade-servicos,
+  .grade-servicos--pagina,
+  .grade-cases{
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 82%);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: var(--esp-3);
+    padding-bottom: 8px;
+    padding-right: 6px;
+    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+
+  .grade-beneficios > *,
+  .grade-servicos > *,
+  .grade-servicos--pagina > *,
+  .grade-cases > *{
+    scroll-snap-align: start;
+  }
+
+  .formulario__linha{
+    grid-template-columns: 1fr;
+  }
+
+  .botao-whats-fixo__texto{
+    display: none;
+  }
+
+  .banner-interno__miolo{
+    grid-template-columns: 1fr;
+  }
+
+  .banner-interno{
+    background:
+      linear-gradient(180deg, rgba(240,223,205,.97) 0%, rgba(240,223,205,.97) 340px, rgba(255,255,255,0) 340px),
+      linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+  }
+
+  .banner-interno__foto img{
+    height: 280px;
+  }
+
+  .banner-interno__foto--faixa{
+    grid-template-columns: 1fr;
+  }
+
+  .banner-interno__foto--faixa img{
+    height: 160px;
+  }
+
+  /* Faixa CTA fica igual, só com quebra interna */
+  .faixa-cta{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .faixa-cta__acoes{
+    justify-content: flex-start;
+  }
+
+  /* Seção Informações profissionais: garante centralização mesmo se vier sem .miolo */
+  .sessao .cartao,
+  .sessao .faixa-cta,
+  .sessao .barra-filtros{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Celular pequeno */
+@media (max-width: 480px){
+
+  :root{
+    --esp-7: 40px;
+    --esp-6: 30px;
+    --esp-5: 20px;
+    --esp-4: 16px;
+  }
+
+  .cabecalho__acoes .botao{
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .botao{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__botoes{
+    width: 100%;
+  }
+
+  .hero__telefone{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__selos{
+    grid-template-columns: 1fr; /* aqui 2 colunas já fica espremido demais */
+  }
+
+  .faixa-cta{
+    padding: var(--esp-4);
+  }
+
+  .cartao__midia img{
+    height: 200px;
+  }
+
+  .botao-whats-fixo{
+    right: 14px;
+    bottom: 14px;
+  }
+}
+/* =========================================================
+   NAV MOBILE IGUAL AO PC (sem dock, sem scroll)
+   Cole no FINAL do estilos.css
+   ========================================================= */
+
+@media (max-width: 720px){
+
+  /* Se você colou o patch do “dock”, isso aqui anula ele */
+  body{ padding-bottom: 0 !important; }
+
+  .menu-principal{
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: auto !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    z-index: auto !important;
+    mask-image: none !important;
+    overflow: visible !important;
+    max-width: none !important;
+  }
+
+  /* Header igual PC: logo | menu | botão */
+  .cabecalho__miolo{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+    min-height: 72px; /* igual PC */
+  }
+
+  /* Logo só diminui um pouco pra caber */
+  .marca__logo{
+    width: 112px;
+  }
+
+  /* Botão “Contato” compacto, mas igual PC */
+  .cabecalho__acoes .botao{
+    padding: 10px 14px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Menu NO TOPO, igual PC — sem scroll */
+  .menu-principal{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;          /* se não couber em 1 linha, vai pra 2 (sem scroll) */
+    gap: 10px;                /* mais compacto */
+  }
+
+  /* Links com a mesma “cara” do PC (underline/borda embaixo) */
+  .menu-principal__link{
+    font-size: 14px;          /* menor que PC, mas mesma estética */
+    padding: 8px 6px;
+    border-bottom: 2px solid transparent; /* mantém o underline */
+    border-radius: 0;         /* evita “cara de botão” */
+    background: transparent;
+  }
+
+  /* garante que o item ativo apareça certinho */
+  .menu-principal__link--ativo{
+    border-bottom-color: var(--bege-destaque);
+  }
+}
+
+/* Celulares menores: compacta mais pra caber sem ficar feio */
+@media (max-width: 420px){
+
+  .cabecalho__miolo{
+    gap: 8px;
+  }
+
+  .marca__logo{ width: 104px; }
+
+  .menu-principal{
+    gap: 8px;
+  }
+
+  .menu-principal__link{
+    font-size: 13px;
+    padding: 7px 5px;
+  }
+
+  .cabecalho__acoes .botao{
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+}
+
+
+
+
+/* =========================
+   BLOCO COMERCIAL (HOME) — PREMIUM / CHAMATIVO
+   ========================= */
+
+.sessao--comercial{
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(209,165,122,.14), transparent 60%),
+    radial-gradient(900px 420px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+  padding-top: var(--esp-6);
+  padding-bottom: var(--esp-7);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.cartao--comercial{
+  position: relative;
+  border-radius: calc(var(--raio-grande) + 6px);
+  overflow: hidden;
+
+  /* “vidro” premium */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.045));
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.30),
+    0 1px 0 rgba(255,255,255,.10) inset;
+  transform: translateZ(0);
+}
+
+/* borda dourada sutil (cara de escritório premium) */
+.cartao--comercial::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(209,165,122,.85),
+    rgba(255,255,255,.10),
+    rgba(209,165,122,.55)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .85;
+}
+
+
+.cartao--comercial .cartao__conteudo{
+  padding: clamp(18px, 3vw, 32px);
+}
+
+/* rótulo “Início” mais elegante */
+.comercial__rotulo{
+  margin: 0 0 12px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  font-family: var(--fonte-titulo);
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  font-size: 12px;
+
+  color: rgba(255,255,255,.78);
+}
+
+.comercial__rotulo::before{
+  content: "";
+  width: 26px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(209,165,122,.95);
+  box-shadow: 0 6px 16px rgba(209,165,122,.22);
+}
+
+/* título com impacto (sem ficar “brega”) */
+.comercial__titulo{
+  margin: 0 0 var(--esp-3) 0;
+  line-height: 1.06;
+  font-size: clamp(26px, 3.4vw, 38px);
+  letter-spacing: .2px;
+  text-shadow: 0 14px 40px rgba(0,0,0,.35);
+}
+
+/* texto: mais legível e “corpo” */
+.comercial__texto{
+  max-width: 88ch;
+  color: rgba(255,255,255,.90);
+  font-size: 15.5px;
+}
+
+/* bloco de chamada com visual “assinatura” */
+.comercial__chamada{
+  margin: var(--esp-4) 0 0 0;
+  padding: 16px 18px;
+  border-radius: calc(var(--raio) + 6px);
+  border: 1px solid rgba(209,165,122,.30);
+  background:
+    linear-gradient(180deg, rgba(209,165,122,.16), rgba(255,255,255,.05));
+  color: rgba(255,255,255,.95);
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+}
+
+/* CTA: vira uma “faixa” bonita */
+.comercial__cta{
+  margin-top: var(--esp-4);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-2);
+  align-items: stretch;
+}
+
+.comercial__cta-texto{
+  grid-column: 1 / -1;
+  margin: 0 0 6px 0;
+  color: rgba(255,255,255,.86);
+  font-family: var(--fonte-titulo);
+  font-size: 15px;
+  letter-spacing: .2px;
+}
+
+/* botão destaque: “ouro premium” com leve brilho */
+.comercial__cta .botao--destaque{
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.22),
+    0 10px 24px rgba(209,165,122,.18);
+}
+
+.comercial__cta .botao--destaque::after{
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -40%;
+  width: 60%;
+  height: 180%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.45),
+    transparent
+  );
+  transform: rotate(18deg);
+  opacity: .35;
+  transition: transform 420ms ease, opacity 420ms ease;
+}
+
+.comercial__cta .botao--destaque:hover::after{
+  transform: translateX(220%) rotate(18deg);
+  opacity: .55;
+}
+
+/* botão secundário: mais sóbrio, mas com presença */
+.comercial__cta .botao:not(.botao--destaque){
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.20);
+}
+
+/* observação final */
+.comercial__obs{
+  margin: var(--esp-4) 0 0 0;
+  color: rgba(255,255,255,.74);
+  font-size: 13.5px;
+  max-width: 90ch;
+}
+
+/* micro-animação no hover do bloco (premium) */
+.cartao--comercial:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.34),
+    0 1px 0 rgba(255,255,255,.12) inset;
+}
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 720px){
+  .sessao--comercial{
+    padding-top: var(--esp-5);
+  }
+
+  .comercial__cta{
+    grid-template-columns: 1fr;
+  }
+
+  .comercial__texto{
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px){
+  .cartao--comercial .cartao__conteudo{
+    padding: 18px;
+  }
+}
+
+
+
+/* =========================
+   PATCH — COMERCIAL MAIS PREMIUM (GLOW NO FRAME)
+   Cole no FINAL do CSS
+   ========================= */
+
+/* 1) Remove o brilho/sombra estranha do fundo da seção */
+.sessao--comercial{
+  background:
+    radial-gradient(1200px 520px at 18% 10%, rgba(209,165,122,.10), transparent 62%),
+    radial-gradient(900px 520px at 82% 30%, rgba(255,255,255,.05), transparent 58%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+}
+
+.sessao--comercial::before{
+  /* desliga o “blob” que estava ficando esquisito */
+  content: none !important;
+}
+
+/* 2) Glow premium ao redor do card (aura + borda viva) */
+.cartao--comercial{
+  position: relative;
+  isolation: isolate; /* garante que o glow não “vaze” errado */
+}
+
+/* Aura externa (glow) */
+.cartao--comercial::after{
+  content: "";
+  position: absolute;
+  inset: -14px;              /* “para fora” do card */
+  border-radius: calc(var(--raio-grande) + 18px);
+  z-index: -1;
+  pointer-events: none;
+
+  /* Glow dual (dourado + azul), bem premium */
+  background:
+    radial-gradient(70% 70% at 30% 20%, rgba(209,165,122,.38), transparent 60%),
+    radial-gradient(70% 70% at 78% 76%, rgba(120,170,255,.18), transparent 62%),
+    linear-gradient(135deg, rgba(209,165,122,.26), rgba(255,255,255,.06), rgba(120,170,255,.10));
+
+  filter: blur(18px);
+  opacity: .95;
+  transform: translateZ(0);
+}
+
+/* Borda “viva” (mais limpa que a anterior) */
+.cartao--comercial::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(209,165,122,.95),
+    rgba(255,255,255,.12),
+    rgba(209,165,122,.55)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .9;
+}
+
+/* 3) Glow “respira” no hover (chamativo e bonito) */
+@media (prefers-reduced-motion: no-preference){
+  .cartao--comercial{
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .cartao--comercial::after{
+    transition: filter 280ms ease, opacity 280ms ease, inset 280ms ease;
+  }
+
+  .cartao--comercial:hover{
+    transform: translateY(-3px);
+    box-shadow:
+      0 30px 75px rgba(0,0,0,.36),
+      0 1px 0 rgba(255,255,255,.12) inset;
+  }
+
+  .cartao--comercial:hover::after{
+    inset: -18px;
+    filter: blur(22px);
+    opacity: 1;
+  }
+
+  /* Um “shine” passando no título */
+  .comercial__titulo{
+    position: relative;
+  }
+  .comercial__titulo::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(255,255,255,.35),
+      transparent
+    );
+    opacity: .0;
+    transform: translateX(-18%);
+    filter: blur(0px);
+    pointer-events: none;
+  }
+  .cartao--comercial:hover .comercial__titulo::after{
+    opacity: .22;
+    transform: translateX(18%);
+    transition: transform 520ms ease, opacity 520ms ease;
+  }
+}
+
+/* 4) Texto e CTA mais “impacto” */
+.comercial__titulo{
+  text-shadow:
+    0 16px 45px rgba(0,0,0,.42),
+    0 1px 0 rgba(255,255,255,.08);
+}
+
+.comercial__chamada{
+  border-color: rgba(209,165,122,.38);
+  background:
+    linear-gradient(180deg, rgba(209,165,122,.20), rgba(255,255,255,.05));
+}
+
+/* 5) Mobile: glow menos “pesado” pra não ficar exagerado */
+@media (max-width: 480px){
+  .cartao--comercial::after{
+    inset: -12px;
+    filter: blur(16px);
+    opacity: .9;
+  }
+}
+
+
+/* =========================
+   BANNER PRINCIPAL (CAPA GRANDE)
+   ========================= */
+
+.capa-destaque{
+  padding: calc(var(--esp-6)) 0 calc(var(--esp-4)) 0;
+  background:
+    radial-gradient(900px 420px at 30% 10%, rgba(209,165,122,.12), transparent 60%),
+    radial-gradient(900px 420px at 70% 0%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.capa-destaque__miolo{
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.capa-destaque__frame{
+  margin: 0;
+  border-radius: calc(var(--raio-grande) + 6px);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.35),
+    0 0 0 1px rgba(209,165,122,.10),
+    0 0 42px rgba(209,165,122,.18); /* glow externo */
+  position: relative;
+  isolation: isolate;
+}
+
+/* Glow “premium” que parece moldura viva */
+.capa-destaque__frame::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(500px 240px at 18% 20%, rgba(209,165,122,.28), transparent 60%),
+    radial-gradient(520px 260px at 82% 30%, rgba(255,255,255,.10), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+  opacity: .55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.capa-destaque__img{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+
+  /* IMPORTANTÍSSIMO: não corta a imagem */
+  object-fit: contain;
+  background: rgba(0,0,0,.05);
+}
+
+/* ações (botões) */
+.capa-destaque__acoes{
+  display: flex;
+  gap: var(--esp-2);
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* =========================
+   ANIMAÇÃO (BANNER)
+   ========================= */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes capa-entrar{
+    from{ opacity: 0; transform: translateY(14px); filter: blur(2px); }
+    to{ opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  @keyframes glow-pulsar{
+    0%   { box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 1px rgba(209,165,122,.10), 0 0 34px rgba(209,165,122,.14); }
+    50%  { box-shadow: 0 22px 70px rgba(0,0,0,.38), 0 0 0 1px rgba(209,165,122,.14), 0 0 52px rgba(209,165,122,.22); }
+    100% { box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 0 1px rgba(209,165,122,.10), 0 0 34px rgba(209,165,122,.14); }
+  }
+
+  .capa-destaque__frame{
+    animation: capa-entrar 680ms ease both, glow-pulsar 3.2s ease-in-out infinite;
+  }
+}
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+@media (max-width: 720px){
+  .capa-destaque{
+    padding: calc(var(--esp-5)) 0 calc(var(--esp-3)) 0;
+  }
+
+  .capa-destaque__acoes .botao{
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   PATCH HOME (Banner + Comercial + Resumo + Menu Mobile PC-like)
+   Autor: Pedro Max
+   ========================================================= */
+
+/* ---------- 1) BANNER CAPA ---------- */
+
+.capa-destaque{
+  padding: calc(var(--esp-6) + 10px) 0 var(--esp-6) 0;
+  background:
+    radial-gradient(1000px 520px at 30% 15%, rgba(209,165,122,.10), transparent 55%),
+    radial-gradient(900px 480px at 70% 0%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, var(--azul-fundo) 0%, var(--azul-fundo-2) 100%);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.capa-destaque__miolo{
+  display: grid;
+  gap: var(--esp-4);
+  justify-items: center;
+}
+
+.capa-destaque__frame{
+  width: min(980px, 100%);
+  margin: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+
+  /* Glow premium (sem “sombra suja”) */
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.06) inset;
+}
+
+.capa-destaque__frame::before{
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  pointer-events: none;
+
+  /* Glow em volta */
+  background: radial-gradient(60% 70% at 50% 20%, rgba(209,165,122,.28), transparent 60%);
+  filter: blur(10px);
+  opacity: .55;
+}
+
+.capa-destaque__img{
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateZ(0);
+}
+
+.capa-destaque__acoes{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-3);
+  flex-wrap: wrap;
+  width: min(980px, 100%);
+}
+
+/* Microinteração suave no banner */
+@media (prefers-reduced-motion: no-preference){
+  .capa-destaque__frame{
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+  .capa-destaque__frame:hover{
+    transform: translateY(-2px);
+    box-shadow:
+      0 34px 90px rgba(0,0,0,.40),
+      0 0 0 1px rgba(255,255,255,.08) inset;
+  }
+}
+
+/* ---------- 2) BLOCO COMERCIAL (bem chamativo, mas sofisticado) ---------- */
+
+.sessao--comercial{
+  padding-top: calc(var(--esp-6) + 8px);
+  background:
+    radial-gradient(900px 500px at 50% 20%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, var(--azul-fundo-2) 0%, var(--azul-fundo) 100%);
+}
+
+.cartao--comercial{
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.cartao--comercial::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius: 24px;
+  pointer-events:none;
+  background:
+    radial-gradient(70% 70% at 20% 20%, rgba(209,165,122,.24), transparent 55%),
+    radial-gradient(60% 60% at 80% 0%, rgba(255,255,255,.10), transparent 55%);
+  filter: blur(12px);
+  opacity: .55;
+}
+
+.cartao--comercial .cartao__conteudo{
+  position: relative;
+  padding: clamp(18px, 3.2vw, 34px);
+}
+
+.comercial__rotulo{
+  margin: 0 0 10px 0;
+  font-family: var(--fonte-titulo);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(255,255,255,.78);
+}
+
+.comercial__titulo{
+  margin-bottom: var(--esp-3);
+  line-height: 1.12;
+  text-shadow: 0 8px 26px rgba(0,0,0,.22);
+}
+
+.comercial__texto{
+  max-width: 78ch;
+}
+
+.comercial__chamada{
+  margin: var(--esp-4) 0 var(--esp-3) 0;
+  padding: 14px 16px;
+  border-left: 4px solid var(--bege-destaque);
+  border-radius: 14px;
+  background: rgba(0,0,0,.12);
+  color: rgba(255,255,255,.92);
+  text-align: justify;
+}
+
+.comercial__cta{
+  margin-top: var(--esp-4);
+  display: grid;
+  gap: 12px;
+}
+
+.comercial__cta-texto{
+  margin: 0;
+  color: rgba(255,255,255,.86);
+  text-align: justify;
+}
+
+.comercial__botoes{
+  display: flex;
+  gap: var(--esp-3);
+  flex-wrap: wrap;
+}
+
+/* ---------- 3) RESUMO (foto + pilares) ---------- */
+
+.sessao--resumo{
+  background: var(--azul-fundo);
+  padding-top: var(--esp-6);
+}
+
+.resumo__miolo{
+  display: grid;
+  grid-template-columns: .95fr 1.05fr;
+  gap: var(--esp-6);
+  align-items: center;
+}
+
+.resumo__foto{
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 22px 60px rgba(0,0,0,.26);
+}
+
+.resumo__foto img{
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.resumo__rotulo{
+  margin: 0 0 var(--esp-2) 0;
+  font-family: var(--fonte-titulo);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(255,255,255,.78);
+}
+
+.resumo__titulo{
+  margin-bottom: var(--esp-3);
+}
+
+.resumo__texto{
+  max-width: 70ch;
+}
+
+.resumo__pilares{
+  margin-top: var(--esp-4);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-3);
+}
+
+.pilar{
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  transition: transform var(--transicao), background var(--transicao), border-color var(--transicao);
+}
+
+.pilar:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.14);
+}
+
+.pilar__titulo{
+  margin: 0 0 6px 0;
+  font-family: var(--fonte-titulo);
+  color: var(--branco);
+}
+
+.pilar__texto{
+  margin: 0;
+  color: rgba(255,255,255,.82);
+  text-align: justify;
+  font-size: 13.8px;
+}
+
+.resumo__acoes{
+  margin-top: var(--esp-4);
+  display: flex;
+  gap: var(--esp-3);
+  flex-wrap: wrap;
+}
+
+/* ---------- 4) MENU MOBILE IGUAL AO DESKTOP (sem scroll, tudo aparece) ---------- */
+
+@media (max-width: 720px){
+
+  /* deixa o cabeçalho mais “organizado” e com tudo visível */
+  .cabecalho__miolo{
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+
+  /* Logo centralizada numa linha */
+  .marca{
+    flex: 0 0 100%;
+    justify-content: center;
+    padding: 6px 0;
+  }
+
+  /* Menu em duas linhas se precisar (sem barra de rolagem) */
+  .menu-principal{
+    flex: 0 0 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: visible;
+    max-width: none;
+    padding-bottom: 0;
+    gap: 12px 14px;
+  }
+
+  /* Links compactos, mas iguais aos do desktop */
+  .menu-principal__link{
+    font-size: 15px;
+    padding: 8px 8px;
+  }
+
+  /* Botão de contato centralizado abaixo */
+  .cabecalho__acoes{
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+
+  .cabecalho__acoes .botao{
+    width: min(360px, 100%);
+  }
+
+  /* Resumo empilha bonito no mobile */
+  .resumo__miolo{
+    grid-template-columns: 1fr;
+  }
+
+  .resumo__foto img{
+    height: 320px;
+  }
+
+  .resumo__pilares{
+    grid-template-columns: 1fr;
+  }
+
+  .capa-destaque__frame{
+    border-radius: 18px;
+  }
+}
+
+/* ---------- 5) Ajustes mobile do bloco comercial ---------- */
+
+@media (max-width: 480px){
+  .comercial__botoes .botao{
+    width: 100%;
+  }
+}
+
+
+/* =========================
+   HERO VÍDEO
+   ========================= */
+
+.hero__midia{
+  position: relative;
+}
+
+/* vídeo ocupa o frame inteiro igual a imagem */
+.hero__video{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;      /* não distorce */
+  object-position: center;
+  border-radius: inherit; /* respeita o raio do frame */
+}
+
+/* botão de som por cima (premium) */
+.hero__som{
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(6, 43, 78, .55);
+  color: rgba(255,255,255,.95);
+
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+
+  font-family: var(--fonte-titulo);
+  transition: transform var(--transicao), background var(--transicao), border-color var(--transicao);
+}
+
+.hero__som:hover{
+  transform: translateY(-1px);
+  background: rgba(6, 43, 78, .68);
+  border-color: rgba(255,255,255,.28);
+}
+
+/* quando o som já estiver ativo, você pode esconder o botão via JS */
+.hero__som.is-hidden{
+  display: none;
+}
+
+
+/* =========================
+   VÍDEO DO HERO (tamanho + moldura)
+   ========================= */
+
+.midia-hero{
+  position: relative;
+  width: 100%;
+  border-radius: var(--raio-grande);
+  overflow: hidden;
+}
+
+/* controla o “ficou grande” */
+.midia-hero__video{
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;   /* mantém proporção elegante */
+  max-height: 520px;       /* limita no desktop */
+  object-fit: cover;       /* não deforma, só recorta */
+  background: rgba(255,255,255,.04);
+}
+
+/* no mobile diminui mais */
+@media (max-width: 720px){
+  .midia-hero__video{
+    max-height: 340px;
+    aspect-ratio: 16 / 11;
+  }
+}
+
+/* botão de som (aparece por cima do vídeo) */
+.midia-hero__som{
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(6, 43, 78, .72);
+  color: #fff;
+  font-family: var(--fonte-titulo);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform var(--transicao), background var(--transicao), opacity var(--transicao);
+}
+
+.midia-hero__som:hover{
+  transform: translateY(-1px);
+  background: rgba(6, 43, 78, .85);
+}
+
+/* quando som já foi ativado, some o botão */
+.midia-hero--som-on .midia-hero__som{
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   VÍDEO VERTICAL (story) — NÃO CORTA DE JEITO NENHUM
+   ========================================================= */
+
+/* Use no mesmo bloco onde estava a imagem (hero__foto ou seu frame) */
+.hero__foto,
+.capa-destaque__frame,
+.midia-hero{
+  position: relative;
+  width: 100%;
+  border-radius: var(--raio-grande);
+  overflow: hidden;
+
+  /* fundo bonito pra “faixas” quando o vídeo for vertical */
+  background:
+    radial-gradient(900px 340px at 35% 15%, rgba(209,165,122,.18), transparent 60%),
+    radial-gradient(700px 280px at 70% 55%, rgba(255,255,255,.08), transparent 60%),
+    rgba(0,0,0,.24);
+
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 18px 55px rgba(0,0,0,.28);
+}
+
+/* Altura controlada no desktop pra não ficar enorme */
+.hero__foto,
+.midia-hero{
+  height: clamp(360px, 46vh, 560px);
+}
+
+/* Se for o banner/capa grande, um pouco mais alto */
+.capa-destaque__frame{
+  height: clamp(320px, 52vh, 620px);
+}
+
+/* O VÍDEO em si */
+.hero__foto video,
+.capa-destaque__frame video,
+.midia-hero video,
+.midia-hero__video{
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: contain;     /* ✅ NÃO CORTA */
+  object-position: center; /* centraliza */
+
+  /* deixa a imagem mais “premium” */
+  filter: contrast(1.02) saturate(1.02);
+}
+
+/* Mobile: mantém a mesma experiência, só ajusta a altura do frame */
+@media (max-width: 720px){
+  .hero__foto,
+  .midia-hero{
+    height: clamp(420px, 62vh, 680px);
+  }
+
+  .capa-destaque__frame{
+    height: clamp(420px, 68vh, 760px);
+  }
+}
+
+/* Micro brilho (glow) no frame quando passar o mouse (desktop) */
+@media (hover: hover){
+  .hero__foto:hover,
+  .capa-destaque__frame:hover,
+  .midia-hero:hover{
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.08) inset,
+      0 18px 55px rgba(0,0,0,.30),
+      0 0 34px rgba(209,165,122,.18);
+    transform: translateY(-1px);
+    transition: transform var(--transicao), box-shadow var(--transicao);
+  }
+}
+
+/* =========================================
+   AJUSTE: texto longe da borda nos cards
+   (Serviços em destaque)
+   ========================================= */
+
+/* garante respiro interno do card (quando não existe .cartao__conteudo no HTML) */
+.cartao--servico{
+  padding: 18px 18px 20px;
+}
+
+/* como a imagem fica em cima, remove padding dela e mantém no texto */
+.cartao--servico .cartao__midia{
+  margin: -18px -18px 14px; /* “encosta” a imagem nas bordas sem afetar o texto */
+  border-radius: calc(var(--raio-grande) - 2px);
+  overflow: hidden;
+}
+
+/* título e texto com espaçamento mais “premium” */
+.cartao--servico .cartao__titulo{
+  margin: 6px 0 10px 0;
+  line-height: 1.15;
+}
+
+.cartao--servico .cartao__texto{
+  margin: 0;
+  line-height: 1.6;
+  color: rgba(255,255,255,.88);
+}
+
+/* melhora leitura: limita largura do parágrafo pra não grudar e nem ficar “longo demais” */
+.cartao--servico .cartao__texto{
+  max-width: 46ch;
+}
+
+/* mobile: um pouco mais de respiro */
+@media (max-width: 720px){
+  .cartao--servico{
+    padding: 18px;
+  }
+
+  .cartao--servico .cartao__midia{
+    margin: -18px -18px 12px;
+  }
+}
+
+
+
+/* =========================
+   CHATBOT (Pré-atendimento)
+   ========================= */
+
+.chatbot{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+}
+
+.chatbot.is-ativo{
+  display: block;
+}
+
+.chatbot__overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+}
+
+.chatbot__janela{
+  position: absolute;
+  right: 18px;
+  bottom: 90px; /* sobe um pouco pra não brigar com o botão flutuante */
+  width: min(420px, calc(100vw - 36px));
+  max-height: min(640px, calc(100vh - 140px));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(6, 43, 78, .98);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.38),
+    0 0 0 1px rgba(209,165,122,.10),
+    0 0 32px rgba(209,165,122,.18); /* glow bonito */
+  animation: chatbotSubir .22s ease both;
+}
+
+@keyframes chatbotSubir{
+  from{ transform: translateY(10px); opacity: 0; }
+  to{ transform: translateY(0); opacity: 1; }
+}
+
+.chatbot__topo{
+  padding: 14px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.chatbot__topo-titulo{
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  color: var(--branco);
+  font-size: 16px;
+  letter-spacing: .2px;
+}
+
+.chatbot__topo-sub{
+  margin: 2px 0 0 0;
+  color: rgba(255,255,255,.80);
+  font-size: 13px;
+}
+
+.chatbot__fechar{
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: var(--branco);
+  cursor: pointer;
+  transition: transform var(--transicao), background var(--transicao);
+}
+.chatbot__fechar:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
+
+.chatbot__corpo{
+  padding: 14px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chatbot__msg{
+  max-width: 92%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  line-height: 1.45;
+  font-size: 14px;
+  animation: msgAparecer .18s ease both;
+}
+
+@keyframes msgAparecer{
+  from{ transform: translateY(6px); opacity: 0; }
+  to{ transform: translateY(0); opacity: 1; }
+}
+
+.chatbot__msg--bot{
+  align-self: flex-start;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.92);
+}
+
+.chatbot__msg--user{
+  align-self: flex-end;
+  background: rgba(209,165,122,.90);
+  color: #141414;
+  border-color: rgba(0,0,0,.10);
+}
+
+.chatbot__rodape{
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  display: grid;
+  gap: 10px;
+}
+
+.chatbot__campo{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.chatbot__input{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.07);
+  color: var(--branco);
+  outline: none;
+}
+
+.chatbot__input:focus{
+  border-color: rgba(209,165,122,.90);
+  background: rgba(255,255,255,.10);
+}
+
+.chatbot__enviar{
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: var(--bege-destaque);
+  color: #141414;
+  font-family: var(--fonte-titulo);
+  cursor: pointer;
+  transition: transform var(--transicao), background var(--transicao);
+}
+.chatbot__enviar:hover{ transform: translateY(-1px); background: #ddb089; }
+
+.chatbot__acoes{
+  display: flex;
+  gap: 10px;
+}
+
+.chatbot__acao{
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  cursor: pointer;
+  transition: transform var(--transicao), background var(--transicao);
+}
+.chatbot__acao:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
+
+.chatbot__acao--sec{
+  opacity: .9;
+}
+
+/* Mobile: janela centralizada e maior */
+@media (max-width: 720px){
+  .chatbot__janela{
+    left: 18px;
+    right: 18px;
+    bottom: 100px;
+    width: auto;
+  }
+}
+
+
+
+/* =========================
+   CORREÇÃO: BOTÃO WHATS FIXO NÃO APARECE
+   (cola no FINAL do estilos.css)
+   ========================= */
+
+.botao-whats-fixo{
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  z-index: 99999 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+
+  padding: 12px 16px !important;
+  border-radius: 999px !important;
+
+  background: var(--bege-destaque, #d1a57a) !important;
+  color: #1c1c1c !important;
+
+  border: 1px solid rgba(0,0,0,.12) !important;
+  box-shadow: 0 16px 35px rgba(0,0,0,.24) !important;
+
+  cursor: pointer !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateZ(0) !important;
+}
+
+.botao-whats-fixo:hover{
+  transform: translateY(-2px) !important;
+}
+
+.botao-whats-fixo__texto{
+  font-family: var(--fonte-titulo, Georgia, "Times New Roman", Times, serif) !important;
+  letter-spacing: .2px !important;
+}
+
+/* Se algum container estiver “cortando” o fixo */
+.escala-layout{
+  overflow: visible !important;
+}
+
+/* Mobile: não deixa o botão ficar gigante */
+@media (max-width: 720px){
+  .botao-whats-fixo{
+    right: 14px !important;
+    bottom: 14px !important;
+    padding: 12px 14px !important;
+  }
+}
+
+
+.botao-whats-fixo__icone{
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--bege-destaque, #d1a57a);
+  display: grid;
+  place-items: center;
+}
+
+.botao-whats-fixo__icone{
+  background-image: url("../img/icone-whats.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+}

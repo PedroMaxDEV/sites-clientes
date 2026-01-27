@@ -1,0 +1,349 @@
+<!--
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: index.html
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advocacia Empresarial | Samantha Ferreira</title>
+  <meta name="description" content="Advocacia Empresarial com foco em governança, contratos, compliance, LGPD, marcas e gestão de riscos." />
+
+  <!-- Trocar depois se você quiser um ícone real -->
+  <link rel="icon" href="assets/img/favicon.png" />
+
+  <link rel="stylesheet" href="assets/css/estilos.css" />
+</head>
+
+<body>
+ 
+<div class="escala-layout">
+  <!-- Topo fixo do site. Mantive simples e elegante; no CSS a gente deixa com cara premium -->
+  <header class="cabecalho">
+    <div class="miolo cabecalho__miolo">
+      <a class="marca" href="index.html" aria-label="Ir para a página inicial">
+        <!-- inserir logo aqui: assets/img/logo-samantha.svg -->
+        <img class="marca__logo" src="assets/img/logo-samantha.png" alt="Samantha Ferreira" />
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a class="menu-principal__link" href="index.html">Início</a>
+        <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
+        <a class="menu-principal__link" href="servicos.html">Serviços</a>
+        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link" href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <!-- Em mobile, se eu precisar simplificar, deixo só esse botão visível via CSS -->
+        <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
+          Contato
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+<!-- BANNER PRINCIPAL (capa grande) -->
+<section class="capa-destaque" aria-label="Banner principal">
+  <div class="miolo capa-destaque__miolo">
+    <figure class="capa-destaque__frame">
+      <img
+        class="capa-destaque__img"
+        src="assets/img/banner-capa.png"
+        alt="Banner: Advogada Empresarial — Samantha Ferreira — OAB/PE 66010"
+        loading="eager"
+      />
+    </figure>
+
+    <!-- Botão opcional embaixo (fica lindo e chama pro contato). Se não quiser, apaga esse bloco. -->
+    <div class="capa-destaque__acoes">
+      <a class="botao botao--destaque botao--grande" href="contato.html">Falar agora</a>
+      <a class="botao" data-whats data-mensagem="Olá, Dra. Samantha! Vi seu banner no site e gostaria de falar sobre uma demanda empresarial.">
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <main>
+    <!-- HERO: igual a pegada da print (foto grande à esquerda, texto à direita) -->
+    <section class="hero" aria-label="Apresentação">
+      <div class="miolo hero__miolo">
+        <div class="hero__foto">
+          <!-- inserir foto principal da advogada: assets/img/hero-advogada.png -->
+          <img src="assets/img/hero-advogada.png" alt="Foto profissional da advogada" />
+        </div>
+
+        <div class="hero__conteudo">
+          <p class="hero__rotulo">Advogada Empresarial</p>
+
+          <h1 class="hero__titulo">
+            Samantha Ferreira <span class="hero__oab">| OAB/PE 66010</span>
+          </h1>
+
+          <p class="hero__texto">
+            Atuação em <strong>Direito Empresarial</strong>, oferecendo suporte jurídico estratégico em
+            <em>compliance</em>, área trabalhista, contratos, proteção de dados, marcas e gestão,
+            com foco em segurança e crescimento empresarial.
+          </p>
+
+          <div class="hero__botoes">
+            <a class="botao botao--destaque" href="contato.html">Contato</a>
+
+            <!-- Telefone aparece do lado, como na referência -->
+            <a class="hero__telefone" data-whats data-mensagem="Olá, Dra. Samantha! Vi seu site e gostaria de falar pelo WhatsApp.">
+              <span class="hero__telefone-icone" aria-hidden="true">☎</span>
+              <span class="hero__telefone-texto">81 99970-1844</span>
+            </a>
+          </div>
+
+          <div class="hero__selos">
+            <!-- Esses “selos” deixam mais premium e passam confiança; no CSS eu vou trabalhar isso -->
+            <div class="selo">
+              <p class="selo__titulo">Atuação estratégica</p>
+              <p class="selo__texto">Decisões com respaldo jurídico e visão de negócio.</p>
+            </div>
+            <div class="selo">
+              <p class="selo__titulo">Prevenção de riscos</p>
+              <p class="selo__texto">Contratos, processos e políticas com segurança.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- BLOCO COMERCIAL (alinhamento do DOCX) -->
+<section class="sessao sessao--comercial" aria-label="Mensagem comercial">
+  <div class="miolo">
+    <div class="cartao cartao--comercial">
+      <div class="cartao__conteudo">
+        <p class="comercial__rotulo">Início</p>
+
+        <h2 class="titulo-secao comercial__titulo">
+          SEU NEGÓCIO EM CRESCIMENTO, SEM DOR DE CABEÇA.
+        </h2>
+
+        <p class="texto-secao comercial__texto">
+          Mais que Advogada Empresarial, serei uma <strong>parceira estratégica</strong> para o crescimento da sua empresa!
+        </p>
+
+        <p class="texto-secao comercial__texto">
+          Advogada, especialista em <strong>Business Law</strong>, com mais de 10 anos de experiência em
+          <strong>Gestão Empresarial</strong> e <strong>Liderança</strong>, te ajudo a gerenciar riscos
+          (Societários, Trabalhistas, Contratuais e de Privacidade), mantendo seu time alinhado às estratégias,
+          sua gestão mais eficiente e seu crescimento planejado.
+        </p>
+
+        <p class="comercial__chamada">
+          <strong>Pare de apagar incêndios e comece a planejar o futuro!</strong>
+        </p>
+
+        <div class="comercial__cta">
+          <p class="comercial__cta-texto">
+            Quer saber como eu já ajudei empresas a crescer de forma segura?
+          </p>
+
+          <a class="botao botao--destaque botao--grande"
+             data-whats
+             data-mensagem="Olá, Dra. Samantha! Quero entender como posso blindar meu negócio e crescer com segurança. Podemos conversar?">
+            Quero blindar meu negócio
+          </a>
+
+          <a class="botao"
+             data-whats
+             data-mensagem="Olá, Dra. Samantha! Quero falar sobre meu próximo passo na empresa e como organizar o jurídico.">
+            Fale direto comigo
+          </a>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+    <!-- Texto institucional (na vibe do que aparece nas prints, com justificado no CSS) -->
+    <section class="sessao sessao--institucional">
+      <div class="miolo">
+        <h2 class="titulo-secao">Atuação em Direito Empresarial</h2>
+        <p class="texto-secao">
+          Atuação marcada pela entrega de soluções jurídicas e estratégicas que fortalecem a governança corporativa e reduzem
+          riscos empresariais, promovendo segurança e eficiência nas operações.
+        </p>
+        <p class="texto-secao">
+          Destaque, ainda, pela capacitação de lideranças e equipes, impulsionando a performance organizacional e consolidando
+          uma cultura de gestão orientada a resultados.
+        </p>
+
+        <div class="grade-beneficios">
+          <article class="cartao cartao--beneficio">
+            <h3 class="cartao__titulo">Clareza para decidir</h3>
+            <p class="cartao__texto">
+              Pareceres e orientações objetivas, com linguagem direta, sem juridiquês desnecessário.
+            </p>
+          </article>
+
+          <article class="cartao cartao--beneficio">
+            <h3 class="cartao__titulo">Rotina mais protegida</h3>
+            <p class="cartao__texto">
+              Processos e documentos ajustados para reduzir vulnerabilidades e evitar passivos.
+            </p>
+          </article>
+
+          <article class="cartao cartao--beneficio">
+            <h3 class="cartao__titulo">Estratégia e conformidade</h3>
+            <p class="cartao__texto">
+              Compliance, contratos e dados tratados como parte do crescimento do negócio.
+            </p>
+          </article>
+        </div>
+
+        <div class="faixa-cta">
+          <div class="faixa-cta__texto">
+            <h3 class="faixa-cta__titulo">Quer organizar o jurídico da sua empresa com mais segurança?</h3>
+            <p class="faixa-cta__descricao">Me conte o cenário e eu te digo o caminho mais eficiente.</p>
+          </div>
+          <div class="faixa-cta__acoes">
+            <a class="botao" href="servicos.html">Ver serviços</a>
+            <a class="botao botao--destaque" href="cases.html">Ver cases</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Um “recorte” de serviços na home (as páginas completas ficam em servicos.html) -->
+    <section class="sessao sessao--vitrine">
+      <div class="miolo">
+        <h2 class="titulo-secao">Serviços em destaque</h2>
+
+        <div class="grade-servicos">
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <!-- inserir imagem: assets/img/servico-contratos.jpg -->
+              <img src="assets/img/servico-contratos.jpg" alt="" />
+            </div>
+            <h3 class="cartao__titulo">Contratos Empresariais</h3>
+            <p class="cartao__texto">
+              Estruturação, revisão e negociação de contratos corporativos, com foco em proteção e alinhamento ao objetivo do negócio.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <!-- inserir imagem: assets/img/servico-compliance.jpg -->
+              <img src="assets/img/servico-compliance.jpg" alt="" />
+            </div>
+            <h3 class="cartao__titulo">Compliance Trabalhista</h3>
+            <p class="cartao__texto">
+              Implementação e monitoramento de políticas e rotinas trabalhistas para reduzir passivos e dar previsibilidade à gestão.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <!-- inserir imagem: assets/img/servico-lgpd.jpg -->
+              <img src="assets/img/servico-lgpd.jpg" alt="" />
+            </div>
+            <h3 class="cartao__titulo">Proteção de Dados (LGPD)</h3>
+            <p class="cartao__texto">
+              Diagnóstico e adequação prática, com medidas proporcionais ao porte e ao risco real da operação.
+            </p>
+          </article>
+        </div>
+
+        <div class="acao-centralizada">
+          <a class="botao" href="servicos.html">Ver todos os serviços</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape__miolo">
+      <div class="rodape__linha">
+        <div class="rodape__assinatura">
+          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+        </div>
+
+       <div class="rodape__redes">
+  <!-- Instagram -->
+  <a class="rodape__icone"
+     href="https://www.instagram.com/drasamantha.ferreira/"
+     target="_blank" rel="noopener"
+     aria-label="Instagram">
+    <img src="assets/img/icone-instagram.png" alt="" />
+  </a>
+
+  <!-- LinkedIn -->
+  <a class="rodape__icone"
+     href="https://www.linkedin.com/in/samantha-ferreira-b14b681ab/"
+     target="_blank" rel="noopener"
+     aria-label="LinkedIn">
+    <img src="assets/img/icone-linkedin.png" alt="" />
+  </a>
+
+  <!-- WhatsApp (link direto - mais garantido) -->
+  <a class="rodape__icone"
+     href="https://wa.me/5581999701844?text=Ol%C3%A1%2C%20Dra.%20Samantha!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20uma%20demanda%20empresarial."
+     target="_blank" rel="noopener"
+     aria-label="WhatsApp">
+    <img src="assets/img/icone-whats.png" alt="" />
+  </a>
+</div>
+
+  </footer>
+
+  <!-- Botão flutuante: você pediu data-whats-flutuante -->
+  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre uma demanda empresarial.">
+    <span aria-hidden="true"></span>
+    <span class="botao-whats-fixo__texto">WhatsApp</span>
+  </a>
+</div>
+
+<!-- =========================
+     MODAL: PRÉ-ATENDIMENTO (CHAT)
+     Autor: Pedro Max
+     ========================= -->
+<div class="chatbot" id="chatbot" aria-hidden="true">
+  <div class="chatbot__overlay" data-chatbot-fechar></div>
+
+  <section class="chatbot__janela" role="dialog" aria-modal="true" aria-labelledby="chatbotTitulo">
+    <header class="chatbot__topo">
+      <div class="chatbot__topo-info">
+        <p class="chatbot__topo-titulo" id="chatbotTitulo">Pré-atendimento no WhatsApp</p>
+        <p class="chatbot__topo-sub">Responda rapidinho pra eu montar sua mensagem.</p>
+      </div>
+
+      <button class="chatbot__fechar" type="button" aria-label="Fechar" data-chatbot-fechar>✕</button>
+    </header>
+
+    <div class="chatbot__corpo" id="chatbotCorpo" aria-live="polite"></div>
+
+    <footer class="chatbot__rodape">
+      <div class="chatbot__campo">
+        <input class="chatbot__input" id="chatbotInput" type="text" placeholder="Digite aqui..." autocomplete="off" />
+        <button class="chatbot__enviar" id="chatbotEnviar" type="button">Enviar</button>
+      </div>
+
+      <div class="chatbot__acoes">
+        <button class="chatbot__acao" type="button" id="chatbotVoltar">Voltar</button>
+        <button class="chatbot__acao chatbot__acao--sec" type="button" id="chatbotReiniciar">Reiniciar</button>
+      </div>
+    </footer>
+  </section>
+</div>
+
+
+  <script src="assets/js/principal.js"></script>
+</body>
+</html>

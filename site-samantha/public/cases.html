@@ -1,0 +1,129 @@
+<!--
+  Projeto: Site institucional - Advocacia Empresarial
+  Autor: Pedro Max
+  Arquivo: cases.html
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cases e Resultados | Samantha Ferreira</title>
+  <meta name="description" content="Cases e resultados em advocacia empresarial: contratos, compliance, marcas, LGPD e gestão de riscos." />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/estilos.css" />
+</head>
+
+<body>
+  <header class="cabecalho">
+    <div class="miolo cabecalho__miolo">
+      <a class="marca" href="index.html" aria-label="Ir para a página inicial">
+        <img class="marca__logo" src="assets/img/logo-samantha.png" alt="Samantha Ferreira" />
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a class="menu-principal__link" href="index.html">Início</a>
+        <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
+        <a class="menu-principal__link" href="servicos.html">Serviços</a>
+        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link" href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Quero conhecer seus cases e conversar sobre minha demanda.">
+          Contato
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="banner-interno banner-interno--cases" aria-label="Cases e resultados">
+      <div class="miolo banner-interno__miolo">
+        <div class="banner-interno__texto">
+          <h1 class="titulo-pagina">Resultados e cases</h1>
+          <p class="texto-secao">
+            Atuação marcada pela entrega de soluções jurídicas e estratégicas que fortalecem a governança corporativa e reduzem riscos empresariais,
+            promovendo segurança e eficiência nas operações.
+          </p>
+          <p class="texto-secao">
+            Destaque, ainda, pela capacitação de lideranças e equipes, impulsionando a performance organizacional e consolidando uma cultura de gestão orientada a resultados.
+          </p>
+        </div>
+
+        <div class="banner-interno__foto">
+          <!-- inserir imagem do banner: assets/img/cases-banner.jpg -->
+          <img src="assets/img/cases-banner.jpg" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="sessao">
+      <div class="miolo">
+        <h2 class="titulo-secao">Filtrar cases</h2>
+
+        <!-- Filtro simples (select + JS), do jeito que você pediu -->
+        <div class="barra-filtros" role="region" aria-label="Filtros de cases">
+          <label class="campo campo--curto">
+            <span class="campo__rotulo">Segmento</span>
+            <select id="filtro-segmento" class="campo__controle">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <label class="campo campo--curto">
+            <span class="campo__rotulo">Serviço</span>
+            <select id="filtro-servico" class="campo__controle">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <label class="campo campo--curto">
+            <span class="campo__rotulo">Porte</span>
+            <select id="filtro-porte" class="campo__controle">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <button id="botao-limpar-filtros" class="botao" type="button">Limpar</button>
+        </div>
+
+        <div class="linha-separadora" aria-hidden="true"></div>
+
+        <div class="grade-cases" id="lista-cases" aria-label="Lista de cases">
+          <!--
+            A lista entra via JS (pagina-cases.js) com base no LISTA_CASES.
+            Aqui eu deixo vazio de propósito pra não duplicar conteúdo.
+          -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape__miolo">
+      <div class="rodape__linha">
+        <div class="rodape__assinatura">
+          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+        </div>
+
+        <div class="rodape__redes">
+          <a class="rodape__icone" href="#" aria-label="Instagram"><img src="assets/img/icone-instagram.png" alt="" /></a>
+          <a class="rodape__icone" href="#" aria-label="LinkedIn"><img src="assets/img/icone-linkedin.png" alt="" /></a>
+          <a class="rodape__icone" data-whats aria-label="WhatsApp"><img src="assets/img/icone-whats.png" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre um caso parecido com os que vi no site.">
+    <span aria-hidden="true">💬</span>
+    <span class="botao-whats-fixo__texto">WhatsApp</span>
+  </a>
+
+  <script src="assets/js/principal.js"></script>
+  <script src="assets/js/dados-cases.js"></script>
+  <script src="assets/js/pagina-cases.js"></script>
+</body>
+</html>
