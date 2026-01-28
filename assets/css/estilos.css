@@ -2805,10 +2805,7 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
    ========================= */
 @media (max-width: 720px){
 
-  /* logo reduz automaticamente */
-  .marca__logo{
-    width: clamp(78px, 18vw, 112px) !important;
-  }
+
 
   /* menu SEM QUEBRAR e centralizado */
   .menu-principal{
