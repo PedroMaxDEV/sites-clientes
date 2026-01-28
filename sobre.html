@@ -23,54 +23,89 @@
 
       <nav class="menu-principal" aria-label="Menu principal">
         <a class="menu-principal__link" href="index.html">Início</a>
-        <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
+        <a class="menu-principal__link menu-principal__link--ativo" href="sobre.html">Quem sou eu?</a>
         <a class="menu-principal__link" href="servicos.html">Serviços</a>
         <a class="menu-principal__link" href="cases.html">Cases</a>
         <a class="menu-principal__link" href="contato.html">Contato</a>
       </nav>
 
-      <!--<div class="cabecalho__acoes">
-          <a class="botao botao--destaque"
-             data-whats
-             data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
-            Contato
-          </a>
-        </div>-->
+      <!-- Se quiser reativar o botão de contato no topo, é só descomentar -->
+      <!--
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque"
+           data-whats
+           data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
+          Contato
+        </a>
+      </div>
+      -->
     </div>
   </header>
 
   <main>
-    <!-- Banner interno (pegada igual às prints: fundo claro e foto do lado) -->
-    <section class="banner-interno banner-interno--sobre" aria-label="Quem sou eu">
-      <div class="miolo banner-interno__miolo">
-        <div class="banner-interno__texto">
-          <h1 class="titulo-pagina">Quem sou eu?</h1>
 
-          <!--
-            IMPORTANTE:
-            Aqui você vai colar o texto do DOCX (parte "Quem sou eu") assim que anexar.
-            Eu deixei um texto base coerente só pra não ficar vazio.
-          -->
-          <p class="texto-secao">
-            Sou advogada com atuação voltada ao <strong>Direito Empresarial</strong>, dedicada a oferecer soluções estratégicas e personalizadas para empresas.
-            Trabalho com Compliance e Defesa Trabalhista, Acordos Societários, Contratos Empresariais, Proteção de Dados, Registro de Marcas e Gestão de Riscos,
-            além de ministrar Mentorias e Treinamentos em Gestão e Liderança.
-          </p>
+    <!-- SOBRE (apresentação premium, sem moldura na foto) -->
+    <section class="sobre-hero" aria-label="Quem é Samantha Ferreira">
+      <div class="miolo sobre-hero__miolo">
+        <div class="sobre-hero__grid">
 
-          <p class="frase-destaque">
-            Meu propósito é fortalecer a segurança jurídica, o crescimento e a sustentabilidade dos negócios,
-            unindo técnica, ética e visão empresarial.
-          </p>
-        </div>
+          <!-- Foto PNG sem fundo (sem moldura) -->
+          <figure class="sobre-hero__foto">
+            <!-- ajuste o nome se necessário -->
+            <img src="assets/img/samantha-recorte.png" alt="Samantha Ferreira" />
+          </figure>
 
-        <div class="banner-interno__foto">
-          <!-- inserir foto da advogada: assets/img/sobre-advogada.jpg -->
-          <img src="assets/img/sobre-advogada.png" alt="Foto da advogada" />
+          <!-- Texto -->
+          <div class="sobre-hero__conteudo">
+            <p class="sobre-hero__rotulo">QUEM SOU EU</p>
+
+            <h1 class="titulo-pagina sobre-hero__titulo">Quem é Samantha Ferreira?</h1>
+
+            <p class="texto-secao sobre-hero__texto">
+              <strong>Advogada Empresarial</strong>, especialista em <strong>Business Law</strong> e <strong>Gestão Empresarial</strong>, que atua na linha de frente da segurança e da inovação empresarial.
+            </p>
+
+            <p class="texto-secao sobre-hero__texto">
+              Não ofereço apenas serviços, eu entrego <strong>soluções jurídicas customizadas</strong> que mitigam riscos em áreas importantes, como
+              <strong>Compliance Trabalhista</strong>, <strong>Privacidade e Proteção de Dados</strong>, <strong>Contratos</strong>, <strong>Relações entre Sócios</strong>.
+            </p>
+
+            <p class="texto-secao sobre-hero__texto">
+              Com <strong>mais de 10 anos de experiência</strong>, sou a ponte entre a legalidade e a alta performance, dedicando-me também a formar líderes através de
+              <strong>Mentorias</strong> e <strong>Treinamentos</strong>. Já são centenas de empresas, líderes e empresários impactados.
+            </p>
+
+            <blockquote class="sobre-hero__citacao">
+              “Minha missão é garantir que seu negócio cresça com bases sólidas, unindo dedicação técnica com uma visão de futuro inspiradora.”
+            </blockquote>
+
+            <div class="sobre-hero__botoes">
+              <a class="botao botao--destaque"
+                 data-whats
+                 data-mensagem="Olá, Dra. Samantha! Vim pela página 'Quem sou eu' e gostaria de uma orientação inicial.">
+                Falar agora
+              </a>
+
+              <a class="botao" href="servicos.html">
+                Ver serviços
+              </a>
+            </div>
+
+            <div class="sobre-hero__chips" aria-label="Áreas em destaque">
+              <span class="chip">Compliance Trabalhista</span>
+              <span class="chip">Contratos</span>
+              <span class="chip">LGPD</span>
+              <span class="chip">Societário</span>
+              <span class="chip">Mentorias & Treinamentos</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <section class="sessao">
+    <!-- CONTEÚDO DO SOBRE -->
+    <section class="sessao sessao--sobre-conteudo">
       <div class="miolo">
         <h2 class="titulo-secao">Informações profissionais</h2>
 
@@ -95,19 +130,50 @@
           </div>
         </div>
 
+        <div class="linha-separadora"></div>
+
+        <h2 class="titulo-secao">Como eu posso ajudar</h2>
+
+        <div class="grade-ajuda">
+          <div class="cartao cartao--ajuda">
+            <h3 class="cartao__titulo">Previsibilidade</h3>
+            <p class="cartao__texto">
+              Mais clareza para decidir e organizar o dia a dia com respaldo jurídico.
+            </p>
+          </div>
+
+          <div class="cartao cartao--ajuda">
+            <h3 class="cartao__titulo">Proteção</h3>
+            <p class="cartao__texto">
+              Contratos, dados e relações empresariais estruturadas para reduzir riscos e passivos.
+            </p>
+          </div>
+
+          <div class="cartao cartao--ajuda">
+            <h3 class="cartao__titulo">Crescimento</h3>
+            <p class="cartao__texto">
+              Base sólida para escalar com segurança, governança e rotinas consistentes.
+            </p>
+          </div>
+        </div>
+
         <div class="faixa-cta">
           <div class="faixa-cta__texto">
             <h3 class="faixa-cta__titulo">Quer uma orientação inicial?</h3>
-            <p class="faixa-cta__descricao">Me diga o que está acontecendo e eu te explico o próximo passo.</p>
+            <p class="faixa-cta__descricao">Me diga o que está acontecendo e eu te indico o próximo passo.</p>
           </div>
           <div class="faixa-cta__acoes">
-            <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Vim pela página 'Quem sou eu' e gostaria de uma orientação inicial.">
+            <a class="botao botao--destaque"
+               data-whats
+               data-mensagem="Olá, Dra. Samantha! Vim pela página 'Quem sou eu' e gostaria de uma orientação inicial.">
               Falar no WhatsApp
             </a>
           </div>
         </div>
+
       </div>
     </section>
+
   </main>
 
   <footer class="rodape">
