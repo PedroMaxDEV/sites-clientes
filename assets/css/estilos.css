@@ -2594,3 +2594,209 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
   background-position: center;
   background-size: 20px 20px;
 }
+
+/* =========================
+   PATCH MOBILE - CABEÇALHO (não quebrar / ficar igual ao PC)
+   Cole NO FINAL do estilos.css
+   ========================= */
+
+@media (max-width: 720px){
+
+  /* impede o header de virar “coluna” e bagunçar */
+  .cabecalho__miolo{
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* garante que a marca não “empurre” tudo */
+  .marca{
+    flex: 0 0 auto !important;
+    padding: 8px 0 !important;
+  }
+
+  /* menu sempre em UMA linha e com scroll horizontal discreto */
+  .menu-principal{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;               /* isso é o segredo p/ não quebrar */
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    justify-content: center !important;
+    gap: 18px !important;
+
+    padding: 0 !important;
+    margin: 0 8px !important;
+
+    scrollbar-width: none;                 /* Firefox: some a barra */
+    -ms-overflow-style: none;              /* IE/Edge antigo */
+  }
+
+  .menu-principal::-webkit-scrollbar{
+    display: none;                         /* Chrome/Safari: some a barra */
+  }
+
+  .menu-principal__link{
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    padding: 10px 8px !important;
+    line-height: 1 !important;
+  }
+
+  /* botão “Contato” não pode esmagar o menu */
+  .cabecalho__acoes{
+    flex: 0 0 auto !important;
+  }
+
+  .cabecalho__acoes .botao{
+    width: auto !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* =========================
+   PATCH MOBILE - FRAMES (capa/vídeo) não esticar
+   ========================= */
+
+@media (max-width: 720px){
+
+  /* Frame do banner principal */
+  .capa-destaque__frame{
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 62vh !important;          /* impede ficar gigante */
+    overflow: hidden !important;
+    border-radius: var(--raio-grande) !important;
+  }
+
+  /* Imagem do banner: nunca corta, só reduz mantendo proporção */
+  .capa-destaque__img{
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Se seu vídeo está dentro de algum “frame”/foto do hero */
+  .hero__foto{
+    height: auto !important;
+    max-height: 70vh !important;          /* limita o estrago */
+    overflow: hidden !important;
+  }
+
+  /* Vídeo/imagem dentro do hero: NÃO CORTAR */
+  .hero__foto video,
+  .hero__foto iframe,
+  .hero__foto img{
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    background: rgba(0,0,0,.12);
+  }
+}
+
+/* =========================================================
+   PATCH MOBILE (<= 720px)
+   - Cabeçalho em 2 linhas: logo em cima / menu embaixo
+   - Menu centralizado, 1 linha, sem quebrar
+   - Frame do vídeo sem ficar gigante (sem “vazio” enorme)
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+
+@media (max-width: 720px){
+
+  /* ---------- HEADER EM 2 LINHAS ---------- */
+  .cabecalho__miolo{
+    display: grid !important;
+    grid-template-columns: 1fr auto !important; /* logo | botão */
+    grid-template-areas:
+      "marca acoes"
+      "menu  menu" !important;
+    gap: 10px !important;
+    align-items: center !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .marca{ grid-area: marca !important; }
+  .menu-principal{ grid-area: menu !important; }
+  .cabecalho__acoes{ grid-area: acoes !important; }
+
+  /* logo um pouco maior e bem alinhada */
+  .marca__logo{
+    width: 140px !important;
+    max-width: 44vw !important;
+    height: auto !important;
+  }
+
+  /* botão contato não pode esmagar o menu */
+  .cabecalho__acoes .botao{
+    width: auto !important;
+    padding: 10px 14px !important;
+    white-space: nowrap !important;
+  }
+
+  /* ---------- MENU BONITO E USÁVEL ---------- */
+  .menu-principal{
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+
+    gap: 18px !important;
+    padding: 6px 2px 2px !important;
+
+    overflow-x: auto !important;   /* se faltar espaço, desliza */
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    scrollbar-width: none !important; /* some a barra */
+    -ms-overflow-style: none !important;
+  }
+
+  .menu-principal::-webkit-scrollbar{ display:none !important; }
+
+  .menu-principal__link{
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    white-space: nowrap !important;
+    padding: 10px 8px !important;
+    line-height: 1 !important;
+    font-size: 15px !important;
+  }
+
+  /* deixa o ativo mais “cara de PC” */
+  .menu-principal__link--ativo{
+    border-bottom-width: 2px !important;
+  }
+
+
+  /* ---------- FRAME/VÍDEO (sem esticar e sem vazio gigante) ---------- */
+
+
+  /* Vídeo sem cortar (contain) */
+  .hero__foto video{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;  /* NÃO CORTA */
+    display: block !important;
+    background: rgba(0,0,0,.18) !important; /* disfarça as “barras” */
+  }
+
+  /* Se você tiver um frame separado do banner */
+  .capa-destaque__frame{
+    width: 100% !important;
+    max-height: 62vh !important;
+    height: auto !important;
+    overflow: hidden !important;
+  }
+}
+
