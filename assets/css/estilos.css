@@ -2801,45 +2801,51 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
 }
 
 /* =========================
-   MOBILE: corrigir corte do menu no cabeçalho
+   MOBILE: MENU 100% EM 1 LINHA (AUTO-ADAPT)
    ========================= */
 @media (max-width: 720px){
 
-  /* dá respiro nas laterais e impede encostar */
-  .cabecalho__miolo{
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+  /* logo reduz automaticamente */
+  .marca__logo{
+    width: clamp(78px, 18vw, 112px) !important;
   }
 
-  /* garante que o header tenha altura suficiente (evita cortar letras/underline) */
-  .cabecalho{
-    padding-top: 8px !important;
-    padding-bottom: 10px !important;
-  }
-
-  /* evita o primeiro/último link ficar colado e “sumir” metade */
+  /* menu SEM QUEBRAR e centralizado */
   .menu-principal{
-    padding-left: 6px !important;
-    padding-right: 6px !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;     /* 1 linha sempre */
+    justify-content: center !important;
+    align-items: center !important;
+
+    gap: clamp(6px, 1.4vw, 14px) !important;
+
+    /* permite o centro encolher sem estourar */
+    min-width: 0 !important;
+    overflow: hidden !important;      /* não cria barra de rolagem */
   }
 
-  /* evita “cortar” em cima/embaixo (tipo o underline do ativo) */
+  /* links diminuem conforme a tela */
   .menu-principal__link{
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    font-size: clamp(11px, 2.8vw, 15px) !important;
+    padding: clamp(6px, 1.2vw, 10px) clamp(4px, 1.0vw, 8px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* botão Contato “encolhe” junto */
+  .cabecalho__acoes .botao{
+    padding: clamp(7px, 1.4vw, 10px) clamp(10px, 2.2vw, 14px) !important;
+    font-size: clamp(11px, 2.7vw, 14px) !important;
+    white-space: nowrap !important;
   }
 }
 
-/* celular bem pequeno: mais respiro ainda */
-@media (max-width: 420px){
-  .cabecalho__miolo{
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
+/* Se ainda faltar 1 ou 2px em celulares bem pequenos, aplica um micro-scale no menu */
+@media (max-width: 380px){
   .menu-principal{
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    transform: scale(0.94) !important;
+    transform-origin: center !important;
   }
 }
 
