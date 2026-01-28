@@ -2846,3 +2846,8 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
   }
 }
 
+@media (max-width: 720px){
+  .cabecalho{
+    background: color-mix(in srgb, var(--cor-primaria) 92%, transparent) !important;
+  }
+}
