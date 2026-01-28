@@ -3727,3 +3727,132 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
   }
 }
 html{ outline: 8px solid #ff00ff !important; }
+
+/* =========================================================
+   HERO — FOTO no tamanho original (DESKTOP)
+   - a div .hero__foto vira "moldura" que abraça o tamanho real
+   - o <img> não é esticado
+   Cole no FINAL do estilos.css
+   ========================================================= */
+
+/* Desktop / PC */
+@media (min-width: 721px){
+
+  /* a coluna da foto não precisa ocupar tudo */
+  .hero__miolo{
+    align-items: center;
+  }
+
+  /* moldura vira "fit-content" pra respeitar tamanho real */
+  .hero__foto{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    max-width: 100%;         /* segurança */
+    overflow: visible;       /* não corta */
+    background: transparent; /* sem “placa” atrás */
+    border: 0;               /* se quiser sem borda */
+    box-shadow: none;        /* se quiser sem sombra */
+  }
+
+  /* imagem no tamanho original */
+  .hero__foto img{
+    width: auto !important;      /* ✅ não estica */
+    max-width: 100%;             /* ✅ não estoura a coluna */
+    height: auto !important;
+    object-fit: unset !important;
+
+    /* opcional: mantém a estética premium sem "moldura" */
+    filter: drop-shadow(0 22px 60px rgba(0,0,0,.35));
+    display: block;
+  }
+}
+/* =========================================================
+   HERO — FOTO QUADRADA GRANDE (PC) + bordas redondas
+   Cole no FINAL do estilos.css
+   ========================================================= */
+
+@media (min-width: 721px){
+
+  /* deixa o quadrado maior e responsivo no desktop */
+  .hero__foto{
+    width: clamp(480px, 38vw, 720px); /* ✅ maior no PC */
+    aspect-ratio: 1 / 1;              /* ✅ quadrado */
+    height: auto;
+
+    border-radius: 26px;
+    overflow: hidden;
+    display: block;
+
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    box-shadow: 0 22px 60px rgba(0,0,0,.28);
+  }
+
+  .hero__foto img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block;
+  }
+}
+
+
+/* =========================================================
+   SOBRE-CAPA (PC) — texto mais largo (menos quebras)
+   Cole no FINAL do estilos.css
+   ========================================================= */
+@media (min-width: 721px){
+
+  /* o “card” do texto fica mais largo */
+  .sobre-capa__conteudo{
+    width: clamp(720px, 54vw, 980px) !important;
+    max-width: none !important; /* mata o limite antigo */
+  }
+
+  /* parágrafos mais “horizontais” */
+  .sobre-capa__texto,
+  .sobre-capa__frase{
+    max-width: 82ch !important;
+  }
+
+  /* título quebra menos */
+  .sobre-capa__titulo{
+    max-width: 26ch !important;
+  }
+}
+
+/* =========================================================
+   SOBRE-CAPA (PC) — centralizar e NÃO cortar quando aumentar
+   Cole no FINAL do estilos.css
+   ========================================================= */
+@media (min-width: 721px){
+
+  /* garante um layout em 2 colunas com espaço correto */
+  .sobre-capa__miolo{
+    display: grid !important;
+    grid-template-columns: clamp(420px, 42vw, 720px) minmax(520px, 1fr) !important;
+    gap: clamp(24px, 4vw, 72px) !important;
+    align-items: center !important;
+  }
+
+  /* card do texto: ocupa a coluna inteira e fica centralizado nela */
+  .sobre-capa__conteudo{
+    width: 100% !important;          /* não estoura */
+    max-width: 980px !important;     /* limite “premium” */
+    justify-self: center !important; /* ✅ centraliza na coluna */
+    margin-inline: auto !important;
+    padding-right: clamp(16px, 2vw, 28px) !important; /* respiro pra não cortar */
+    box-sizing: border-box;
+  }
+
+  /* evita o título encostar na borda */
+  .sobre-capa__titulo{
+    max-width: 100% !important;
+    padding-right: clamp(10px, 1.5vw, 24px) !important;
+  }
+}
+
