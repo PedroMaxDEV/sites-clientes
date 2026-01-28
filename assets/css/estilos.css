@@ -2800,3 +2800,46 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
   }
 }
 
+/* =========================
+   MOBILE: corrigir corte do menu no cabeçalho
+   ========================= */
+@media (max-width: 720px){
+
+  /* dá respiro nas laterais e impede encostar */
+  .cabecalho__miolo{
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* garante que o header tenha altura suficiente (evita cortar letras/underline) */
+  .cabecalho{
+    padding-top: 8px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* evita o primeiro/último link ficar colado e “sumir” metade */
+  .menu-principal{
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  /* evita “cortar” em cima/embaixo (tipo o underline do ativo) */
+  .menu-principal__link{
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    line-height: 1.15 !important;
+  }
+}
+
+/* celular bem pequeno: mais respiro ainda */
+@media (max-width: 420px){
+  .cabecalho__miolo{
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .menu-principal{
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
