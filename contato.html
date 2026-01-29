@@ -142,27 +142,83 @@
     </section>
   </main>
 
-  <footer class="rodape">
-    <div class="miolo rodape__miolo">
-      <div class="rodape__linha">
-        <div class="rodape__assinatura">
-          <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
-          <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
-        </div>
+  <!-- RODAPÉ -->
+    <footer class="rodape">
+      <div class="miolo rodape__miolo">
+        <div class="rodape__linha">
+          <div class="rodape__assinatura">
+            <p class="rodape__nome">Samantha Ferreira <span class="rodape__oab">| OAB/PE 66010</span></p>
+            <p class="rodape__direitos">© <span id="ano-atual">2026</span> — Todos os direitos reservados.</p>
+          </div>
 
-        <div class="rodape__redes">
-          <a class="rodape__icone" href="#" aria-label="Instagram"><img src="assets/img/icone-instagram.png" alt="" /></a>
-          <a class="rodape__icone" href="#" aria-label="LinkedIn"><img src="assets/img/icone-linkedin.png" alt="" /></a>
-          <a class="rodape__icone" data-whats aria-label="WhatsApp"><img src="assets/img/icone-whats.png" alt="" /></a>
+          <div class="rodape__redes">
+            <a class="rodape__icone"
+               href="https://www.instagram.com/drasamantha.ferreira/"
+               target="_blank" rel="noopener"
+               aria-label="Instagram">
+              <img src="assets/img/icone-instagram.png" alt="" />
+            </a>
+
+            <a class="rodape__icone"
+               href="https://www.linkedin.com/in/samantha-ferreira-b14b681ab/"
+               target="_blank" rel="noopener"
+               aria-label="LinkedIn">
+              <img src="assets/img/icone-linkedin.png" alt="" />
+            </a>
+
+            <a class="rodape__icone"
+               href="https://wa.me/5581999701844?text=Ol%C3%A1%2C%20Dra.%20Samantha!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20uma%20demanda%20empresarial."
+               target="_blank" rel="noopener"
+               aria-label="WhatsApp">
+              <img src="assets/img/icone-whats.png" alt="" />
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre contato.">
-    <span aria-hidden="true">💬</span>
-    <span class="botao-whats-fixo__texto">WhatsApp</span>
-  </a>
+   <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre uma demanda empresarial.">
+  <span class="botao-whats-fixo__icone" aria-hidden="true"></span>
+
+</a>
+
+
+  
+  
+    <!-- =========================
+     MODAL: PRÉ-ATENDIMENTO (CHAT)
+     Autor: Pedro Max
+     ========================= -->
+<div class="chatbot" id="chatbot" aria-hidden="true">
+  <div class="chatbot__overlay" data-chatbot-fechar></div>
+
+  <section class="chatbot__janela" role="dialog" aria-modal="true" aria-labelledby="chatbotTitulo">
+    <header class="chatbot__topo">
+      <div class="chatbot__topo-info">
+        <p class="chatbot__topo-titulo" id="chatbotTitulo">Pré-atendimento no WhatsApp</p>
+        <p class="chatbot__topo-sub">Responda rapidinho pra eu montar sua mensagem.</p>
+      </div>
+
+      <button class="chatbot__fechar" type="button" aria-label="Fechar" data-chatbot-fechar>✕</button>
+    </header>
+
+    <div class="chatbot__corpo" id="chatbotCorpo" aria-live="polite"></div>
+
+    <footer class="chatbot__rodape">
+      <div class="chatbot__campo">
+        <input class="chatbot__input" id="chatbotInput" type="text" placeholder="Digite aqui..." autocomplete="off" />
+        <button class="chatbot__enviar" id="chatbotEnviar" type="button">Enviar</button>
+      </div>
+
+      <div class="chatbot__acoes">
+        <button class="chatbot__acao" type="button" id="chatbotVoltar">Voltar</button>
+        <button class="chatbot__acao chatbot__acao--sec" type="button" id="chatbotReiniciar">Reiniciar</button>
+      </div>
+    </footer>
+  </section>
+</div>
+
+  </div>
 
   <script src="assets/js/principal.js"></script>
 </body>

@@ -692,7 +692,7 @@ background: color-mix(in srgb, var(--cor-primaria) 92%, transparent);
 .banner-interno .frase-destaque{
   background: rgba(0,0,0,.06);
   color: rgba(0,0,0,.76);
-  border-left-color: rgba(209,165,122,.95);
+  border-left-color: rgba(0, 0, 0, 0.95);
 }
 
 .banner-interno__foto--faixa{
@@ -4600,3 +4600,28 @@ html{ outline: 8px solid #ff00ff !important; }
   box-shadow: 0 18px 60px rgba(0,0,0,0.35);
 }
 
+
+/* ===== Detalhe do case: bege premium só no banner ===== */
+.banner-interno--detalhe-case{
+  background: var(--cor-areia); /* #face8b */
+  color: #061738; /* texto escuro pra contrastar */
+}
+
+.banner-interno--detalhe-case .caminho,
+.banner-interno--detalhe-case .caminho a,
+.banner-interno--detalhe-case .titulo-pagina,
+.banner-interno--detalhe-case .texto-secao{
+  color: #061738;
+}
+
+/* pills e métrica com “cara premium” em cima do bege */
+.banner-interno--detalhe-case .case-pill{
+  border-color: rgba(6, 23, 56, .25);
+  color: #061738;
+  background: rgba(255, 255, 255, .25);
+}
+
+.banner-interno--detalhe-case .badge-metrica{
+  background: #061738;
+  color: #face8b;
+}
