@@ -8,9 +8,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contato | Samantha Ferreira</title>
+  <title>Contato</title>
   <meta name="description" content="Entre em contato por WhatsApp ou envie suas informações para abrir atendimento." />
-  <link rel="icon" href="assets/img/favicon.png" />
+   <link rel="icon" href="assets/img/logo-samantha.png" />
   <link rel="stylesheet" href="assets/css/estilos.css" />
 </head>
 
@@ -39,108 +39,118 @@
   </header>
 
   <main>
-    <section class="banner-interno banner-interno--contato" aria-label="Contato">
-      <div class="miolo banner-interno__miolo">
-        <div class="banner-interno__texto">
-          <h1 class="titulo-pagina">Contato</h1>
-          <p class="texto-secao">
-            Para esclarecimentos, informações ou solicitações, prefiro receber os dados organizados.
-            Assim eu consigo responder com mais agilidade e precisão.
+  <!-- HERO / BANNER -->
+ 
+
+
+ 
+  <section class="banner-interno banner-interno--contato" aria-label="Contato">
+    <div class="miolo banner-interno__miolo contato-hero">
+      <div class="banner-interno__texto">
+        <p class="caminho">
+          <a href="index.html">Início</a> <span aria-hidden="true">›</span> <span>Contato</span>
+        </p>
+
+        <h1 class="titulo-pagina">Comece agora o seu projeto!</h1>
+
+        <p class="texto-secao">
+          Para eu te orientar com precisão, prefiro iniciar com um pré-atendimento rápido.
+          Em poucos passos, eu já entendo o cenário e a gente segue para a melhor estratégia.
+        </p>
+
+        <div class="contato-hero__acoes">
+          <!-- Abre o seu chatbot/modal -->
+          <button class="botao botao--destaque botao--grande" type="button" data-chatbot-abrir>
+            Iniciar pré-atendimento
+          </button>
+
+          <!-- WhatsApp direto (sem robô) -->
+          <a class="botao botao--grande"
+             data-whats
+             data-mensagem="Olá, Dra. Samantha! Vim pelo site e quero começar um projeto. Podemos falar?">
+            WhatsApp direto
+          </a>
+        </div>
+
+        <div class="contato-hero__info">
+          <div class="cartao cartao--info contato-info">
+            <p class="cartao__texto"><strong>WhatsApp:</strong> 81 99970-1844</p>
+            <p class="cartao__texto"><strong>OAB/PE:</strong> 66010</p>
+            <p class="cartao__texto"><strong>E-mail:</strong> drasamantha.ferreira</p>
+          </div>
+
+          <div class="contato-nota">
+            <p class="texto-secao">
+              <strong>Atendimento com foco empresarial:</strong> contratos, governança, compliance, societário e LGPD.
+              Se você já souber o tema, pode ir direto no WhatsApp — o robô só organiza as informações.
+            </p>
+          </div>
+        </div>
+      </div>
+
+       <!-- DIREITA (foto sem fundo) -->
+<div class="banner-interno__foto contato-hero__midia contato-hero__midia--recorte">
+  <img class="contato-hero__recorte"
+       src="assets/img/contato/samantha-recorte.png"
+       alt="Samantha Ferreira"
+       loading="eager" />
+</div>
+    </div>
+  </section>
+
+  <!-- GALERIA DE FOTOS
+  <section class="sessao sessao--contato-galeria" aria-label="Fotos e atuação">
+    <div class="miolo">
+      <div class="contato-topo-sessao">
+        <h2 class="titulo-secao">Atuação na prática</h2>
+        <p class="texto-secao">
+          Selecionei algumas imagens de atendimentos, treinamentos e rotinas de consultoria.
+          (Você pode trocar as fotos quando quiser — só manter os caminhos.)
+        </p>
+      </div>
+
+      <div class="contato-galeria">
+         Troque os src pelas suas fotos
+        <figure class="contato-foto">
+          <img src="assets/img/contato/atuacao-01.jpg" alt="Atuação em consultoria empresarial" loading="lazy" />
+        </figure>
+        <figure class="contato-foto">
+          <img src="assets/img/contato/atuacao-02.jpg" alt="Treinamento e orientação de equipe" loading="lazy" />
+        </figure>
+        <figure class="contato-foto">
+          <img src="assets/img/contato/treinamento-01.jpg" alt="Treinamento corporativo" loading="lazy" />
+        </figure>
+        <figure class="contato-foto">
+          <img src="assets/img/contato/treinamento-02.jpg" alt="Apresentação e alinhamento de rotinas" loading="lazy" />
+        </figure>
+        <figure class="contato-foto contato-foto--wide">
+          <img src="assets/img/contato/atuacao-03.jpg" alt="Atuação estratégica e análise de cenário" loading="lazy" />
+        </figure>
+      </div>
+ -->
+      <!-- CTA final -->
+      <div class="faixa-cta faixa-cta--contato">
+        <div class="faixa-cta__texto">
+          <h3 class="faixa-cta__titulo">Vamos organizar seu cenário com método e segurança?</h3>
+          <p class="faixa-cta__descricao">
+            Comece pelo pré-atendimento: rápido, objetivo e já direcionado para sua demanda.
           </p>
         </div>
 
-        <div class="banner-interno__foto">
-          <!-- inserir imagem do topo: assets/img/contato-banner.jpg -->
-          <img src="assets/img/contato-banner.jpg" alt="" />
+        <div class="faixa-cta__acoes">
+          <button class="botao botao--destaque" type="button" data-chatbot-abrir>
+            Iniciar pré-atendimento
+          </button>
+          <a class="botao"
+             data-whats
+             data-mensagem="Olá, Dra. Samantha! Quero começar um projeto e vim pela página de contato do seu site.">
+            Falar no WhatsApp
+          </a>
         </div>
       </div>
-    </section>
-
-    <section class="sessao">
-      <div class="miolo">
-        <div class="grade-contato">
-          <div class="bloco-whats">
-            <h2 class="titulo-secao">WhatsApp</h2>
-            <p class="texto-secao">
-              Se for algo direto, pode chamar. Se preferir, preencha o formulário que eu monto a mensagem certinha no WhatsApp.
-            </p>
-
-            <div class="botoes-grandes">
-              <a class="botao botao--destaque botao--grande" data-whats data-mensagem="Olá, Dra. Samantha! Quero falar sobre uma consultoria empresarial.">
-                Chamar agora
-              </a>
-
-              <a class="botao botao--grande" data-whats data-mensagem="Olá, Dra. Samantha! Quero agendar uma conversa para entender a melhor estratégia jurídica para minha empresa.">
-                Agendar conversa
-              </a>
-            </div>
-
-            <div class="cartao cartao--info contato__info">
-              <p class="cartao__texto"><strong>Telefone/WhatsApp:</strong> 81 99970-1844</p>
-              <p class="cartao__texto"><strong>OAB/PE:</strong> 66010</p>
-              <p class="cartao__texto"><strong>E-mail:</strong> drasamantha.ferreira<!-- @dominio.com (trocar depois) --></p>
-            </div>
-          </div>
-
-          <div class="bloco-formulario">
-            <h2 class="titulo-secao">Formulário</h2>
-
-            <!--
-              O JS vai interceptar o submit e abrir o WhatsApp com a mensagem montada.
-              Eu deixei id e name nos campos pra facilitar o trabalho.
-            -->
-            <form id="formulario-contato" class="formulario" autocomplete="on">
-              <div class="formulario__linha">
-                <label class="campo">
-                  <span class="campo__rotulo">Nome</span>
-                  <input class="campo__controle" type="text" id="nome" name="nome" required />
-                </label>
-
-                <label class="campo">
-                  <span class="campo__rotulo">E-mail</span>
-                  <input class="campo__controle" type="email" id="email" name="email" required />
-                </label>
-              </div>
-
-              <div class="formulario__linha">
-                <label class="campo">
-                  <span class="campo__rotulo">Telefone</span>
-                  <input class="campo__controle" type="tel" id="telefone" name="telefone" required />
-                </label>
-
-                <label class="campo">
-                  <span class="campo__rotulo">Assunto</span>
-                  <select class="campo__controle" id="assunto" name="assunto" required>
-                    <option value="" selected disabled>Selecione…</option>
-                    <option value="Societário / Acordo de sócios">Societário / Acordo de sócios</option>
-                    <option value="Contratos empresariais">Contratos empresariais</option>
-                    <option value="Trabalhista / Compliance">Trabalhista / Compliance</option>
-                    <option value="LGPD / Proteção de dados">LGPD / Proteção de dados</option>
-                    <option value="Holding / Planejamento">Holding / Planejamento</option>
-                    <option value="Outro">Outro</option>
-                  </select>
-                </label>
-              </div>
-
-              <label class="campo">
-                <span class="campo__rotulo">Mensagem (opcional)</span>
-                <textarea class="campo__controle" id="mensagem" name="mensagem" rows="5" placeholder="Se quiser, descreva rapidamente o contexto."></textarea>
-              </label>
-
-              <div class="formulario__acoes">
-                <button class="botao botao--destaque" type="submit">
-                  Enviar para o WhatsApp
-                </button>
-                <p class="formulario__aviso">
-                  Ao enviar, eu apenas vou abrir o WhatsApp com a mensagem pronta — não fica nada “preso” em servidor.
-                </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
   <!-- RODAPÉ -->
     <footer class="rodape">

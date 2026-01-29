@@ -3,7 +3,7 @@
   Autor: Pedro Max
   Arquivo: pagina-cases.js
 
-  ✅ Renderiza:
+   Renderiza:
   - Case em destaque (o que tiver destaque:true; se não tiver, pega o primeiro)
   - Filtros: segmento, serviço, porte
   - Cards com "desafio em 1 linha" + "resultado principal"

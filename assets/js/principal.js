@@ -12,7 +12,7 @@
 (function () {
   "use strict";
 
-  // ⚠️ Troque aqui depois pelo número real (apenas dígitos, com DDI + DDD)
+  // ⚠️ Caso queira mudar o numero:(apenas dígitos, com DDI + DDD)
   // Ex.: 55819999701844
   const WHATSAPP_NUMERO = "55819999701844";
 
@@ -71,8 +71,7 @@
   }
 
   function marcarMenuAtivo() {
-    // Aqui eu comparo a página atual com os href do menu.
-    // Sem gambiarra: só pego o nome do arquivo e pronto.
+
     const caminhoAtual = window.location.pathname;
     const paginaAtual = caminhoAtual.split("/").pop() || "index.html";
 
@@ -111,7 +110,7 @@
       const assunto = limparTexto(document.getElementById("assunto")?.value);
       const mensagem = limparTexto(document.getElementById("mensagem")?.value);
 
-      // Eu monto a mensagem de um jeito “copiável” e organizado
+  
       const linhas = [
         "Olá, Dra. Samantha! Seguem meus dados para atendimento:",
         "",
@@ -147,52 +146,56 @@
 
 
 
+/* =========================
+   HERO VÍDEO — TOGGLE SOM
+   Autor: Pedro Max
+   ========================= */
 (function () {
-  const videos = document.querySelectorAll(".js-video-visivel");
-  if (!("IntersectionObserver" in window) || videos.length === 0) return;
+  "use strict";
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(async (entry) => {
-        const video = entry.target;
+  function atualizarBotao(btn, video) {
+    const mudo = video.muted || video.volume === 0;
 
-        if (entry.isIntersecting) {
-          try {
-            // garante que está mutado (autoplay permitido)
-            video.muted = true;
-            await video.play();
-          } catch (e) {}
-        } else {
-          video.pause();
-        }
-      });
-    },
-    {
-      threshold: 0.15,          // antes era 0.6 (muito alto, às vezes não bate)
-      rootMargin: "120px 0px"   // começa a tocar um pouco antes de aparecer
+    if (mudo) {
+      btn.textContent = "🔊 Ativar som";
+      btn.setAttribute("aria-label", "Ativar som");
+      btn.classList.remove("midia-hero__som--ativo");
+    } else {
+      btn.textContent = "🔇 Desativar som";
+      btn.setAttribute("aria-label", "Desativar som");
+      btn.classList.add("midia-hero__som--ativo");
     }
-  );
+  }
 
-  videos.forEach((v) => observer.observe(v));
+  document.addEventListener("DOMContentLoaded", () => {
+    const video = document.querySelector(".midia-hero__video");
+    const btn = document.querySelector(".js-toggle-som");
 
-  document.addEventListener("click", async (ev) => {
-    const btn = ev.target.closest(".js-toggle-som");
-    if (!btn) return;
+    if (!video || !btn) return;
 
-    const wrap = btn.closest(".midia-hero");
-    const video = wrap?.querySelector("video");
-    if (!video) return;
+    // Por padrão, começa mudo (autoplay no mobile exige muted)
+    video.muted = true;
+    video.volume = 1;
 
-    try {
-      video.muted = false;
-      video.volume = 1;
-      await video.play();
-      wrap.classList.add("midia-hero--som-on");
-      btn.textContent = "🔊 Som ativado";
-      setTimeout(() => (btn.style.display = "none"), 700);
-    } catch (e) {
-      alert("Seu navegador bloqueou o áudio. Toque no vídeo para iniciar com som.");
-    }
+    atualizarBotao(btn, video);
+
+    btn.addEventListener("click", async () => {
+      // Se estiver pausado, tenta tocar (alguns browsers só liberam após interação)
+      if (video.paused) {
+        try { await video.play(); } catch (e) {}
+      }
+
+      // Alterna
+      video.muted = !video.muted;
+
+      // Se “desmutou”, garante volume audível
+      if (!video.muted && video.volume === 0) video.volume = 1;
+
+      atualizarBotao(btn, video);
+    });
+
+    // Se alguém mudar o muted via devtools/outro script
+    video.addEventListener("volumechange", () => atualizarBotao(btn, video));
   });
 })();
 
@@ -375,14 +378,23 @@
     elEnviar.disabled = false;
   }
 
-  // Clique no botão flutuante do site abre o chatbot
-  document.addEventListener("click", function(ev){
-    const alvo = ev.target.closest(".botao-whats-fixo");
-    if(alvo){
-      ev.preventDefault(); // evita abrir o Whats direto
-      abrir();
-    }
-  });
+ // Abre o chatbot em QUALQUER botão com data-chatbot-abrir
+// e só “sequestra” o flutuante se você marcar com data-chatbot-flutuante
+document.addEventListener("click", function (ev) {
+  const btnChat = ev.target.closest("[data-chatbot-abrir]");
+  if (btnChat) {
+    ev.preventDefault();
+    abrir();
+    return;
+  }
+
+  const flutuanteChat = ev.target.closest(".botao-whats-fixo[data-chatbot-flutuante]");
+  if (flutuanteChat) {
+    ev.preventDefault();
+    abrir();
+  }
+});
+
 
   // fechar
   botoesFechar.forEach(b => b.addEventListener("click", fechar));
@@ -412,4 +424,66 @@
     iniciar();
   });
 
+
+  
+
+})();
+
+/* =========================================
+   Autoplay do vídeo quando ficar visível
+   Autor: Pedro Max
+   ========================================= */
+
+(function () {
+  "use strict";
+
+  function tentaPlay(video) {
+    if (!video) return;
+    // garante compatibilidade
+    video.muted = true;
+    video.playsInline = true;
+
+    const p = video.play();
+    if (p && typeof p.catch === "function") {
+      p.catch(() => {
+        // alguns browsers bloqueiam mesmo mutado em raros casos;
+        // aqui a gente só evita erro no console.
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const video = document.querySelector(".js-video-visivel");
+    if (!video) return;
+
+    // fallback simples (caso não exista IO)
+    if (!("IntersectionObserver" in window)) {
+      tentaPlay(video);
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            tentaPlay(video);
+          } else {
+            // pausa quando sai da tela (economiza bateria)
+            video.pause();
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.35, // quando ~35% do vídeo estiver visível
+      }
+    );
+
+    obs.observe(video);
+
+    // bônus: se o usuário troca de aba, pausa; quando volta, retoma se estiver visível
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) video.pause();
+    });
+  });
 })();

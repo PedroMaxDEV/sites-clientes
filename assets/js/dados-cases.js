@@ -3,7 +3,7 @@
   Autor: Pedro Max
   Arquivo: dados-cases.js
 
-  ✅ Manutenção fácil:
+    Manutenção fácil:
   - Para adicionar um novo case, copie um objeto abaixo e cole no final.
   - Troque id, cliente, textos e (se tiver) imagem.
   - Não precisa mexer em cases.html, pagina-cases.js ou detalhe-case.js.
