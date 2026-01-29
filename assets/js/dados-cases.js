@@ -3,161 +3,199 @@
   Autor: Pedro Max
   Arquivo: dados-cases.js
 
-  Aqui ficam os cases em formato de lista.
-  O case.html lê pelo parâmetro ?id= e busca nessa lista.
+  ✅ Manutenção fácil:
+  - Para adicionar um novo case, copie um objeto abaixo e cole no final.
+  - Troque id, cliente, textos e (se tiver) imagem.
+  - Não precisa mexer em cases.html, pagina-cases.js ou detalhe-case.js.
 */
 
 "use strict";
 
-/*
-  Observação:
-  - id precisa ser único
-  - "servicoPrincipal" é o que mais aparece pro cliente no card
-  - "oQueFoiFeito" e "ganhos" são listas para deixar o detalhe mais bonito
-*/
 const LISTA_CASES = [
   {
-    id: "contratos-empresariais-01",
-    nome: "Reestruturação de Contratos Empresariais",
+    id: "correia-advogados",
+    cliente: "Correia Advogados",
+    segmento: "Advocacia",
+    porte: "Pequeno",
+    servicoPrincipal: "Metodologia de Gestão",
+    desafioCurto: "Retrabalho, falta de clareza de papéis e clima organizacional afetado.",
+    resultadoPrincipal: "30% mais eficiência",
+    destaque: true,
+
+    // imagens (se não tiver agora, deixa placeholder mesmo)
+    imagemCard: "assets/img/cases/correia.jpg",
+    imagemDestaque: "assets/img/cases/correia-destaque.jpg",
+
+    // detalhes (case.html)
+    resumo: "Estruturação de gestão e rotina para reduzir retrabalho, organizar papéis e dar previsibilidade à operação.",
+    contexto:
+      "Escritório com crescimento de demandas e equipe em expansão, precisando organizar rotinas internas, papéis e responsabilidades para sustentar a operação.",
+    desafio:
+      "A ausência de um método claro gerava retrabalho, desalinhamento e decisões sem padrão, impactando produtividade e clima.",
+    oQueFoiFeito: [
+      "Diagnóstico de rotinas, gargalos e pontos de atrito",
+      "Definição de papéis, responsabilidades e fluxos essenciais",
+      "Padronização de rotinas e ritos de acompanhamento",
+      "Orientação para execução e ajustes práticos no dia a dia",
+    ],
+    resultados: [
+      "Aumento de eficiência operacional e redução de retrabalho",
+      "Mais clareza de papéis e decisões com critério",
+      "Ambiente interno mais organizado e previsível",
+    ],
+    ganhos: [
+      "30% mais eficiência",
+      "Menos ruído e mais alinhamento",
+      "Rotina mais leve e controlada",
+    ],
+  },
+
+  {
+    id: "suiani-terto-advocacia",
+    cliente: "Suiani Terto Advocacia",
+    segmento: "Advocacia",
+    porte: "Pequeno",
+    servicoPrincipal: "Estrutura de Compliance",
+    desafioCurto: "Falta de clareza de processos, turnover elevado e riscos trabalhistas.",
+    resultadoPrincipal: "Aumento da receita em 20%",
+    destaque: false,
+
+    imagemCard: "assets/img/cases/suiani.jpg",
+    imagemDestaque: "assets/img/cases/suiani-destaque.jpg",
+
+    resumo:
+      "Estruturação de compliance e processos para reduzir risco, estabilizar time e sustentar crescimento com mais segurança.",
+    contexto:
+      "Operação com rotinas internas pouco definidas e dificuldades na manutenção do time, com riscos trabalhistas e impactos em entrega e receita.",
+    desafio:
+      "Sem processos claros e diretrizes internas, a operação ficava vulnerável: rotatividade alta, decisões inconsistentes e aumento do risco jurídico.",
+    oQueFoiFeito: [
+      "Mapeamento de processos e pontos críticos",
+      "Criação de diretrizes internas e rotinas de conformidade",
+      "Padronização de procedimentos e documentos-base",
+      "Treinamento e alinhamento de liderança",
+    ],
+    resultados: [
+      "Redução de vulnerabilidades operacionais",
+      "Mais previsibilidade na gestão de pessoas",
+      "Operação mais estável para crescimento",
+    ],
+    ganhos: [
+      "Aumento da receita em 20%",
+      "Menos risco trabalhista",
+      "Time mais estável e organizado",
+    ],
+  },
+
+  {
+    id: "camerite",
+    cliente: "Camerite",
     segmento: "Serviços",
     porte: "Médio",
-    servicoPrincipal: "Contratos Empresariais",
-    resumoDesafio:
-      "Contratos com cláusulas inconsistentes e ausência de padrões para negociação com fornecedores e parceiros.",
-    resumoResultado:
-      "Padronização de minutas e redução de riscos contratuais, com maior previsibilidade de prazos, entregas e responsabilidades.",
+    servicoPrincipal: "Diagnóstico Estratégico",
+    desafioCurto: "Ausência de planejamento estratégico e prejuízo financeiro.",
+    resultadoPrincipal: "Clareza na tomada de decisão",
+    destaque: false,
+
+    imagemCard: "assets/img/cases/camerite.jpg",
+    imagemDestaque: "assets/img/cases/camerite-destaque.jpg",
+
+    resumo:
+      "Diagnóstico estratégico para organizar prioridades, reduzir desperdícios e orientar decisões com base no cenário real da operação.",
     contexto:
-      "Empresa em crescimento, com aumento de volume de negociações e dependência de fornecedores estratégicos.",
+      "Empresa com dificuldades para definir prioridades e controlar impactos financeiros, precisando de clareza para reorganizar direção e execução.",
     desafio:
-      "A operação avançou mais rápido que o jurídico. Os contratos não acompanhavam o nível de exposição, gerando pontos de conflito e margem para discussão.",
+      "A falta de planejamento gerava decisões reativas, desperdício de recursos e dificuldade em sustentar crescimento com consistência.",
     oQueFoiFeito: [
-      "Revisão técnica dos contratos em uso e identificação de cláusulas críticas",
-      "Criação de minutas padrão por tipo de relação (fornecedor, parceiro, prestação de serviço)",
-      "Ajustes de cláusulas de prazo, penalidades, rescisão e confidencialidade",
-      "Orientação prática para negociação e assinatura",
+      "Diagnóstico do cenário e dos principais gargalos",
+      "Definição de prioridades e direção prática de execução",
+      "Organização de rotinas e critérios de decisão",
+      "Plano de ação objetivo para reduzir risco e melhorar previsibilidade",
     ],
-    resultado:
-      "Contratos mais consistentes e alinhados à estratégia, com redução de ruído nas negociações e melhoria na segurança das relações comerciais.",
+    resultados: [
+      "Clareza para decidir com critérios e prioridades",
+      "Redução de decisões reativas",
+      "Organização da rotina para execução consistente",
+    ],
     ganhos: [
-      "Menos discussões por interpretação de cláusulas",
-      "Mais previsibilidade e controle de obrigações",
-      "Processo de contratação mais rápido e organizado",
+      "Clareza na tomada de decisão",
+      "Plano de ação imediato",
+      "Mais previsibilidade financeira",
     ],
   },
 
   {
-    id: "compliance-trabalhista-01",
-    nome: "Implementação de Compliance Trabalhista",
-    segmento: "Varejo",
+    id: "germano-barros-ltda",
+    cliente: "Germano & Barros LTDA",
+    segmento: "Comércio",
     porte: "Médio",
-    servicoPrincipal: "Compliance Trabalhista",
-    resumoDesafio:
-      "Risco de passivo trabalhista por rotinas internas desalinhadas e ausência de políticas claras para liderança e equipe.",
-    resumoResultado:
-      "Redução de exposição e maior segurança nas decisões, com rotinas revisadas e diretrizes internas implementadas.",
+    servicoPrincipal: "Regularização Societária",
+    desafioCurto: "Cenário financeiro prejudicado após morte de sócio.",
+    resultadoPrincipal: "Regularização societária",
+    destaque: false,
+
+    imagemCard: "assets/img/cases/germano.jpg",
+    imagemDestaque: "assets/img/cases/germano-destaque.jpg",
+
+    resumo:
+      "Regularização societária com foco em segurança, continuidade e recuperação do patrimônio — evitando travas e conflitos.",
     contexto:
-      "Empresa com equipes operacionais e rotatividade moderada, necessitando padronização de condutas e orientação para lideranças.",
+      "Após o falecimento de um sócio, a empresa enfrentou insegurança e impactos financeiros, exigindo reorganização societária para continuidade.",
     desafio:
-      "A falta de padronização gerava inconsistência nas práticas de gestão, aumentando risco de questionamentos e fragilidades em caso de demanda.",
+      "Sem estrutura societária ajustada, o negócio ficou vulnerável a conflitos e travas decisórias, com reflexo direto no patrimônio e na operação.",
     oQueFoiFeito: [
-      "Diagnóstico de rotinas e pontos críticos",
-      "Estruturação de políticas internas e orientações de conduta",
-      "Ajustes de procedimentos e checklist de conformidade",
-      "Treinamento direcionado para liderança e responsáveis",
+      "Análise do cenário societário e riscos envolvidos",
+      "Estruturação do caminho jurídico para regularização",
+      "Adequação documental e alinhamento de responsabilidades",
+      "Medidas para retomar segurança e estabilidade",
     ],
-    resultado:
-      "Rotina mais segura, com práticas internas mais consistentes e redução do risco de passivos trabalhistas.",
+    resultados: [
+      "Regularização societária com retomada de previsibilidade",
+      "Redução de risco de conflitos e travas",
+      "Recuperação do controle e estabilidade patrimonial",
+    ],
     ganhos: [
-      "Mais clareza para tomada de decisão",
-      "Padronização de práticas internas",
-      "Mitigação de riscos e prevenção de passivos",
+      "Regularização societária",
+      "Recuperação do patrimônio",
+      "Continuidade do negócio com segurança",
     ],
   },
 
   {
-    id: "registro-marcas-01",
-    nome: "Registro e Proteção de Marca",
-    segmento: "Indústria",
-    porte: "Pequeno",
-    servicoPrincipal: "Registro de Marcas",
-    resumoDesafio:
-      "Necessidade de proteção da identidade corporativa e prevenção de uso indevido por terceiros.",
-    resumoResultado:
-      "Proteção consolidada da marca e redução de risco de conflitos por uso e propriedade intelectual.",
-    contexto:
-      "Empresa em expansão de mercado, investindo em posicionamento e comunicação, com preocupação em consolidar a marca.",
-    desafio:
-      "Sem registro, a marca ficava exposta a cópias e disputas, o que poderia travar crescimento e gerar perda de investimento em marketing.",
-    oQueFoiFeito: [
-      "Análise prévia de viabilidade e pesquisa de anterioridade",
-      "Protocolo e acompanhamento do processo",
-      "Orientação sobre classes e estratégia de proteção",
-      "Ajustes de documentação e suporte em exigências",
-    ],
-    resultado:
-      "Marca protegida com estratégia adequada ao negócio, reduzindo o risco de uso indevido e fortalecendo a identidade corporativa.",
-    ganhos: [
-      "Mais segurança para investir em marca e marketing",
-      "Redução de risco de disputa",
-      "Organização da propriedade intelectual",
-    ],
-  },
+    id: "mastermind",
+    cliente: "Mastermind (Programas e imersões)",
+    segmento: "Educação / Gestão",
+    porte: "PMEs",
+    servicoPrincipal: "Desenvolvimento de Líderes",
+    desafioCurto: "PMEs com dificuldades na gestão empresarial e decisões sem base sólida.",
+    resultadoPrincipal: "Otimização de resultados",
+    destaque: false,
 
-  {
-    id: "gestao-risco-01",
-    nome: "Reestruturação de Processos e Gestão de Riscos",
-    segmento: "Serviços",
-    porte: "Médio",
-    servicoPrincipal: "Gestão de Riscos",
-    resumoDesafio:
-      "Processos internos sem padronização e vulnerabilidades que impactavam decisões estratégicas.",
-    resumoResultado:
-      "Redução de vulnerabilidades e fortalecimento da governança com medidas preventivas e ajustes de rotina.",
-    contexto:
-      "Empresa com operação distribuída, decisões rápidas e necessidade de controle consistente para garantir segurança jurídica.",
-    desafio:
-      "A ausência de procedimentos claros criava pontos de fragilidade: decisões importantes eram tomadas sem registro adequado e sem critérios padronizados.",
-    oQueFoiFeito: [
-      "Mapeamento de processos com foco em pontos de risco",
-      "Definição de rotinas e responsabilidades",
-      "Criação de documentos-base e diretrizes internas",
-      "Orientação de lideranças para execução e acompanhamento",
-    ],
-    resultado:
-      "Processos mais organizados, decisões com melhor lastro e redução de riscos ligados a falhas de procedimento.",
-    ganhos: [
-      "Mais consistência na governança",
-      "Menos vulnerabilidade em auditorias e revisões",
-      "Rotinas internas mais claras e aplicáveis",
-    ],
-  },
+    imagemCard: "assets/img/cases/mastermind.jpg",
+    imagemDestaque: "assets/img/cases/mastermind-destaque.jpg",
 
-  {
-    id: "mentoria-gestao-01",
-    nome: "Mentoria em Gestão e Liderança",
-    segmento: "Educação Corporativa",
-    porte: "Pequeno",
-    servicoPrincipal: "Mentoria e Treinamento",
-    resumoDesafio:
-      "Necessidade de fortalecer competências decisórias e alinhar práticas de liderança à estratégia do negócio.",
-    resumoResultado:
-      "Integração entre gestão de pessoas e resultados, com cultura mais orientada a desempenho e rotina de liderança estruturada.",
+    resumo:
+      "Desenvolvimento de líderes e gestores com visão técnica e prática para decisões mais seguras, reduzindo riscos e melhorando performance.",
     contexto:
-      "Equipe em crescimento, com líderes recém-promovidos e necessidade de padronizar práticas e comunicação interna.",
+      "Atuação com centenas de empresários e gestores em pequenas e médias empresas, com necessidades recorrentes de organização, liderança e segurança jurídica.",
     desafio:
-      "A falta de método e alinhamento gerava ruído, retrabalho e decisões inconsistentes, afetando clima e execução.",
+      "Sem método e governança mínima, as empresas enfrentavam desperdícios, alta rotatividade, passivos e decisões que comprometiam crescimento.",
     oQueFoiFeito: [
-      "Diagnóstico de cenário e objetivos de liderança",
-      "Mentorias com foco em tomada de decisão e comunicação",
-      "Rotinas de acompanhamento e alinhamento de expectativas",
-      "Ajustes práticos para fortalecer execução",
+      "Mentorias e treinamentos aplicados à realidade da gestão",
+      "Organização de rotinas e critérios de decisão",
+      "Orientação para reduzir vulnerabilidades e passivos",
+      "Desenvolvimento de liderança com foco em performance e previsibilidade",
     ],
-    resultado:
-      "Lideranças mais consistentes, com visão sistêmica e práticas alinhadas ao objetivo institucional.",
+    resultados: [
+      "Rotinas mais consistentes e liderança mais preparada",
+      "Retenção de talentos e redução de turnover",
+      "Redução significativa do contencioso trabalhista",
+      "Otimização de resultados financeiros ao longo do tempo",
+    ],
     ganhos: [
-      "Mais clareza na execução e cobrança",
-      "Melhoria na comunicação interna",
-      "Cultura de gestão mais organizada",
+      "Otimização dos resultados financeiros",
+      "Redução de turnover",
+      "Redução do contencioso trabalhista",
     ],
   },
 ];

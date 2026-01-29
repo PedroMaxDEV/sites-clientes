@@ -3,38 +3,30 @@
   Autor: Pedro Max
   Arquivo: pagina-cases.js
 
-  Aqui eu monto a listagem e os filtros da página cases.html.
-  - Popula os selects (segmento/serviço/porte)
-  - Renderiza os cards
-  - Aplica filtro simples sem complicar
+  ✅ Renderiza:
+  - Case em destaque (o que tiver destaque:true; se não tiver, pega o primeiro)
+  - Filtros: segmento, serviço, porte
+  - Cards com "desafio em 1 linha" + "resultado principal"
 */
 
 (function () {
   "use strict";
 
-  function pegarElemento(id) {
+  function el(id) {
     return document.getElementById(id);
   }
 
-  function normalizarTexto(valor) {
-    return String(valor || "").trim();
+  function normalizar(v) {
+    return (v || "").trim();
   }
 
-  function ordenarAlfabetico(a, b) {
-    return normalizarTexto(a).localeCompare(normalizarTexto(b), "pt-BR");
-  }
-
-  function valoresUnicos(lista, seletor) {
+  function valoresUnicos(lista, pickFn) {
     const set = new Set();
-    lista.forEach((item) => {
-      const valor = normalizarTexto(seletor(item));
-      if (valor) set.add(valor);
-    });
-    return Array.from(set).sort(ordenarAlfabetico);
+    lista.forEach((item) => set.add(pickFn(item)));
+    return Array.from(set).filter(Boolean).sort();
   }
 
   function preencherSelect(select, valores) {
-    // Mantém o primeiro option ("Todos") e adiciona o resto
     valores.forEach((valor) => {
       const opt = document.createElement("option");
       opt.value = valor;
@@ -43,39 +35,88 @@
     });
   }
 
-  function montarCardCase(caseItem) {
+  function imgSafe(src) {
+    return src && src.trim() ? src : "assets/img/case-placeholder.jpg";
+  }
+
+ function montarDestaque(caseItem) {
+  const area = el("case-destaque");
+  if (!area) return;
+
+  const img = imgSafe(caseItem.imagemDestaque || caseItem.imagemCard);
+
+  area.innerHTML = `
+    <article class="case-destaque">
+      <div class="case-destaque__midia" aria-hidden="true">
+        <img src="${img}" alt="" />
+      </div>
+
+      <div class="case-destaque__conteudo">
+        <p class="case-destaque__rotulo">CASE EM DESTAQUE</p>
+        <h2 class="case-destaque__titulo">${caseItem.cliente}</h2>
+
+        <div class="case-destaque__meta">
+          <span class="case-pill">${caseItem.servicoPrincipal}</span>
+          <span class="case-pill">${caseItem.segmento}</span>
+          <span class="case-pill">${caseItem.porte}</span>
+        </div>
+
+        <!-- ✅ Thumb visível no mobile -->
+        <div class="case-destaque__thumb" aria-hidden="true">
+          <img src="${img}" alt="" />
+        </div>
+
+        <p class="case-destaque__linha">
+          <strong>Desafio:</strong> ${caseItem.desafioCurto}
+        </p>
+
+        <p class="case-destaque__linha">
+          <strong>Resultado:</strong> <span class="case-destaque__resultado">${caseItem.resultadoPrincipal}</span>
+        </p>
+
+        <div class="case-destaque__acoes">
+          <a class="botao botao--destaque" href="case.html?id=${encodeURIComponent(caseItem.id)}">Ver detalhes</a>
+          <a class="botao" data-whats data-mensagem="Olá, Dra. Samantha! Vi o case '${caseItem.cliente}' e quero conversar sobre um cenário parecido.">
+            Quero um plano para minha empresa
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+
+  window.dispatchEvent(new Event("cases:renderizado"));
+}
+
+  function montarCard(caseItem) {
     const artigo = document.createElement("article");
     artigo.className = "cartao cartao--case";
 
-    // Eu deixei imagem com placeholder; você troca depois no assets/img
     artigo.innerHTML = `
-      <div class="cartao__midia">
-        <!-- inserir foto do case aqui (opcional) -->
-        <img src="assets/img/case-placeholder.jpg" alt="" />
+      <div class="cartao__midia cartao__midia--case">
+        <img src="${imgSafe(caseItem.imagemCard)}" alt="" />
       </div>
 
       <div class="cartao__conteudo">
-        <h3 class="cartao__titulo">${caseItem.nome}</h3>
+        <div class="cartao__cabecalho">
+          <h3 class="cartao__titulo">${caseItem.cliente}</h3>
+          <span class="badge-metrica" aria-label="Resultado principal">${caseItem.resultadoPrincipal}</span>
+        </div>
 
-        <p class="cartao__texto">
-          <strong>Segmento:</strong> ${caseItem.segmento} &nbsp;|&nbsp;
-          <strong>Porte:</strong> ${caseItem.porte}
+        <p class="cartao__texto cartao__texto--meta">
+          <strong>Serviço aplicado:</strong> ${caseItem.servicoPrincipal}
         </p>
 
         <p class="cartao__texto">
-          <strong>Serviço principal:</strong> ${caseItem.servicoPrincipal}
+          <strong>Desafio:</strong> ${caseItem.desafioCurto}
         </p>
 
-        <p class="cartao__texto">
-          <strong>Desafio:</strong> ${caseItem.resumoDesafio}
-        </p>
+        <div class="cartao__rodape">
+          <div class="cartao__tags">
+            <span class="tag-case">${caseItem.segmento}</span>
+            <span class="tag-case">${caseItem.porte}</span>
+          </div>
 
-        <p class="cartao__texto">
-          <strong>Resultado:</strong> ${caseItem.resumoResultado}
-        </p>
-
-        <div class="cartao__acoes">
-          <a class="botao" href="case.html?id=${encodeURIComponent(caseItem.id)}">Ver detalhes</a>
+          <a class="botao botao--mini" href="case.html?id=${encodeURIComponent(caseItem.id)}">Ver case</a>
         </div>
       </div>
     `;
@@ -83,77 +124,67 @@
     return artigo;
   }
 
-  function aplicarFiltros(lista, filtroSegmento, filtroServico, filtroPorte) {
+  function aplicarFiltros(lista, seg, serv, porte) {
     return lista.filter((item) => {
-      const bateSegmento = !filtroSegmento || item.segmento === filtroSegmento;
-      const bateServico = !filtroServico || item.servicoPrincipal === filtroServico;
-      const batePorte = !filtroPorte || item.porte === filtroPorte;
-      return bateSegmento && bateServico && batePorte;
+      const okSeg = !seg || item.segmento === seg;
+      const okServ = !serv || item.servicoPrincipal === serv;
+      const okPorte = !porte || item.porte === porte;
+      return okSeg && okServ && okPorte;
     });
   }
 
   function renderizarLista(lista) {
-    const area = pegarElemento("lista-cases");
+    const area = el("lista-cases");
     if (!area) return;
 
     area.innerHTML = "";
 
     if (!lista.length) {
-      const aviso = document.createElement("div");
-      aviso.className = "aviso-lista-vazia";
-      aviso.innerHTML = `
-        <p class="texto-secao">
-          Não encontrei cases com esses filtros. Se quiser, limpe os filtros ou chame no WhatsApp para me contar seu cenário.
-        </p>
-        <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Filtrei os cases no site e quero conversar sobre minha demanda.">
-          Falar no WhatsApp
-        </a>
+      area.innerHTML = `
+        <div class="aviso-lista-vazia">
+          <p class="texto-secao">
+            Não encontrei cases com esses filtros. Se quiser, limpe os filtros ou me diga seu cenário no WhatsApp.
+          </p>
+          <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Usei os filtros de cases no seu site e quero ajuda para entender o melhor caminho.">
+            Falar no WhatsApp
+          </a>
+        </div>
       `;
-      area.appendChild(aviso);
-
-      // Importante: como esse botão foi criado via JS, eu disparo o “prepararLinksWhatsApp” de novo.
-      if (window && window.dispatchEvent) {
-        window.dispatchEvent(new Event("cases:renderizado"));
-      }
+      window.dispatchEvent(new Event("cases:renderizado"));
       return;
     }
 
-    lista.forEach((item) => area.appendChild(montarCardCase(item)));
-
-    // Mesma ideia: renderizei coisa nova, então eu deixo o principal.js “pegar” os data-whats se precisar.
-    if (window && window.dispatchEvent) {
-      window.dispatchEvent(new Event("cases:renderizado"));
-    }
+    lista.forEach((item) => area.appendChild(montarCard(item)));
+    window.dispatchEvent(new Event("cases:renderizado"));
   }
 
   function init() {
-    // Segurança: se alguém abriu a página sem carregar dados-cases.js, eu não deixo quebrar feio
-    if (!window.LISTA_CASES && typeof LISTA_CASES === "undefined") {
+    if (typeof LISTA_CASES === "undefined" || !Array.isArray(LISTA_CASES)) {
       console.warn("LISTA_CASES não está disponível. Verifique o script dados-cases.js.");
       return;
     }
 
-    // LISTA_CASES vem do arquivo dados-cases.js
-    const listaCompleta = typeof LISTA_CASES !== "undefined" ? LISTA_CASES : window.LISTA_CASES;
+    // destaque
+    const destaque = LISTA_CASES.find((c) => c.destaque) || LISTA_CASES[0];
+    if (destaque) montarDestaque(destaque);
 
-    const selectSegmento = pegarElemento("filtro-segmento");
-    const selectServico = pegarElemento("filtro-servico");
-    const selectPorte = pegarElemento("filtro-porte");
-    const botaoLimpar = pegarElemento("botao-limpar-filtros");
+    // filtros
+    const selectSegmento = el("filtro-segmento");
+    const selectServico = el("filtro-servico");
+    const selectPorte = el("filtro-porte");
+    const botaoLimpar = el("botao-limpar-filtros");
 
     if (!selectSegmento || !selectServico || !selectPorte) return;
 
-    // Preenchendo selects com valores únicos reais (evita “inventar” filtro)
-    preencherSelect(selectSegmento, valoresUnicos(listaCompleta, (c) => c.segmento));
-    preencherSelect(selectServico, valoresUnicos(listaCompleta, (c) => c.servicoPrincipal));
-    preencherSelect(selectPorte, valoresUnicos(listaCompleta, (c) => c.porte));
+    preencherSelect(selectSegmento, valoresUnicos(LISTA_CASES, (c) => c.segmento));
+    preencherSelect(selectServico, valoresUnicos(LISTA_CASES, (c) => c.servicoPrincipal));
+    preencherSelect(selectPorte, valoresUnicos(LISTA_CASES, (c) => c.porte));
 
     function atualizar() {
-      const filtroSegmento = normalizarTexto(selectSegmento.value);
-      const filtroServico = normalizarTexto(selectServico.value);
-      const filtroPorte = normalizarTexto(selectPorte.value);
-
-      const filtrada = aplicarFiltros(listaCompleta, filtroSegmento, filtroServico, filtroPorte);
+      const seg = normalizar(selectSegmento.value);
+      const serv = normalizar(selectServico.value);
+      const porte = normalizar(selectPorte.value);
+      const filtrada = aplicarFiltros(LISTA_CASES, seg, serv, porte);
       renderizarLista(filtrada);
     }
 
@@ -170,19 +201,13 @@
       });
     }
 
-    // Primeira renderização sem filtros
     atualizar();
   }
 
   document.addEventListener("DOMContentLoaded", init);
 
-  /*
-    Pequena integração:
-    Quando eu renderizo elementos com data-whats via JS,
-    eu sinalizo pro principal.js atualizar os links.
-  */
+  // integração com seu principal.js (caso você tenha a função)
   window.addEventListener("cases:renderizado", () => {
-    // Se por algum motivo você tirar o principal.js, isso aqui não incomoda.
     if (typeof window.__atualizarWhatsApp === "function") {
       window.__atualizarWhatsApp();
     }

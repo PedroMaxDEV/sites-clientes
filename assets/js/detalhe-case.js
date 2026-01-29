@@ -4,135 +4,106 @@
   Arquivo: detalhe-case.js
 
   case.html?id=...
-  - lê o id
+  - lê id
   - busca no LISTA_CASES
-  - joga os textos na tela
-  - se não achar, mostra uma mensagem decente (e dá caminho pro usuário)
+  - joga conteúdo na tela
 */
 
 (function () {
   "use strict";
 
-  function pegarParametro(nome) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(nome);
+  function param(nome) {
+    const p = new URLSearchParams(window.location.search);
+    return p.get(nome);
   }
 
-  function pegarEl(id) {
+  function el(id) {
     return document.getElementById(id);
   }
 
-  function criarListaItens(itens) {
+  function criarLista(itens, classe) {
     const ul = document.createElement("ul");
-    ul.className = "lista-detalhe";
-    itens.forEach((texto) => {
+    ul.className = classe || "lista-detalhe";
+    itens.forEach((t) => {
       const li = document.createElement("li");
-      li.textContent = texto;
+      li.textContent = t;
       ul.appendChild(li);
     });
     return ul;
   }
 
-  function mostrarNaoEncontrado() {
-    const titulo = pegarEl("titulo-case");
-    const resumo = pegarEl("resumo-case");
-
-    if (titulo) titulo.textContent = "Case não encontrado";
-    if (resumo) {
-      resumo.innerHTML =
-        "Não encontrei esse case pelo parâmetro da URL. Você pode voltar para a lista ou falar direto pelo WhatsApp.";
+  function naoEncontrado() {
+    if (el("titulo-case")) el("titulo-case").textContent = "Case não encontrado";
+    if (el("titulo-breadcrumb")) el("titulo-breadcrumb").textContent = "Não encontrado";
+    if (el("resumo-case")) {
+      el("resumo-case").textContent = "Não encontrei esse case pelo parâmetro da URL. Volte para a lista ou fale no WhatsApp.";
     }
-
-    // Escondo blocos que fazem sentido só quando existe conteúdo
-    const contexto = pegarEl("case-contexto");
-    const desafio = pegarEl("case-desafio");
-    const oq = pegarEl("case-o-que-foi-feito");
-    const ganhos = pegarEl("case-ganhos");
-    const resultado = pegarEl("case-resultado");
-
-    if (contexto) contexto.textContent = "—";
-    if (desafio) desafio.textContent = "—";
-    if (resultado) resultado.textContent = "—";
-    if (oq) oq.innerHTML = "";
-    if (ganhos) ganhos.innerHTML = "";
-
-    const breadcrumb = pegarEl("titulo-breadcrumb");
-    if (breadcrumb) breadcrumb.textContent = "Não encontrado";
-
-    // CTA de WhatsApp mais genérica nesse caso
-    const cta = pegarEl("cta-case-whats");
-    if (cta) {
-      cta.setAttribute(
-        "data-mensagem",
-        "Olá, Dra. Samantha! Tentei abrir um case no seu site e não carregou. Pode me ajudar?"
-      );
+    if (el("cta-case-whats")) {
+      el("cta-case-whats").setAttribute("data-mensagem", "Olá, Dra. Samantha! Tentei abrir um case no seu site e não carregou. Pode me ajudar?");
     }
   }
 
   function init() {
-    if (typeof LISTA_CASES === "undefined") {
-      console.warn("LISTA_CASES não está disponível. Verifique o script dados-cases.js.");
-      mostrarNaoEncontrado();
+    if (typeof LISTA_CASES === "undefined" || !Array.isArray(LISTA_CASES)) {
+      console.warn("LISTA_CASES não está disponível.");
+      naoEncontrado();
       return;
     }
 
-    const id = pegarParametro("id");
+    const id = param("id");
     if (!id) {
-      mostrarNaoEncontrado();
+      naoEncontrado();
       return;
     }
 
-    const encontrado = LISTA_CASES.find((c) => c.id === id);
-    if (!encontrado) {
-      mostrarNaoEncontrado();
+    const c = LISTA_CASES.find((x) => x.id === id);
+    if (!c) {
+      naoEncontrado();
       return;
     }
 
-    // Título e breadcrumb
-    const titulo = pegarEl("titulo-case");
-    const breadcrumb = pegarEl("titulo-breadcrumb");
-    if (titulo) titulo.textContent = encontrado.nome;
-    if (breadcrumb) breadcrumb.textContent = encontrado.nome;
+    // título / breadcrumb / title do navegador
+    if (el("titulo-case")) el("titulo-case").textContent = c.cliente;
+    if (el("titulo-breadcrumb")) el("titulo-breadcrumb").textContent = c.cliente;
+    document.title = `${c.cliente} | Case`;
 
-    // Ajusto o title do navegador pra ficar bonito em aba e compartilhamento
-    document.title = `${encontrado.nome} | Case`;
+    // resumo
+    if (el("resumo-case")) el("resumo-case").textContent = c.resumo || c.resultadoPrincipal;
 
-    // Resumo
-    const resumo = pegarEl("resumo-case");
-    if (resumo) resumo.textContent = encontrado.resumoResultado;
+    // meta
+    if (el("case-servico")) el("case-servico").textContent = c.servicoPrincipal || "—";
+    if (el("case-segmento")) el("case-segmento").textContent = c.segmento || "—";
+    if (el("case-porte")) el("case-porte").textContent = c.porte || "—";
+    if (el("case-metrica")) el("case-metrica").textContent = c.resultadoPrincipal || "—";
 
-    // Contexto / desafio / resultado
-    const contexto = pegarEl("case-contexto");
-    const desafio = pegarEl("case-desafio");
-    const resultado = pegarEl("case-resultado");
-    if (contexto) contexto.textContent = encontrado.contexto;
-    if (desafio) desafio.textContent = encontrado.desafio;
-    if (resultado) resultado.textContent = encontrado.resultado;
+    // corpo
+    if (el("case-contexto")) el("case-contexto").textContent = c.contexto || "—";
+    if (el("case-desafio")) el("case-desafio").textContent = c.desafio || c.desafioCurto || "—";
 
-    // O que foi feito (lista)
-    const areaOq = pegarEl("case-o-que-foi-feito");
-    if (areaOq) {
-      areaOq.innerHTML = "";
-      if (Array.isArray(encontrado.oQueFoiFeito) && encontrado.oQueFoiFeito.length) {
-        areaOq.appendChild(criarListaItens(encontrado.oQueFoiFeito));
-      }
+    const oq = el("case-o-que-foi-feito");
+    if (oq) {
+      oq.innerHTML = "";
+      if (Array.isArray(c.oQueFoiFeito) && c.oQueFoiFeito.length) oq.appendChild(criarLista(c.oQueFoiFeito));
     }
 
-    // Ganhos (lista)
-    const areaGanhos = pegarEl("case-ganhos");
-    if (areaGanhos) {
-      areaGanhos.innerHTML = "";
-      if (Array.isArray(encontrado.ganhos) && encontrado.ganhos.length) {
-        areaGanhos.appendChild(criarListaItens(encontrado.ganhos));
-      }
+    const res = el("case-resultados");
+    if (res) {
+      res.innerHTML = "";
+      if (Array.isArray(c.resultados) && c.resultados.length) res.appendChild(criarLista(c.resultados));
     }
 
-    // Deixo o CTA final mais certeiro: já vai com o nome do case
-    const cta = pegarEl("cta-case-whats");
+    const ganhos = el("case-ganhos");
+    if (ganhos) {
+      ganhos.innerHTML = "";
+      if (Array.isArray(c.ganhos) && c.ganhos.length) ganhos.appendChild(criarLista(c.ganhos));
+    }
+
+    // CTA final mais certeiro
+    const cta = el("cta-case-whats");
     if (cta) {
       cta.setAttribute(
         "data-mensagem",
-        `Olá, Dra. Samantha! Vi o case "${encontrado.nome}" no seu site e quero conversar sobre um cenário parecido.`
+        `Olá, Dra. Samantha! Vi o case "${c.cliente}" no seu site e quero conversar sobre um cenário parecido.`
       );
     }
   }

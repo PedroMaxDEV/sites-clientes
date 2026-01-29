@@ -9,7 +9,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cases e Resultados | Samantha Ferreira</title>
-  <meta name="description" content="Cases e resultados em advocacia empresarial: contratos, compliance, marcas, LGPD e gestão de riscos." />
+  <meta name="description" content="Cases de sucesso: veja desafios, soluções aplicadas e resultados alcançados." />
   <link rel="icon" href="assets/img/favicon.png" />
   <link rel="stylesheet" href="assets/css/estilos.css" />
 </head>
@@ -25,46 +25,46 @@
         <a class="menu-principal__link" href="index.html">Início</a>
         <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
         <a class="menu-principal__link" href="servicos.html">Serviços</a>
-        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link menu-principal__link--ativo" href="cases.html">Cases</a>
         <a class="menu-principal__link" href="contato.html">Contato</a>
       </nav>
-
-     <!--<div class="cabecalho__acoes">
-          <a class="botao botao--destaque"
-             data-whats
-             data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
-            Contato
-          </a>
-        </div>-->
     </div>
   </header>
 
   <main>
-    <section class="banner-interno banner-interno--cases" aria-label="Cases e resultados">
-      <div class="miolo banner-interno__miolo">
-        <div class="banner-interno__texto">
-          <h1 class="titulo-pagina">Resultados e cases</h1>
-          <p class="texto-secao">
-            Atuação marcada pela entrega de soluções jurídicas e estratégicas que fortalecem a governança corporativa e reduzem riscos empresariais,
-            promovendo segurança e eficiência nas operações.
+
+    <!-- INTRO + DESTAQUE -->
+    <section class="cases-intro" aria-label="Cases de sucesso">
+      <div class="miolo cases-intro__miolo">
+
+        <div class="cases-intro__texto">
+          <p class="cases-intro__rotulo">CASES DE SUCESSO</p>
+          <h1 class="cases-intro__titulo">Transformamos desafios em resultados reais.</h1>
+          <p class="cases-intro__subtitulo">
+            Veja como soluções customizadas ajudaram clientes de diversos segmentos a atingir — e superar —
+            objetivos de negócio com mais segurança, previsibilidade e performance.
           </p>
-          <p class="texto-secao">
-            Destaque, ainda, pela capacitação de lideranças e equipes, impulsionando a performance organizacional e consolidando uma cultura de gestão orientada a resultados.
-          </p>
+
+          <div class="cases-intro__mini-cta">
+            <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Vi seus cases e quero entender o melhor caminho para minha empresa.">
+              Quero entender meu cenário
+            </a>
+          </div>
         </div>
 
-        <div class="banner-interno__foto">
-          <!-- inserir imagem do banner: assets/img/cases-banner.jpg -->
-          <img src="assets/img/cases-banner.jpg" alt="" />
+        <div class="cases-intro__destaque" id="case-destaque" aria-label="Case em destaque">
+          <!-- entra via JS (pagina-cases.js) -->
         </div>
+
       </div>
     </section>
 
+    <!-- FILTROS + LISTA -->
     <section class="sessao">
       <div class="miolo">
+
         <h2 class="titulo-secao">Filtrar cases</h2>
 
-        <!-- Filtro simples (select + JS), do jeito que você pediu -->
         <div class="barra-filtros" role="region" aria-label="Filtros de cases">
           <label class="campo campo--curto">
             <span class="campo__rotulo">Segmento</span>
@@ -93,11 +93,29 @@
         <div class="linha-separadora" aria-hidden="true"></div>
 
         <div class="grade-cases" id="lista-cases" aria-label="Lista de cases">
-          <!--
-            A lista entra via JS (pagina-cases.js) com base no LISTA_CASES.
-            Aqui eu deixo vazio de propósito pra não duplicar conteúdo.
-          -->
+          <!-- entra via JS -->
         </div>
+
+        <!-- CTA FINAL (do jeito que você pediu) -->
+        <div class="faixa-cta faixa-cta--cases">
+          <div class="faixa-cta__texto">
+            <h3 class="faixa-cta__titulo">
+              Esses são apenas alguns exemplos de centenas de empresários, líderes e gestores impactados pelo meu trabalho.
+            </h3>
+            <p class="faixa-cta__descricao">
+              Quer saber como criar bases sólidas para o seu crescimento, sem burocracia e com segurança?
+            </p>
+          </div>
+
+          <div class="faixa-cta__acoes">
+            <a class="botao botao--destaque"
+               data-whats
+               data-mensagem="Olá, Dra. Samantha! Vi os cases no seu site e quero conversar sobre como blindar e estruturar minha empresa.">
+              Fale com um especialista
+            </a>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -127,5 +145,6 @@
   <script src="assets/js/principal.js"></script>
   <script src="assets/js/dados-cases.js"></script>
   <script src="assets/js/pagina-cases.js"></script>
+  
 </body>
 </html>

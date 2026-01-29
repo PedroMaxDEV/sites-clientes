@@ -9,7 +9,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Case | Samantha Ferreira</title>
-  <meta name="description" content="Detalhe do case e resultados alcançados com atuação em advocacia empresarial." />
+  <meta name="description" content="Detalhe do case e resultados alcançados com atuação estratégica." />
   <link rel="icon" href="assets/img/favicon.png" />
   <link rel="stylesheet" href="assets/css/estilos.css" />
 </head>
@@ -25,17 +25,10 @@
         <a class="menu-principal__link" href="index.html">Início</a>
         <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
         <a class="menu-principal__link" href="servicos.html">Serviços</a>
-        <a class="menu-principal__link" href="cases.html">Cases</a>
+        <a class="menu-principal__link menu-principal__link--ativo" href="cases.html">Cases</a>
         <a class="menu-principal__link" href="contato.html">Contato</a>
       </nav>
-
-     <!--<div class="cabecalho__acoes">
-          <a class="botao botao--destaque"
-             data-whats
-             data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
-            Contato
-          </a>
-        </div>-->
+    </div>
   </header>
 
   <main>
@@ -45,14 +38,19 @@
           <p class="caminho">
             <a href="cases.html">Cases</a> <span aria-hidden="true">›</span> <span id="titulo-breadcrumb">Detalhe</span>
           </p>
-          <h1 class="titulo-pagina" id="titulo-case">Carregando case…</h1>
-          <p class="texto-secao" id="resumo-case">
-            Estou puxando as informações do case pelo parâmetro <code>?id=</code>.
-          </p>
+
+          <h1 class="titulo-pagina" id="titulo-case">Carregando…</h1>
+          <p class="texto-secao" id="resumo-case">Carregando informações do case.</p>
+
+          <div class="case-meta" aria-label="Informações do case">
+            <span class="case-pill" id="case-servico">—</span>
+            <span class="case-pill" id="case-segmento">—</span>
+            <span class="case-pill" id="case-porte">—</span>
+            <span class="badge-metrica badge-metrica--grande" id="case-metrica">—</span>
+          </div>
         </div>
 
         <div class="banner-interno__foto">
-          <!-- inserir imagem do case (opcional): assets/img/case-detalhe.jpg -->
           <img src="assets/img/case-detalhe.jpg" alt="" />
         </div>
       </div>
@@ -61,6 +59,7 @@
     <section class="sessao">
       <div class="miolo">
         <div class="bloco-detalhe">
+
           <div class="bloco-detalhe__coluna">
             <h2 class="titulo-secao">Contexto</h2>
             <p class="texto-secao" id="case-contexto">—</p>
@@ -71,18 +70,15 @@
 
           <div class="bloco-detalhe__coluna">
             <h2 class="titulo-secao">O que foi feito</h2>
-            <div id="case-o-que-foi-feito">
-              <!-- entra via JS -->
-            </div>
+            <div id="case-o-que-foi-feito"></div>
 
             <h2 class="titulo-secao">Resultados</h2>
-            <p class="texto-secao" id="case-resultado">—</p>
+            <div id="case-resultados"></div>
 
             <h2 class="titulo-secao">Ganhos</h2>
-            <div id="case-ganhos">
-              <!-- entra via JS -->
-            </div>
+            <div id="case-ganhos"></div>
           </div>
+
         </div>
 
         <div class="faixa-cta">
@@ -97,6 +93,7 @@
             <a class="botao" href="cases.html">Voltar para cases</a>
           </div>
         </div>
+
       </div>
     </section>
   </main>
@@ -126,5 +123,44 @@
   <script src="assets/js/principal.js"></script>
   <script src="assets/js/dados-cases.js"></script>
   <script src="assets/js/detalhe-case.js"></script>
+  <script>
+  (function () {
+    const midia = document.getElementById("caseMidia");
+    if (!midia) return;
+
+    const params = new URLSearchParams(location.search);
+    const slugURL = params.get("case");
+
+    // 1) tenta pegar do sessionStorage (mais prático, já vem com img/cores)
+    const salvo = sessionStorage.getItem("caseSelecionada");
+    let data = salvo ? JSON.parse(salvo) : null;
+
+    // 2) se o usuário abriu direto o link (sem sessionStorage), você pode
+    // mapear pelo slug (adicione os seus aqui)
+    const fallback = {
+      correia: {
+        img: "assets/img/cases/correia.jpg",
+        bg: "#061738",
+        txt: "#E9D9C9"
+      }
+      // master: {...}
+      // germano: {...}
+    };
+
+    if (!data || (slugURL && data.slug !== slugURL)) {
+      data = fallback[slugURL] || data;
+    }
+
+    if (!data) return;
+
+    // aplica imagem
+    if (data.img) midia.style.backgroundImage = `url("${data.img}")`;
+
+    // aplica tema (cores) via CSS variables
+    if (data.bg) document.documentElement.style.setProperty("--case-bg", data.bg);
+    if (data.txt) document.documentElement.style.setProperty("--case-txt", data.txt);
+  })();
+</script>
+
 </body>
 </html>

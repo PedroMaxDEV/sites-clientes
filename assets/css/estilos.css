@@ -3856,3 +3856,747 @@ html{ outline: 8px solid #ff00ff !important; }
   }
 }
 
+/* =========================================================
+   HERO (PC) — puxar o conjunto mais pra ESQUERDA
+   Cole no FINAL do estilos.css
+   ========================================================= */
+@media (min-width: 721px){
+
+  /* o grid do hero */
+  .hero__miolo{
+    display: grid !important;
+
+    /* mantém 2 colunas, mas com mais espaço pra foto */
+    grid-template-columns: minmax(520px, 1.05fr) minmax(520px, 0.95fr) !important;
+
+    gap: clamp(20px, 3vw, 56px) !important;
+    align-items: center !important;
+
+    /* ✅ isso “encosta” mais no lado esquerdo do miolo */
+    justify-content: start !important;
+
+    /* ✅ garante que não tem centralização via margin */
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  /* se o texto estiver “empurrado”, puxa a coluna do conteúdo */
+  .hero__conteudo,
+  .hero__texto,
+  .hero__card,
+  .sobre-hero__conteudo{
+    justify-self: start !important;
+  }
+
+  /* opcional: puxa o bloco do texto alguns px pra esquerda */
+  .sobre-hero__conteudo,
+  .hero__conteudo{
+    transform: translateX(-40px);
+  }
+}
+
+/* =========================================================
+   AJUSTE FINO (PC) — menos pra esquerda + fundo da direita 100%
+   Cole no FINAL do estilos.css
+   ========================================================= */
+@media (min-width: 721px){
+
+  /* 1) HERO: volta pro centro, com leve ajuste (bem menor) */
+  .hero__miolo{
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* se você tinha aplicado translateX grande, reduz aqui */
+  .sobre-hero__conteudo,
+  .hero__conteudo{
+    transform: translateX(-12px) !important; /* era -40px (muito). Agora é sutil. */
+  }
+
+  /* 2) FUNDO DA DIREITA: a mídia tem que ocupar o card inteiro */
+  .sobre-capa{
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .sobre-capa__miolo{
+    position: relative !important;
+  }
+
+  /* a camada da imagem vira “background” do card e cobre tudo */
+  .sobre-capa__midia{
+    position: absolute !important;
+    inset: 0 !important;               /* ✅ preenche 100% */
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    border-radius: inherit !important;  /* ✅ acompanha borda do card */
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .sobre-capa__img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;       /* ✅ preenche sem distorcer */
+    object-position: right center !important; /* puxa a pessoa mais pra direita */
+    display: block !important;
+    transform: translateX(0) !important; /* garante que não ficou empurrada */
+  }
+
+  /* texto sempre acima do fundo */
+  .sobre-capa__conteudo{
+    position: relative !important;
+    z-index: 2 !important;
+  }
+}
+
+
+
+/* =========================
+   HERO (MOBILE) — empilhado, sem cortes
+   ========================= */
+
+@media (max-width: 720px){
+
+  .hero__miolo{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    justify-items: center;
+    padding-top: 18px;
+    padding-bottom: 10px;
+  }
+
+  .hero__foto{
+    width: 100%;
+    max-width: 520px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+  }
+
+  .hero__foto img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sobre-capa{
+    width: 100%;
+    max-width: 520px;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  /* no mobile a mídia vira “textura” mais leve pra não atrapalhar leitura */
+  .sobre-capa__midia{
+    opacity: .12;
+  }
+
+  .sobre-capa__conteudo{
+    padding: 18px 16px 16px;
+  }
+
+  .sobre-capa__titulo{
+    font-size: clamp(28px, 7vw, 38px);
+    line-height: 1.08;
+    margin: 8px 0 12px;
+  }
+
+  .sobre-capa__texto{
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .sobre-capa__acoes{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .sobre-capa__acoes .botao{
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* =========================================
+   SOBRE-CAPA — FUNDO (MOBILE) APARECER
+   ========================================= */
+@media (max-width: 720px){
+
+  .sobre-capa{
+    position: relative;              /* necessário pro fundo absoluto */
+    isolation: isolate;              /* evita bug de z-index em alguns casos */
+  }
+
+  .sobre-capa__midia{
+    position: absolute;
+    inset: 0;                        /* preenche o card inteiro */
+    z-index: 0;
+    pointer-events: none;
+    opacity: .9990;                    /* controla o “quanto aparece” */
+  }
+
+  .sobre-capa__midia::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* “neblina” por cima pra não atrapalhar o texto */
+    background: linear-gradient(
+      180deg,
+      rgba(6, 23, 56, .55) 0%,
+      rgba(6, 23, 56, .78) 55%,
+      rgba(6, 23, 56, .92) 100%
+    );
+  }
+
+  .sobre-capa__img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;               /* preenche sem distorcer */
+    object-position: center;         /* centraliza o recorte */
+    display: block;
+    filter: saturate(1.05) contrast(1.05);
+  }
+
+  .sobre-capa__conteudo{
+    position: relative;
+    z-index: 1;                      /* texto acima do fundo */
+  }
+}
+/* =========================================
+   CHIPS — CENTRALIZAR (PC e MOBILE)
+   ========================================= */
+
+.sobre-hero__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;   /* ✅ centraliza os chips */
+  align-items: center;
+  width: 100%;
+  margin: 18px auto 0;       /* ✅ centraliza o bloco */
+}
+
+/* se o "miolo" estiver alinhando tudo pra esquerda,
+   isso garante que o bloco não fique "preso" */
+.sobre-hero__chips[aria-label]{
+  text-align: center;
+}
+
+/* =========================================================
+   CASES — Intro + Destaque + Cards + Detalhe (PC + Mobile)
+   Cole no FINAL do estilos.css
+   ========================================================= */
+
+.cases-intro{
+  padding: 46px 0 18px;
+}
+.cases-intro__miolo{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 26px;
+  align-items: stretch;
+}
+.cases-intro__rotulo{
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-size: .78rem;
+  opacity: .75;
+  margin: 0 0 12px;
+}
+.cases-intro__titulo{
+  margin: 0 0 14px;
+  line-height: 1.06;
+}
+.cases-intro__subtitulo{
+  margin: 0 0 18px;
+  max-width: 58ch;
+}
+.cases-intro__mini-cta{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Case destaque */
+.case-destaque{
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  box-shadow: 0 22px 60px rgba(0,0,0,.28);
+  min-height: 340px;
+}
+.case-destaque__midia{
+  position:absolute;
+  inset:0;
+}
+.case-destaque__midia img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.02);
+  transform: scale(1.02);
+  opacity: .42;
+}
+.case-destaque__conteudo{
+  position: relative;
+  z-index: 1;
+  padding: 22px 22px 20px;
+}
+.case-destaque__rotulo{
+  margin: 0 0 10px;
+  font-size: .78rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+.case-destaque__titulo{
+  margin: 0 0 12px;
+  line-height: 1.05;
+}
+.case-destaque__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.case-pill{
+  display:inline-flex;
+  align-items:center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  font-size: .85rem;
+}
+.case-destaque__linha{
+  margin: 0 0 10px;
+}
+.case-destaque__resultado{
+  font-weight: 700;
+}
+.case-destaque__acoes{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Cards */
+.grade-cases{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+.cartao--case .cartao__midia--case{
+  border-radius: 18px;
+  overflow: hidden;
+}
+.cartao--case .cartao__midia--case img{
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center;
+  display:block;
+}
+.cartao--case .cartao__cabecalho{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+.badge-metrica{
+  display:inline-flex;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  font-weight: 700;
+  font-size: .82rem;
+  white-space: nowrap;
+}
+.badge-metrica--grande{
+  padding: 10px 12px;
+  font-size: .86rem;
+}
+.cartao--case .cartao__texto--meta{
+  opacity: .95;
+}
+.cartao--case .cartao__rodape{
+  margin-top: 14px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cartao--case .cartao__tags{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tag-case{
+  display:inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  font-size: .78rem;
+  opacity: .92;
+}
+.botao--mini{
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+
+/* Aviso vazio */
+.aviso-lista-vazia{
+  grid-column: 1 / -1;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+}
+
+/* CTA final na página cases */
+.faixa-cta--cases{
+  margin-top: 26px;
+}
+
+/* Detalhe do case (meta) */
+.case-meta{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Mobile */
+@media (max-width: 900px){
+  .cases-intro__miolo{
+    grid-template-columns: 1fr;
+  }
+  .case-destaque{
+    min-height: 320px;
+  }
+  .grade-cases{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   PATCH MOBILE — CASES não sobrepor (grade-cases + cards)
+   Cole no FINAL do estilos.css
+   ========================================================= */
+
+@media (max-width: 900px){
+
+  /* 1) mata qualquer “carrossel”/flex herdado em grade-cases */
+  .grade-cases{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    padding-right: 0 !important;
+  }
+
+  .grade-cases > *{
+    min-width: 0 !important;
+    flex: none !important;
+    scroll-snap-align: unset !important;
+  }
+
+  /* 2) garante que o card não tenha position/transform herdado */
+  .cartao--case{
+    position: relative !important;
+    transform: none !important;
+    height: auto !important;
+  }
+
+  /* 3) imagem do card sempre “normal” (sem absolute/altura estranha) */
+  .cartao--case .cartao__midia--case{
+    border-radius: 18px !important;
+    overflow: hidden !important;
+  }
+
+  .cartao--case .cartao__midia--case img{
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+
+    position: static !important; /* mata qualquer absolute herdado */
+  }
+
+  /* 4) tipografia e layout interno do card no mobile */
+  .cartao--case .cartao__conteudo{
+    padding: 14px 14px 16px !important;
+  }
+
+  .cartao--case .cartao__cabecalho{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .cartao--case .cartao__titulo{
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+
+  .badge-metrica{
+    white-space: normal !important;
+  }
+
+  .cartao--case .cartao__rodape{
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .cartao--case .botao--mini{
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* 5) destaque: deixa a foto aparecer mais */
+  .case-destaque__midia img{
+    opacity: .60 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+
+
+  .case-destaque__thumb img{
+    width: 100% !important;
+    height: 170px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+  }
+}
+
+/* Desktop: thumb do destaque escondida (só fundo) */
+.case-destaque__thumb{ display:none; }
+
+/* =========================================================
+   FIX DEFINITIVO: CASES no mobile SEM carrossel/sem sobrepor
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+@media (max-width: 900px){
+
+  .grade-cases{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-flow: initial !important;
+    grid-auto-columns: initial !important;
+
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    mask-image: none !important;
+
+    gap: 16px !important;
+    padding: 0 !important;
+  }
+
+  .grade-cases > *{
+    min-width: 0 !important;
+    scroll-snap-align: unset !important;
+  }
+}
+
+/* =========================================================
+   MOBILE — Cases: foto sem corte + cards com altura consistente
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+@media (max-width: 900px){
+
+  /* Card vira “coluna” firme */
+  .cartao--case{
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  /* Frame da imagem: mesmo tamanho pra todos */
+  .cartao--case .cartao__midia--case{
+    border-radius: 18px !important;
+    overflow: hidden !important;
+
+    /* ✅ define um tamanho consistente */
+    aspect-ratio: 16 / 9 !important;
+    background: rgba(0,0,0,.18) !important;  /* disfarça barras */
+    border: 1px solid rgba(255,255,255,.10) !important;
+  }
+
+  /* Imagem SEM cortar (tamanho original proporcional) */
+  .cartao--case .cartao__midia--case img{
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;     /* ✅ não corta */
+    object-position: center !important;
+
+    display: block !important;
+  }
+
+  /* Conteúdo ocupa o restante e alinha o rodapé */
+  .cartao--case .cartao__conteudo{
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+  }
+
+  /* Rodapé sempre “colado” embaixo, igual em todos */
+  .cartao--case .cartao__rodape{
+    margin-top: auto !important;
+  }
+}
+
+
+/* =========================================================
+   PATCH — CARDS COM A MESMA ALTURA (mesmo com textos diferentes)
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+
+/* 1) Grades sempre esticam os itens */
+.grade-beneficios,
+.grade-servicos,
+.grade-servicos--pagina,
+.grade-cases,
+.grade-informacoes,
+.grade-ajuda{
+  align-items: stretch !important;
+}
+
+/* 2) Cada item ocupa toda a altura da “linha” da grade */
+.grade-beneficios > *,
+.grade-servicos > *,
+.grade-servicos--pagina > *,
+.grade-cases > *,
+.grade-informacoes > *,
+.grade-ajuda > *{
+  height: 100% !important;
+}
+
+/* 3) Card vira “coluna” e ocupa a altura inteira */
+.grade-beneficios .cartao,
+.grade-servicos .cartao,
+.grade-servicos--pagina .cartao,
+.grade-cases .cartao,
+.grade-informacoes .cartao,
+.grade-ajuda .cartao{
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 4) Conteúdo cresce e empurra ações/rodapé para baixo */
+.grade-beneficios .cartao__conteudo,
+.grade-servicos .cartao__conteudo,
+.grade-servicos--pagina .cartao__conteudo,
+.grade-cases .cartao__conteudo{
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Se tiver ações, fica sempre no “fundo” do card */
+.cartao__acoes,
+.cartao__rodape{
+  margin-top: auto !important;
+}
+
+/* 5) No mobile-carrossel: garante mesma altura visual também */
+@media (max-width: 720px){
+  .grade-beneficios,
+  .grade-servicos,
+  .grade-servicos--pagina,
+  .grade-cases{
+    align-items: stretch !important;
+  }
+}
+
+/* =========================================================
+   PATCH — pills menores (sem quebrar / sem ficar esquisito)
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+
+/* chips/pills menores e mais “compactos” */
+.case-pill,
+.tag-case{
+  font-size: 0.78rem !important;
+  padding: 6px 10px !important;
+  border-radius: 999px !important;
+
+  white-space: nowrap !important;      /* 1 linha */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;  /* mantém “...” se precisar */
+  max-width: 100% !important;
+}
+
+/* o “benefício”/pill de destaque (o que aparece grande) */
+.case-destaque__meta .case-pill{
+  font-size: 0.80rem !important;
+  padding: 7px 12px !important;
+}
+
+/* no mobile fica ainda mais compacto */
+@media (max-width: 720px){
+  .case-pill,
+  .tag-case{
+    font-size: 0.74rem !important;
+    padding: 6px 9px !important;
+  }
+}
+/* =========================================================
+   PATCH (PC) — pill “benefícios” menor (sem ficar esquisito)
+   Cole NO FINAL do estilos.css
+   ========================================================= */
+@media (min-width: 901px){
+
+  /* pills/pílulas menores e mais compactas no desktop */
+  .case-pill,
+  .tag-case{
+    font-size: 0.78rem !important;
+    padding: 6px 10px !important;
+
+    white-space: nowrap !important;      /* 1 linha */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;  /* “...” se passar */
+    max-width: 100% !important;
+  }
+
+  /* a linha onde ficam os pills (benefícios) pode encolher sem empurrar */
+  .case-destaque__meta,
+  .cartao--case .cartao__tags{
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+}
+.case-hero__midia{
+  width: 100%;
+  height: 100%;
+  min-height: 320px; /* ajusta se quiser */
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(255,255,255,0.04); /* fallback */
+  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+}
+

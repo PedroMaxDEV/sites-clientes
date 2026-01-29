@@ -9,9 +9,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Serviços | Samantha Ferreira</title>
-  <meta name="description" content="Serviços de advocacia empresarial: societário, contratos, compliance trabalhista, LGPD, marcas e gestão de riscos." />
+  <meta name="description" content="Serviços de advocacia empresarial: holding familiar, societário, contratos, compliance trabalhista, LGPD, marcas e gestão de riscos." />
   <link rel="icon" href="assets/img/favicon.png" />
-  <link rel="stylesheet" href="assets/css/estilos.css" />
+  <link rel="stylesheet" href="assets/css/estilos.css?v=20260128-1" />
 </head>
 
 <body>
@@ -24,183 +24,199 @@
       <nav class="menu-principal" aria-label="Menu principal">
         <a class="menu-principal__link" href="index.html">Início</a>
         <a class="menu-principal__link" href="sobre.html">Quem sou eu?</a>
-        <a class="menu-principal__link" href="servicos.html">Serviços</a>
+        <a class="menu-principal__link menu-principal__link--ativo" href="servicos.html">Serviços</a>
         <a class="menu-principal__link" href="cases.html">Cases</a>
         <a class="menu-principal__link" href="contato.html">Contato</a>
       </nav>
 
-      <!--<div class="cabecalho__acoes">
-          <a class="botao botao--destaque"
-             data-whats
-             data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
-            Contato
-          </a>
-        </div>-->
+      <!--
+      <div class="cabecalho__acoes">
+        <a class="botao botao--destaque"
+           data-whats
+           data-mensagem="Olá, Dra. Samantha! Gostaria de falar sobre uma consultoria em Direito Empresarial.">
+          Contato
+        </a>
+      </div>
+      -->
     </div>
   </header>
 
   <main>
-    <!-- Banner de serviços (bem na pegada da print de “Serviços”) -->
-    <section class="banner-interno banner-interno--servicos" aria-label="Serviços">
-      <div class="miolo banner-interno__miolo">
-        <div class="banner-interno__texto">
-          <h1 class="titulo-pagina">Serviços</h1>
-          <p class="texto-secao">
-            Atuação voltada a empresas que precisam de suporte jurídico claro, com prioridade em prevenção,
-            organização e decisões seguras. A ideia aqui é resolver o que é urgente sem perder o que é estratégico.
-          </p>
-        </div>
 
-        <div class="banner-interno__foto banner-interno__foto--faixa">
-          <!-- inserir imagens do topo: assets/img/servicos-foto-1.jpg / -2.jpg / -3.jpg -->
-          <img src="assets/img/servicos-foto-1.jpg" alt="" />
-          <img src="assets/img/servicos-foto-2.jpg" alt="" />
-          <img src="assets/img/servicos-foto-3.jpg" alt="" />
-        </div>
-      </div>
-    </section>
+<!-- BANNER PRINCIPAL (capa grande) -->
+<section class="capa-destaque" aria-label="Banner principal">
+  <div class="miolo capa-destaque__miolo">
+    <figure class="capa-destaque__frame">
+      <img
+        class="capa-destaque__img"
+        src="assets/img/banner-servicos.png"
+        alt="Banner: Advogada Empresarial — Samantha Ferreira — OAB/PE 66010"
+        loading="eager"
+      />
+    </figure>
 
+    <!-- Botão opcional embaixo (fica lindo e chama pro contato). Se não quiser, apaga esse bloco. 
+    <div class="capa-destaque__acoes">
+      <a class="botao botao--destaque botao--grande" href="contato.html">Falar agora</a>
+      <a class="botao" data-whats data-mensagem="Olá, Dra. Samantha! Vi seu banner no site e gostaria de falar sobre uma demanda empresarial.">
+        WhatsApp
+      </a>
+    </div>-->
+  </div>
+</section>
+
+
+
+
+    <!-- LISTA DE SERVIÇOS -->
     <section class="sessao">
       <div class="miolo">
+
         <h2 class="titulo-secao">Áreas de atuação</h2>
 
-        <!--
-          IMPORTANTE:
-          Assim que você anexar o DOCX, eu ajusto os textos exatamente como estiver lá.
-          Por enquanto, deixei descrições realistas e nada genéricas.
-        -->
         <div class="grade-servicos grade-servicos--pagina">
-          <article class="cartao cartao--servico">
-            <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-societario.jpg -->
-              <img src="assets/img/servico-societario.jpg" alt="" />
-            </div>
-            <h3 class="cartao__titulo">Societário e acordos de sócios</h3>
-            <p class="cartao__texto">
-              Estruturação e revisão de documentos societários para evitar conflitos, definir regras e proteger a operação.
-            </p>
-            <ul class="lista-curta">
-              <li>Regras de entrada e saída de sócios</li>
-              <li>Quóruns, poderes e responsabilidades</li>
-              <li>Organização de participações e governança</li>
-            </ul>
-          </article>
 
           <article class="cartao cartao--servico">
             <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-contratos.jpg -->
-              <img src="assets/img/servico-contratos.jpg" alt="" />
+              <img src="assets/img/servico-holding.jpg" alt="Holding familiar" />
             </div>
-            <h3 class="cartao__titulo">Contratos empresariais</h3>
+            <h3 class="cartao__titulo">Holding Familiar</h3>
             <p class="cartao__texto">
-              Contratos bem amarrados reduzem ruído e evitam prejuízo. O foco é deixar obrigações, prazos e riscos claros.
-            </p>
-            <ul class="lista-curta">
-              <li>Revisão e adequação de contratos existentes</li>
-              <li>Negociação com fornecedores e parceiros</li>
-              <li>Padronização de minutas e rotinas</li>
-            </ul>
-          </article>
-
-          <article class="cartao cartao--servico">
-            <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-compliance-trabalhista.jpg -->
-              <img src="assets/img/servico-compliance-trabalhista.jpg" alt="" />
-            </div>
-            <h3 class="cartao__titulo">Compliance trabalhista</h3>
-            <p class="cartao__texto">
-              Implementação e monitoramento de políticas trabalhistas para reduzir passivos e dar previsibilidade à gestão.
-            </p>
-            <ul class="lista-curta">
-              <li>Diagnóstico de risco e ajustes de rotina</li>
-              <li>Políticas internas e orientações de conduta</li>
-              <li>Treinamento de liderança e RH</li>
-            </ul>
-          </article>
-
-          <article class="cartao cartao--servico">
-            <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-defesa-trabalhista.jpg -->
-              <img src="assets/img/servico-defesa-trabalhista.jpg" alt="" />
-            </div>
-            <h3 class="cartao__titulo">Defesa trabalhista e contencioso</h3>
-            <p class="cartao__texto">
-              Atuação em demandas trabalhistas com estratégia processual, organização de documentos e postura técnica.
+              Blindagem patrimonial e sucessão planejada. Estruturamos a Holding para proteger seus ativos de litígios e eliminar o inventário,
+              garantindo a transferência controlada do legado via doação de cotas com usufruto. Te ajudo a organizar seu patrimônio, pagando menos
+              impostos através de planejamento e ferramentas jurídicas.
             </p>
           </article>
 
           <article class="cartao cartao--servico">
             <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-lgpd.jpg -->
-              <img src="assets/img/servico-lgpd.jpg" alt="" />
+              <img src="assets/img/servico-societario.jpg" alt="Governança e acordos de sócios" />
             </div>
-            <h3 class="cartao__titulo">LGPD e proteção de dados</h3>
+            <h3 class="cartao__titulo">Governança e Acordos de Sócios</h3>
             <p class="cartao__texto">
-              Adequação prática, com medidas proporcionais ao porte e ao risco real da operação — sem “teatro de conformidade”.
-            </p>
-            <ul class="lista-curta">
-              <li>Mapeamento de dados e fluxos</li>
-              <li>Termos, políticas e bases legais</li>
-              <li>Plano de ação e orientações de equipe</li>
-            </ul>
-          </article>
-
-          <article class="cartao cartao--servico">
-            <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-marcas.jpg -->
-              <img src="assets/img/servico-marcas.jpg" alt="" />
-            </div>
-            <h3 class="cartao__titulo">Registro e proteção de marcas</h3>
-            <p class="cartao__texto">
-              Gerenciamento do processo de registro e proteção de marca, com acompanhamento e orientações para evitar indeferimentos.
+              Estruturação para proteção e longevidade. Definimos regras claras em Acordos de Sócios e Governança, cobrindo entrada/saída de parceiros
+              e decisões estratégicas. Garanta segurança jurídica e a estabilidade do seu negócio contra conflitos e imprevistos.
             </p>
           </article>
 
           <article class="cartao cartao--servico">
             <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-gestao-riscos.jpg -->
-              <img src="assets/img/servico-gestao-riscos.jpg" alt="" />
+              <!-- Se você não tiver essa imagem ainda, pode apontar para uma que já existe -->
+              <img src="assets/img/servico-planejamento-societario.jpg" alt="Planejamento societário" />
             </div>
-            <h3 class="cartao__titulo">Gestão de riscos</h3>
+            <h3 class="cartao__titulo">Planejamento Societário</h3>
             <p class="cartao__texto">
-              Análise e reestruturação de processos internos para reduzir vulnerabilidades e fortalecer a governança corporativa.
+              Planeje o futuro do seu negócio com segurança. Desenhe a arquitetura societária ideal para fusões, aquisições ou sucessão,
+              assegurando a continuidade e a maximização do valor empresarial.
             </p>
           </article>
 
           <article class="cartao cartao--servico">
             <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-holding.jpg -->
-              <img src="assets/img/servico-holding.jpg" alt="" />
+              <img src="assets/img/servico-compliance-trabalhista.jpg" alt="Compliance trabalhista" />
             </div>
-            <h3 class="cartao__titulo">Holding familiar e planejamento</h3>
+            <h3 class="cartao__titulo">Compliance Trabalhista</h3>
             <p class="cartao__texto">
-              Estruturação para organização patrimonial e sucessória, com foco em segurança, continuidade e regras claras.
+              Implemente uma cultura de integridade. Estruture políticas de prevenção para eliminar passivos e garanta que suas relações de trabalho
+              sejam um diferencial competitivo, não um risco.
             </p>
           </article>
 
           <article class="cartao cartao--servico">
             <div class="cartao__midia">
-              <!-- inserir foto: assets/img/servico-mentoria.jpg -->
-              <img src="assets/img/servico-mentoria.jpg" alt="" />
+              <img src="assets/img/servico-defesa-trabalhista.jpg" alt="Contencioso trabalhista" />
             </div>
-            <h3 class="cartao__titulo">Mentorias e treinamentos</h3>
+            <h3 class="cartao__titulo">Contencioso Trabalhista</h3>
             <p class="cartao__texto">
-              Desenvolvimento de lideranças e equipes, com conteúdo aplicável ao dia a dia e alinhado à estratégia da empresa.
+              Defenda seu patrimônio com estratégia afiada. Conduzimos suas defesas em todas as instâncias, buscando a resolução mais vantajosa e célere
+              para proteger o caixa e a reputação da sua empresa.
             </p>
           </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <img src="assets/img/servico-contratos.jpg" alt="Contratos empresariais" />
+            </div>
+            <h3 class="cartao__titulo">Contratos Empresariais</h3>
+            <p class="cartao__texto">
+              Negocie com segurança. Elabore contratos que protegem sua empresa em cada cláusula e transforme seus acordos em instrumentos sólidos que
+              impulsionam parcerias e minimizam ambiguidade.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <img src="assets/img/servico-marcas.jpg" alt="Registro de marcas" />
+            </div>
+            <h3 class="cartao__titulo">Registro de Marcas</h3>
+            <p class="cartao__texto">
+              Proteja sua identidade imediatamente. Garanta a exclusividade do seu nome e logotipo com o registro no INPI e impeça que terceiros explorem
+              o valor construído pela sua marca.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <img src="assets/img/servico-lgpd.jpg" alt="Adequação LGPD" />
+            </div>
+            <h3 class="cartao__titulo">Adequação LGPD</h3>
+            <p class="cartao__texto">
+              Adapte-se agora à lei. Mapeie riscos, configure a governança e prove o compromisso com a privacidade. Evite as multas e construa a confiança
+              do consumidor.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <!-- Se você não tiver essa imagem ainda, pode apontar para uma que já existe -->
+              <img src="assets/img/servico-auditorias.jpg" alt="Auditorias internas" />
+            </div>
+            <h3 class="cartao__titulo">Auditorias Internas</h3>
+            <p class="cartao__texto">
+              Enxergue as vulnerabilidades antes que elas impactam seus resultados. Realize auditorias completas para obter um raio-X da sua operação e
+              receba um plano de ação imediato para neutralizar riscos jurídicos.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <!-- Se você não tiver essa imagem ainda, pode apontar para uma que já existe -->
+              <img src="assets/img/servico-processos.jpg" alt="Modelagem de processos" />
+            </div>
+            <h3 class="cartao__titulo">Modelagem de Processos</h3>
+            <p class="cartao__texto">
+              Modele e padronize seus fluxos de trabalho para que a rotina do seu time seja mais ágil, econômica e 100% em conformidade.
+            </p>
+          </article>
+
+          <article class="cartao cartao--servico">
+            <div class="cartao__midia">
+              <img src="assets/img/servico-mentoria.jpg" alt="Treinamentos e mentorias" />
+            </div>
+            <h3 class="cartao__titulo">Treinamentos &amp; Mentorias</h3>
+            <p class="cartao__texto">
+              Invista em treinamentos estratégicos que unem a técnica jurídica com a visão de gestão, desenvolvendo líderes que tomam decisões com segurança
+              e visão de negócio.
+            </p>
+          </article>
+
         </div>
 
+        <!-- CTA FINAL (como você pediu) -->
         <div class="faixa-cta">
           <div class="faixa-cta__texto">
-            <h3 class="faixa-cta__titulo">Se você me disser o segmento e o porte, eu te aponto o caminho.</h3>
-            <p class="faixa-cta__descricao">Sem enrolação — direto no que resolve e protege.</p>
+            <h3 class="faixa-cta__titulo">Quer blindar sua empresa com estrutura e estratégia?</h3>
+            <p class="faixa-cta__descricao">Me diga o cenário atual e eu te indico o próximo passo com clareza.</p>
           </div>
           <div class="faixa-cta__acoes">
-            <a class="botao botao--destaque" data-whats data-mensagem="Olá, Dra. Samantha! Vim pela página de serviços e quero falar sobre uma demanda.">
-              Falar no WhatsApp
+            <a class="botao botao--destaque"
+               data-whats
+               data-mensagem="Olá, Dra. Samantha! Vim pela página de serviços e quero blindar minha empresa.">
+              Quero blindar minha empresa!
             </a>
           </div>
         </div>
+
       </div>
     </section>
   </main>
@@ -222,7 +238,9 @@
     </div>
   </footer>
 
-  <a class="botao-whats-fixo" data-whats-flutuante data-mensagem="Olá, Dra. Samantha! Quero falar sobre serviços empresariais.">
+  <a class="botao-whats-fixo"
+     data-whats-flutuante
+     data-mensagem="Olá, Dra. Samantha! Quero blindar minha empresa.">
     <span aria-hidden="true">💬</span>
     <span class="botao-whats-fixo__texto">WhatsApp</span>
   </a>
