@@ -5233,3 +5233,161 @@ html{ outline: 8px solid #ff00ff !important; }
   border: 0;
   outline: 0;
 }
+
+
+
+
+
+
+
+/* =========================
+   SOBRE (hero) — foto esquerda maior + bordas arredondadas
+   Cole no FINAL do estilos.css
+   ========================= */
+
+/* dá mais “peso” pra coluna da foto (desktop) */
+.hero__miolo{
+  grid-template-columns: 1.15fr 1.85fr; /* foto maior */
+  gap: 44px;
+}
+
+/* container da foto */
+.hero__foto{
+  width: 100%;
+  max-width: 620px;        /* aumenta */
+  aspect-ratio: 4 / 3;     /* deixa mais “retangular” e imponente */
+  border-radius: 28px;     /* borda arredondada */
+  overflow: hidden;
+  margin: 0;               /* garante que não fica pequeno por margin auto */
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 22px 65px rgba(0,0,0,.35);
+}
+
+/* imagem em si */
+.hero__foto img,
+.hero__foto-img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* mobile: foto grande, centralizada, sem “quadradão” */
+@media (max-width: 860px){
+  .hero__miolo{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .hero__foto{
+    max-width: 92vw;
+    aspect-ratio: 1 / 1;   /* no celular fica mais “premium” */
+    border-radius: 24px;
+    margin-inline: auto;
+  }
+}
+
+
+ 
+/* =========================================
+   SOBRE (desktop) — Foto esquerda em formato FEED (1:1)
+   Cole no FINAL do estilos.css
+   ========================================= */
+
+@media (min-width: 721px){
+
+  /* Caixa da foto (quadrada, grande, premium) */
+  .hero__foto{
+    width: clamp(380px, 40vw, 560px);
+    max-width: none;
+    aspect-ratio: 1 / 1;         /* ✅ formato feed */
+    border-radius: 28px;         /* ✅ borda arredondada */
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 22px 60px rgba(0,0,0,0.28);
+
+    justify-self: center;
+    align-self: center;
+  }
+
+  /* Imagem preenche o quadrado sem distorcer (corta como feed) */
+  .hero__foto .hero__foto-img,
+  .hero__foto > img{
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+
+    object-fit: cover;          /* ✅ recorte estilo feed */
+    object-position: 50% 35%;   /* ajuste fino do enquadramento */
+  }
+}
+/* =========================================
+   SOBRE — FOTO ESQUERDA (DESKTOP) estilo FEED
+   ========================================= */
+@media (min-width: 721px){
+  .hero__foto--sobre{
+    width: min(560px, 42vw);      /* tamanho grande no PC */
+    aspect-ratio: 1 / 1;          /* formato feed (quadrado) */
+    height: auto;                 /* mata o height: clamp do frame de vídeo */
+    border-radius: 26px;          /* borda arredondada premium */
+    overflow: hidden;
+  }
+
+  .hero__foto--sobre img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;            /* preenche o quadrado */
+    object-position: center;
+    border-radius: inherit;
+    display: block;
+  }
+}
+/* SOBRE — força borda arredondada na foto (DESKTOP) */
+@media (min-width: 721px){
+  .hero__foto--sobre{
+    border-radius: 26px !important;
+    overflow: hidden !important;
+  }
+
+  .hero__foto--sobre img{
+    border-radius: 26px !important;
+    overflow: hidden !important;
+    display: block;
+  }
+}
+
+/* SOBRE — foto com borda arredondada (MOBILE + DESKTOP) */
+
+/* MOBILE */
+@media (max-width: 720px){
+  .hero__foto--sobre{
+    width: min(92vw, 420px);
+    margin: 0 auto 14px;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .hero__foto--sobre img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 22px;
+  }
+}
+
+/* DESKTOP (reforço) */
+@media (min-width: 721px){
+  .hero__foto--sobre{
+    border-radius: 26px !important;
+    overflow: hidden !important;
+  }
+
+  .hero__foto--sobre img{
+    border-radius: 26px !important;
+    display: block;
+  }
+}
