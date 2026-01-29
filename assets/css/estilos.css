@@ -5549,3 +5549,76 @@ html{ outline: 8px solid #ff00ff !important; }
     margin-top: 6px !important;
   }
 }
+
+
+
+/* =========================
+   PERFORMANCE (MOBILE) — remove blurs pesados que causam lag no scroll
+   ========================= */
+@media (max-width: 720px){
+
+  /* 1) Cabeçalho sticky: blur é pesado no celular */
+  .cabecalho{
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    /* mantém “premium”, só sem blur */
+    background: rgba(6, 23, 56, .96);
+  }
+
+  /* 2) Card do “Quem sou eu”: blur grande causa engasgo */
+  .sobre-capa__conteudo{
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(255,255,255, .06);
+  }
+
+  /* 3) Filters em imagens (drop-shadow) também pesam no scroll */
+  .sobre-capa__img,
+  .marca__logo{
+    filter: none;
+  }
+
+  /* 4) Se você tiver algum “brilho/blur” em pseudo-elemento do card, desliga no mobile */
+  .sobre-capa__midia::before,
+  .cartao--comercial::before{
+    filter: none;
+  }
+
+  /* 5) Opcional: se ainda sentir micro-travadinhas, corta animações de entrada no mobile */
+  body,
+  .cabecalho,
+  .hero,
+  .sessao,
+  .rodape{
+    animation: none !important;
+  }
+}
+
+/* =========================
+   AJUSTE DE CONTRASTE (MOBILE) — fundo menos claro sem blur
+   ========================= */
+@media (max-width: 720px){
+
+  /* Header: deixa mais fechado (mais escuro) */
+  .cabecalho{
+    background: rgba(6, 23, 56, .985);
+  }
+
+  /* Card do "Quem sou eu": escurece o glass (sem blur) */
+  .sobre-capa__conteudo{
+    background: rgba(6, 23, 56, .55);
+    border: 1px solid rgba(250, 206, 139, .18); /* mantém premium */
+  }
+
+  /* Texto um pouco mais “limpo” em cima do fundo escuro */
+  .sobre-capa__texto,
+  .sobre-capa__frase{
+    color: rgba(255,255,255,.88);
+  }
+
+  /* Se o banner/hero tiver fundo claro por algum gradiente, força um overlay mais escuro */
+  .hero{
+    background: radial-gradient(900px 500px at 20% 10%, rgba(14,65,111,.22), transparent 60%),
+                linear-gradient(180deg, rgba(6,23,56,.92), rgba(6,23,56,.98));
+  }
+}
