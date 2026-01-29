@@ -14,7 +14,7 @@
 
   // ⚠️ Caso queira mudar o numero:(apenas dígitos, com DDI + DDD)
   // Ex.: 55819999701844
-  const WHATSAPP_NUMERO = "55819999701844";
+  const WHATSAPP_NUMERO = "5581999701844";
 
   // Mensagem padrão quando o elemento não manda uma personalizada
   const MENSAGEM_PADRAO =
@@ -388,8 +388,9 @@ document.addEventListener("click", function (ev) {
     return;
   }
 
-  const flutuanteChat = ev.target.closest(".botao-whats-fixo[data-chatbot-flutuante]");
-  if (flutuanteChat) {
+  // ✅ Flutuante abre o chatbot se tiver data-chatbot-flutuante OU data-whats-flutuante
+  const flutuante = ev.target.closest(".botao-whats-fixo[data-chatbot-flutuante], .botao-whats-fixo[data-whats-flutuante]");
+  if (flutuante) {
     ev.preventDefault();
     abrir();
   }
