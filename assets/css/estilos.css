@@ -5391,3 +5391,161 @@ html{ outline: 8px solid #ff00ff !important; }
     display: block;
   }
 }
+
+/* =========================
+   FIX: Botão de som não sumir no MOBILE
+   (o botão estava no "rodapé" da moldura e era cortado)
+   ========================= */
+
+.midia-hero{ position: relative; }
+
+/* Evita que o botão seja cortado por containers */
+@media (max-width: 720px){
+  .hero__foto,
+  .midia-hero{
+    overflow: visible !important; /* se algum lugar estiver cortando */
+  }
+
+  /* No mobile: coloca o botão no TOPO (não depende do "pé" da moldura) */
+  .midia-hero__som{
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 12px;         /* <- aqui muda o jogo */
+    right: 12px;
+    left: auto;
+    bottom: auto;
+
+    z-index: 20;
+    pointer-events: auto;
+
+    padding: 10px 12px;
+    border-radius: 999px;
+
+    background: rgba(6, 23, 56, 0.82);
+    color: var(--cor-destaque);
+    border: 1px solid rgba(250, 206, 139, 0.35);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-size: 13px;
+    line-height: 1;
+    min-height: 42px;
+  }
+
+  /* Garante que o vídeo não fique "por cima" do botão */
+  .midia-hero__video{
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* =========================
+   MOBILE: remove a "borda" sobrando embaixo do vídeo
+   ========================= */
+@media (max-width: 720px){
+
+  /* a moldura/box do vídeo não pode ter altura fixa */
+  .midia-hero{
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 0 !important; /* se você tinha colocado espaço pro botão */
+  }
+
+  /* se existir um container maior por trás (moldura grande), zera a altura */
+  .hero__foto,
+  .hero__foto .midia-hero{
+    margin-bottom: 0 !important;
+  }
+
+  /* deixa o vídeo "mandar" na altura do box */
+  .midia-hero__video{
+    display: block;
+    width: 100%;
+    height: auto !important;
+    max-height: 68vh;          /* controla pra não ficar gigante */
+    border-radius: 20px;       /* opcional: mantém premium */
+    object-fit: cover;
+  }
+}
+@media (max-width: 720px){
+  .hero__foto::before,
+  .hero__foto::after,
+  .midia-hero::before,
+  .midia-hero::after{
+    display: none !important;
+  }
+}
+
+/* =========================
+   MOBILE: aproxima vídeo do texto abaixo
+   ========================= */
+@media (max-width: 720px){
+
+  /* tira o "respiro" extra do bloco do vídeo */
+  .hero__foto{
+    margin-bottom: 14px !important; /* ajusta aqui se quiser mais/menos */
+    padding-bottom: 0 !important;
+  }
+
+  /* se a moldura do vídeo também tiver margem, zera */
+  .midia-hero{
+    margin-bottom: 0 !important;
+  }
+
+  /* e reduz o topo da coluna de texto logo abaixo (se tiver) */
+  .hero__texto,
+  .hero__conteudo{
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* caso o espaçamento esteja vindo da própria seção/hero */
+  .hero{
+    padding-bottom: 18px !important; /* diminui o "vão" geral */
+  }
+}
+/* =========================
+   MOBILE: aproxima vídeo do texto (sessao--resumo)
+   ========================= */
+@media (max-width: 720px){
+
+  /* a seção toda estava com "respiro" demais */
+  .sessao--resumo{
+    padding-top: 22px;   /* ajuste fino */
+    padding-bottom: 18px;
+  }
+
+  /* aproxima vídeo do conteúdo (título "Segurança jurídica...") */
+  .sessao--resumo .hero__foto{
+    margin: 0 0 14px 0 !important;  /* diminui a distância */
+    padding: 0 !important;
+  }
+
+  /* garante que a moldura do vídeo não cria espaço extra */
+  .sessao--resumo .midia-hero{
+    margin: 0 !important;
+  }
+
+  /* se o container estiver com gap alto (grid/flex), força um gap menor */
+  .sessao--resumo .resumo__miolo{
+    gap: 1px !important;
+  }
+
+  /* evita margem extra no topo do bloco de texto */
+  .sessao--resumo .resumo__conteudo{
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* tira margem padrão de título/texto caso o browser esteja somando */
+  .sessao--resumo .resumo__rotulo{
+    margin-top: 0 !important;
+  }
+  .sessao--resumo .resumo__titulo{
+    margin-top: 6px !important;
+  }
+}
