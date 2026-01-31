@@ -13,6 +13,22 @@
   - Paleta concentrada no :root (fácil editar as cores)
 */
 
+
+/* =========================
+   FONTES (copy arredondada)
+   ========================= */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap");
+
+
+
+
+
+
+
+
+
+
+
 /* =========================
    1) BASE / VARIÁVEIS
    ========================= */
@@ -69,8 +85,7 @@
 
   /* Tipografia */
   --fonte-titulo: Georgia, "Times New Roman", Times, serif;
-  --fonte-texto: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-
+  --fonte-texto: "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   /* Medidas */
   --miolo: 1120px;
   --raio: 14px;
@@ -5624,3 +5639,700 @@ html{ outline: 8px solid #ff00ff !important; }
   */
 }
 
+
+
+
+
+
+
+
+
+/* =========================================
+   PATCH PERFORMANCE (MOBILE) — reduz “lag” no scroll
+   Mantém estética, corta blur/glow pesado
+   Cole no FINAL do estilos.css
+   ========================================= */
+
+@media (max-width: 720px){
+
+  /* 1) Blur do header é bonito, mas pesa no scroll */
+  .cabecalho{
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* mantém a aparência “premium” com fundo sólido */
+    background: rgba(6, 23, 56, .96) !important;
+  }
+
+  /* 2) Card comercial: o que mais pesa é backdrop-filter + glow com blur */
+  .cartao--comercial{
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    /* mantém o “vidro”, mas sem blur real */
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.045)) !important;
+
+    /* sombra mais leve (bem mais suave de renderizar) */
+    box-shadow: 0 14px 38px rgba(0,0,0,.28) !important;
+
+    /* ajuda o navegador a isolar pintura */
+    contain: paint;
+  }
+
+  /* 3) Desliga a aura externa (glow) que usa filter: blur() */
+  .cartao--comercial::after{
+    content: none !important;
+  }
+
+  /* 4) Mantém a borda “viva”, mas mais leve */
+  .cartao--comercial::before{
+    opacity: .65 !important;
+  }
+
+  /* 5) Elementos com sombras grandes: reduz custo */
+  .comercial__chamada{
+    box-shadow: 0 10px 22px rgba(0,0,0,.18) !important;
+  }
+
+  /* 6) Justify em blocos longos pode pesar no mobile (mantém cara boa e melhora fluidez) */
+  .texto-secao,
+  .comercial__texto{
+    text-align: left !important;
+  }
+}
+
+/* Opcional (se ainda sentir “engasgos”):
+   desliga animações de entrada no mobile (é sutil e melhora a rolagem em aparelhos fracos) */
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference){
+  body,
+  .cabecalho,
+  .hero,
+  .banner-interno,
+  .sessao,
+  .rodape,
+  .titulo-pagina,
+  .titulo-secao,
+  .texto-secao,
+  .botao,
+  .cartao,
+  .faixa-cta{
+    animation: none !important;
+  }
+}
+
+
+
+
+
+
+
+body{
+  font-family: var(--fonte-texto);
+}
+
+h1,h2,h3,h4,h5,h6,
+.titulo-pagina,
+.titulo-secao,
+.cartao__titulo{
+  font-family: var(--fonte-titulo);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   CASE (DETALHE) — AJUSTE MOBILE (textos + listas)
+   Corrige "buracos" do justify e organiza blocos no celular
+   ========================================================= */
+
+@media (max-width: 820px){
+
+  /* Empilha as colunas do detalhe do case (se ainda não estiver empilhando) */
+  .bloco-detalhe{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Dá respiro e "cara de card" em cada coluna (opcional, mas fica mais premium) */
+  .bloco-detalhe__coluna{
+    padding: 16px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.04);
+  }
+
+  /* Títulos mais estáveis no mobile */
+  .bloco-detalhe .titulo-secao{
+    margin: 18px 0 10px;
+    line-height: 1.15;
+  }
+  .bloco-detalhe .titulo-secao:first-child{
+    margin-top: 0;
+  }
+
+  /* ✅ O principal: NÃO usar justify no mobile (evita espaçamento esquisito) */
+  .bloco-detalhe .texto-secao,
+  .bloco-detalhe p{
+    text-align: left;
+    line-height: 1.7;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    word-break: normal;
+  }
+
+  /* Como os itens entram via JS nesses containers, eu forço o estilo aqui */
+  #case-o-que-foi-feito,
+  #case-resultados,
+  #case-ganhos{
+    margin-top: 10px;
+  }
+
+  #case-o-que-foi-feito ul,
+  #case-resultados ul,
+  #case-ganhos ul{
+    margin: 12px 0 0;
+    padding-left: 18px;
+  }
+
+  #case-o-que-foi-feito li,
+  #case-resultados li,
+  #case-ganhos li{
+    margin: 10px 0;
+    text-align: left;      /* evita “buracos” */
+    line-height: 1.65;
+  }
+
+  /* Se o JS estiver inserindo <p> ao invés de <ul>, melhora igual */
+  #case-o-que-foi-feito p,
+  #case-resultados p,
+  #case-ganhos p{
+    margin: 10px 0 0;
+    text-align: left;
+    line-height: 1.7;
+  }
+}
+
+/* =========================
+   VÍDEO (sessão resumo) — sem moldura + responsivo
+   Autor: Pedro Max
+   ========================= */
+
+/* 1) Mata qualquer “moldura/card” que esteja envolvendo o vídeo */
+.sessao--resumo .hero__foto,
+.sessao--resumo .midia-hero{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* 2) O container vira só o “palco” do vídeo (sem sombra/borda) */
+.sessao--resumo .midia-hero{
+  position: relative !important;
+  width: min(520px, 100%) !important;   /* DESKTOP: grande e bonito */
+  aspect-ratio: 9 / 16 !important;      /* formato instagram */
+  margin: 0 auto !important;
+  border-radius: 0 !important;          /* SEM borda arredondada (cliente pediu sem borda) */
+  overflow: hidden !important;
+}
+
+/* 3) Vídeo ocupa o container */
+.sessao--resumo .midia-hero__video{
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;         /* DESKTOP: estilo instagram (corta um pouco, fica “premium”) */
+}
+
+/* 4) Botão de som: força tamanho pequeno e overlay */
+.sessao--resumo .midia-hero__som{
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 10 !important;
+
+  /* FORÇA tamanho (pra não herdar regra global de botão) */
+  font-size: 13px !important;
+  line-height: 1 !important;
+  padding: 10px 12px !important;
+  border-radius: 999px !important;
+
+  color: #fff !important;
+  background: rgba(6, 23, 56, .70) !important;
+  border: 1px solid rgba(233, 217, 201, .35) !important;
+
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+
+  width: auto !important;
+  max-width: 180px !important;
+  white-space: nowrap !important;
+}
+
+/* 5) Quando “ativo” (som ligado) — mantém padrão premium */
+.sessao--resumo .midia-hero__som--ativo{
+  color: #061738 !important;
+  background: rgba(233, 217, 201, .92) !important;
+  border-color: rgba(233, 217, 201, .72) !important;
+}
+
+/* =========================
+   MOBILE: caber ela inteira na tela (sem cortar) + não ficar gigante
+   ========================= */
+@media (max-width: 680px){
+  /* Limita a altura do vídeo pra não ficar enorme */
+  .sessao--resumo .midia-hero{
+    width: min(360px, 100%) !important;
+    max-height: 62vh !important;      /* <<< aqui resolve “ficou grande demais” */
+    height: auto !important;
+    border-radius: 0 !important;      /* continua sem borda */
+  }
+
+  /* No mobile: mostra o corpo todo (sem cortar) */
+  .sessao--resumo .midia-hero__video{
+    object-fit: contain !important;   /* <<< caber ela inteira */
+    background: rgba(6, 23, 56, .35) !important; /* preenche laterais sem “moldura” */
+  }
+
+  /* Botão menor ainda no celular */
+  .sessao--resumo .midia-hero__som{
+    top: 10px !important;
+    right: 10px !important;
+    font-size: 12px !important;
+    padding: 9px 10px !important;
+    max-width: 160px !important;
+  }
+}
+/* =========================
+   VÍDEO HERO (sem moldura + estilo instagram)
+   (cole no FINAL do estilos.css)
+   ========================= */
+
+/* 1) Remove a moldura SOMENTE quando for vídeo */
+.hero__foto.hero__foto--video{
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  overflow: hidden;
+  border-radius: 22px; /* arredondado premium (não é borda) */
+}
+
+/* 2) Container do vídeo */
+.hero__foto--video .midia-hero{
+  position: relative;
+  width: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 3) Vídeo responsivo */
+.hero__foto--video .midia-hero__video{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* desktop: preenche bonito */
+}
+
+/* 4) Desktop: “estilo instagram” (9:16) e grande */
+@media (min-width: 900px){
+  .hero__foto.hero__foto--video{
+    width: min(520px, 100%);
+    margin-inline: auto;
+  }
+
+  .hero__foto--video .midia-hero{
+    aspect-ratio: 9 / 16;
+    max-height: 560px;
+  }
+}
+
+/* 5) Mobile: caber ela inteira (sem ficar gigante) */
+@media (max-width: 899px){
+  .hero__foto.hero__foto--video{
+    width: 100%;
+    margin-inline: 0;
+    border-radius: 20px;
+  }
+
+  .hero__foto--video .midia-hero{
+    aspect-ratio: 9 / 16;
+    max-height: 78vh;        /* NÃO fica gigante */
+    border-radius: 20px;
+    background: rgba(6, 23, 56, 0.35); /* se sobrar “faixa” com contain */
+  }
+
+  .hero__foto--video .midia-hero__video{
+    object-fit: contain; /* mostra ela inteira */
+    background: transparent;
+  }
+}
+
+/* 6) Botão de som: pequeno, sempre visível, sem “virar gigante” */
+.hero__foto--video .midia-hero__som{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  width: auto;
+  max-width: 190px;
+
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1;
+
+  border-radius: 999px;
+  border: 1px solid rgba(233,217,201,.22);
+  background: rgba(6,23,56,.70);
+  color: #E9D9C9;
+
+  cursor: pointer;
+  z-index: 5;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 899px){
+  .hero__foto--video .midia-hero__som{
+    top: 10px;
+    right: 10px;
+    padding: 9px 12px;
+    font-size: 13px;
+    max-width: 170px;
+  }
+}
+
+/* feedback quando estiver com som */
+.hero__foto--video .midia-hero__som.midia-hero__som--ativo{
+  background: rgba(233,217,201,.92);
+  color: #061738;
+  border-color: rgba(233,217,201,.35);
+}
+
+/* =========================================
+   VÍDEO (PC + MOBILE) — FRAME PREMIUM
+   Cola no FINAL do estilos.css
+   ========================================= */
+
+/* GARANTE que o container do vídeo seja o “frame” */
+.hero__foto.hero__foto--video,
+.hero__foto.hero__foto--video .midia-hero{
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+/* Borda premium (leve) e sem sombra pesada */
+.hero__foto.hero__foto--video{
+  border: 1px solid rgba(233,217,201,.16);
+  box-shadow: none !important;
+  background: rgba(6,23,56,.18); /* só pra dar profundidade */
+}
+
+/* Desktop: deixa com cara de Reels (9:16) e centraliza */
+@media (min-width: 900px){
+  .hero__foto.hero__foto--video{
+    width: min(520px, 100%);
+    margin-inline: auto;
+  }
+
+  .hero__foto.hero__foto--video .midia-hero{
+    aspect-ratio: 9 / 16;
+    max-height: 560px;
+    background: rgba(6,23,56,.25);
+  }
+
+  .hero__foto.hero__foto--video .midia-hero__video{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+/* Mobile: mantém ela inteira (contain) e não deixa gigante */
+@media (max-width: 899px){
+  .hero__foto.hero__foto--video{
+    border-radius: 22px;
+  }
+
+  .hero__foto.hero__foto--video .midia-hero{
+    aspect-ratio: 9 / 16;
+    max-height: 78vh;
+    background: rgba(6,23,56,.30);
+    border-radius: 22px;
+  }
+
+  .hero__foto.hero__foto--video .midia-hero__video{
+    object-fit: contain;
+    background: transparent;
+  }
+}
+
+/* =========================================
+   BOTÃO SOM — corrigir “oval gigante” no PC
+   (zera qualquer regra herdada de botão do site)
+   ========================================= */
+
+.hero__foto--video .midia-hero__som{
+  position: absolute !important;
+  top: 14px;
+  right: 14px;
+  left: auto !important;
+
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 190px !important;
+
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+
+  border-radius: 999px !important;
+  border: 1px solid rgba(233,217,201,.22) !important;
+
+  background: rgba(6,23,56,.72) !important;
+  color: #E9D9C9 !important;
+
+  box-shadow: none !important;
+  transform: none !important;
+  z-index: 6 !important;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Se teu CSS geral cria “fundo” via pseudo-elemento, mata aqui */
+.hero__foto--video .midia-hero__som::before,
+.hero__foto--video .midia-hero__som::after{
+  content: none !important;
+}
+
+/* Mobile: botão um pouco menor */
+@media (max-width: 899px){
+  .hero__foto--video .midia-hero__som{
+    top: 10px;
+    right: 10px;
+    padding: 9px 12px !important;
+    font-size: 13px !important;
+    max-width: 170px !important;
+  }
+}
+
+/* Estado ativo (som ligado) */
+.hero__foto--video .midia-hero__som.midia-hero__som--ativo{
+  background: rgba(233,217,201,.92) !important;
+  color: #061738 !important;
+  border-color: rgba(233,217,201,.35) !important;
+}
+
+/* =========================================
+   VÍDEO (estilo Instagram) + BOTÃO DE SOM
+   Cole no FINAL do estilos.css
+   ========================================= */
+
+.midia-hero{
+  position: relative;
+  width: 100%;
+  max-width: 720px;          /* controla tamanho no desktop */
+  margin: 0 auto;
+  border-radius: 22px;        /* borda arredondada */
+  overflow: hidden;           /* corta o vídeo dentro da borda */
+  background: #061738;        /* fundo caso tenha “barras” */
+  border: 0 !important;       /* remove bordas/molduras antigas */
+  box-shadow: none !important;/* remove sombra/moldura antiga */
+}
+
+/* Desktop: vídeo “wide” */
+.midia-hero__video{
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;      /* formato bonito no PC */
+  height: auto;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Botão do som: “reseta” qualquer estilo gigante (tipo .botao) */
+.midia-hero__som,
+.js-toggle-som{
+  all: unset;                 /* remove estilos herdados que criam a “oval gigante” */
+  box-sizing: border-box;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  font: 600 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #fff;
+  cursor: pointer;
+
+  background: rgba(6, 23, 56, 0.72);
+  border: 1px solid rgba(255,255,255,0.16);
+
+  /* evita ficar enorme por regras antigas */
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 92%;
+  white-space: nowrap;
+}
+
+/* Estado “ativo” (quando está com som) */
+.midia-hero__som--ativo{
+  background: rgba(233, 217, 201, 0.90);
+  color: #061738;
+  border-color: rgba(233, 217, 201, 0.55);
+}
+
+/* Mobile: estilo “story” SEM ficar gigante e cabendo a pessoa inteira */
+@media (max-width: 900px){
+  .midia-hero{
+    max-width: 420px;
+    /* altura controlada pra NÃO ficar enorme */
+    height: min(62vh, 520px);
+    border-radius: 20px;
+  }
+
+  .midia-hero__video{
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;      /* mostra ela inteira */
+    background: #061738;      /* “barras” ficam elegantes */
+  }
+
+  .midia-hero__som,
+  .js-toggle-som{
+    top: 10px;
+    right: 10px;
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile bem pequeno: dá mais uma enxugada */
+@media (max-width: 380px){
+  .midia-hero{
+    height: min(58vh, 480px);
+  }
+  .midia-hero__som,
+  .js-toggle-som{
+    padding: 8px 9px;
+    font-size: 11.5px;
+  }
+}
+/* =========================================
+   VÍDEO DO RESUMO (vertical tipo Instagram)
+   - sem moldura/sombra
+   - 9:16 de verdade (não corta)
+   - botão de som pequeno e fixo
+   Cole no FINAL do estilos.css
+   ========================================= */
+
+/* 1) Remove a “moldura” do .hero__foto só nessa seção do vídeo */
+.sessao--resumo .hero__foto{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* 2) Define um frame vertical (9:16) pro vídeo */
+.sessao--resumo .midia-hero{
+  position: relative;
+  width: 100%;
+  max-width: 560px;          /* PC: aumenta sem ficar gigante */
+  aspect-ratio: 9 / 16;      /* VERTICAL */
+  border-radius: 22px;       /* cantos “premium” */
+  overflow: hidden;          /* recorta cantos arredondados */
+  background: #000;          /* evita “faixas claras” nas laterais */
+}
+
+/* 3) Não cortar o vídeo: mostra ele INTEIRO */
+.sessao--resumo .midia-hero__video{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain !important; /* ESSENCIAL: não corta */
+  object-position: center;
+}
+
+/* 4) Botão de som (pequeno e sempre visível) */
+.sessao--resumo .midia-hero__som{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(6, 23, 56, .62);
+  color: #fff;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 5) MOBILE: garante que caiba ela inteira na tela (altura limitada) */
+@media (max-width: 768px){
+  .sessao--resumo .midia-hero{
+    /* largura baseada na altura da tela pra não ficar “grande demais” */
+    width: min(92vw, calc(70vh * 9 / 16));
+    max-width: none;
+    margin: 0 auto;
+    border-radius: 18px;
+  }
+
+  .sessao--resumo .midia-hero__som{
+    top: 10px;
+    right: 10px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  /* aproxima do texto abaixo (se estava “longe demais”) */
+  .sessao--resumo .resumo__miolo{
+    gap: 18px;
+  }
+}
