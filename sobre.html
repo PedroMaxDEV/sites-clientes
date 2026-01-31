@@ -11,7 +11,7 @@
   <title> Quem sou eu?</title>
   <meta name="description" content="Conheça a atuação e o propósito profissional da advogada empresarial Samantha Ferreira." />
    <link rel="icon" href="assets/img/logo-samantha.png" />
-  <link rel="stylesheet" href="assets/css/estilos.css?v=1" />
+  <link rel="stylesheet" href="assets/css/estilos.css?v=3" />
 </head>
 
 <body>
@@ -109,36 +109,64 @@
 </section>
 
 
+<!-- VÍDEO + INFORMAÇÕES PROFISSIONAIS (layout 2 colunas no PC) -->
+<section class="sessao sessao--trajetoria" aria-label="Trajetória e informações profissionais">
+  <div class="miolo trajetoria__grid">
 
+    <!-- ESQUERDA: VÍDEO (story / vertical) -->
+    <div class="trajetoria__video">
+      <div class="midia-hero midia-hero--story">
+        <video
+          class="midia-hero__video js-video-visivel"
+          playsinline
+          preload="metadata"
+          muted
+          loop
+          poster="assets/img/sobre-advogada.png"
+        >
+          <source src="assets/video/01_tragetoria2.mp4" type="video/mp4" />
+        </video>
 
+        <button class="midia-hero__som js-toggle-som" type="button" aria-label="Ativar som">
+          🔊 Ativar som
+        </button>
+      </div>
+    </div>
 
+    <!-- DIREITA: INFORMAÇÕES PROFISSIONAIS -->
+    <div class="trajetoria__infos">
+      <h2 class="titulo-secao">Informações Profissionais</h2>
 
-    <!-- CONTEÚDO DO SOBRE -->
-    <section class="sessao sessao--sobre-conteudo">
-      <div class="miolo">
-        <h2 class="titulo-secao">Informações profissionais</h2>
-
-        <div class="grade-informacoes">
-          <div class="cartao cartao--info">
-            <h3 class="cartao__titulo">Registro</h3>
-            <p class="cartao__texto"><strong>OAB/PE:</strong> 66010</p>
-          </div>
-
-          <div class="cartao cartao--info">
-            <h3 class="cartao__titulo">Áreas de atuação</h3>
-            <p class="cartao__texto">
-              Direito Empresarial, Compliance Trabalhista, Contratos, LGPD, Marcas, Gestão de Riscos, Societário.
-            </p>
-          </div>
-
-          <div class="cartao cartao--info">
-            <h3 class="cartao__titulo">Atuação complementar</h3>
-            <p class="cartao__texto">
-              Mentorias e treinamentos voltados para gestão, liderança e fortalecimento de rotinas internas.
-            </p>
-          </div>
+      <div class="grade-informacoes">
+        <div class="cartao cartao--info">
+          <h3 class="cartao__titulo">Registro</h3>
+          <p class="cartao__texto"><strong>OAB/PE:</strong> 66010</p>
         </div>
 
+        <div class="cartao cartao--info">
+          <h3 class="cartao__titulo">Áreas de atuação</h3>
+          <p class="cartao__texto">
+            Direito Empresarial, Compliance Trabalhista, Contratos, LGPD, Marcas, Gestão de Riscos, Societário.
+          </p>
+        </div>
+
+        <div class="cartao cartao--info">
+          <h3 class="cartao__titulo">Atuação complementar</h3>
+          <p class="cartao__texto">
+            Mentorias e treinamentos voltados para gestão, liderança e fortalecimento de rotinas internas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+</section>
         <div class="linha-separadora"></div>
 
         <h2 class="titulo-secao">Como eu posso ajudar</h2>
@@ -263,6 +291,6 @@
 
   </div>
 
-  <script src="assets/js/principal.js"></script>
+  <script src="assets/js/principal.js?v=1"></script>
 </body>
 </html>

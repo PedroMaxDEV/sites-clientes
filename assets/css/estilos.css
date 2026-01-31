@@ -5746,7 +5746,7 @@ h1,h2,h3,h4,h5,h6,
 
 
 
-
+/*pode apagar aqui para restarar videos na horizonttal*/
 
 
 
@@ -6334,5 +6334,614 @@ h1,h2,h3,h4,h5,h6,
   /* aproxima do texto abaixo (se estava “longe demais”) */
   .sessao--resumo .resumo__miolo{
     gap: 18px;
+  }
+}
+/*pode apagar aqui para restarar videos na horizonttal*/
+
+
+
+/* ================================
+   FIX MOBILE: texto “espaçado” (justify)
+   Mantém o desktop igual e corrige só no celular
+   ================================ */
+@media (max-width: 900px){
+  .texto-secao,
+  .hero__texto,
+  .comercial__texto,
+  .cartao__texto,
+  .resumo__texto,
+  .pilar__texto{
+    text-align: left;          /* remove o justify no mobile */
+    text-justify: auto;
+    word-spacing: normal;      /* desfaz “buracos” entre palavras */
+    letter-spacing: normal;
+
+    /* melhora quebra de linha */
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+
+    /* se quiser testar justify com menos “buracos”, deixe ligado.
+       Mesmo com text-align:left, isso ajuda em algumas quebras */
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+/* ================================
+   FIX GLOBAL: remove “buracos” do justify no site todo
+   (aplica no PC + mobile)
+   ================================ */
+
+/* 1) Conteúdo / copy sempre bem alinhado */
+.texto-secao,
+.hero__texto,
+.comercial__texto,
+.cartao__texto,
+.resumo__texto,
+.pilar__texto{
+  text-align: left;         /* tira justify que estica os espaços */
+  text-justify: auto;
+  word-spacing: normal;     /* normaliza espaçamento entre palavras */
+  letter-spacing: normal;
+  line-height: 1.65;        /* melhora leitura/organização */
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* 2) Se você tinha algum justify “genérico” pegando tudo, isso evita */
+p{
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+
+/* =========================
+   DESKTOP: VÍDEO ESQUERDA + CARDS DIREITA
+   (sem moldura grande / layout premium)
+   ========================= */
+
+/* só PC */
+@media (min-width: 901px){
+
+  /* 1) O "miolo" vira grid: vídeo | conteúdo */
+  .sessao--video-story .miolo,
+  .sessao--resumo .miolo,
+  .sessao--quem-sou-eu .miolo,
+  .resumo__miolo{
+    display: grid;
+    grid-template-columns: minmax(420px, 520px) 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* 2) Bloco do vídeo (lado esquerdo) */
+  .sessao--video-story .video-story__card,
+  .sessao--video-story .midia-hero,
+  .sessao--video-story .hero__foto,
+  .sessao--video-story .hero__foto .midia-hero{
+    width: 100%;
+  }
+
+  /* card do vídeo SEM moldura enorme */
+  .sessao--video-story .video-story__card{
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+
+    /* tamanho premium */
+    max-width: 520px;
+  }
+
+  /* mantém o vídeo vertical e grande */
+  .sessao--video-story .midia-hero{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border-radius: 22px;     /* moldura elegante */
+    overflow: hidden;        /* corta certinho nas bordas */
+    background: #050e1f;     /* fallback */
+  }
+
+  .sessao--video-story .midia-hero__video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* preenche sem deformar */
+    display: block;
+  }
+
+  /* botão de som: discreto e fixo no topo-direito do vídeo */
+  .sessao--video-story .midia-hero__som{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    max-width: 70%;
+    white-space: nowrap;
+
+    background: rgba(6, 23, 56, 0.72);
+    border: 1px solid rgba(233, 217, 201, 0.22);
+    color: #fff;
+    backdrop-filter: blur(10px);
+  }
+
+  /* 3) Coluna da direita: título + cards */
+  .sessao--video-story .infos-profissionais,
+  .sessao--video-story .informacoes-profissionais,
+  .sessao--video-story .infos,
+  .sessao--video-story .conteudo-direita{
+    width: 100%;
+  }
+
+  /* Se o seu H2 "Informações profissionais" estiver na coluna direita,
+     garantimos que ele não fique muito afastado */
+  .sessao--video-story h2,
+  .sessao--video-story .titulo-secao{
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+
+  /* 4) Grade dos 3 cards na direita bem organizada */
+  .sessao--video-story .grade-infos,
+  .sessao--video-story .grade-profissional,
+  .sessao--video-story .grade-beneficios,
+  .sessao--video-story .informacoes-profissionais__grade,
+  .sessao--video-story .infos-profissionais__grade{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Se os cards usam a classe .cartao */
+  .sessao--video-story .cartao{
+    margin: 0;
+  }
+
+  /* Opcional: deixa os cards mais “firmes” no desktop */
+  .sessao--video-story .cartao{
+    border-radius: 18px;
+    padding: 18px 18px;
+  }
+
+  /* 5) Espaçamento geral da seção (pra não colar em cima/baixo) */
+  .sessao--video-story{
+    padding-top: 26px;
+    padding-bottom: 34px;
+  }
+}
+/* =========================================
+   SOBRE — VÍDEO + INFOS (layout premium)
+   Autor: Pedro Max
+   ========================================= */
+
+/* GRID do bloco (PC) */
+.sessao--trajetoria .trajetoria__grid{
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Coluna do vídeo */
+.trajetoria__video{
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+
+
+/* Vídeo SEM CORTAR (mostra tudo) */
+.midia-hero--story .midia-hero__video{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;              /* <- não corta nada */
+  background: rgba(0,0,0,.20);      /* “letterbox” discreto se precisar */
+}
+
+/* Botão de som (tamanho controlado) */
+.midia-hero--story .midia-hero__som{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 1;
+  max-width: 70%;
+  white-space: nowrap;
+}
+
+/* Coluna das infos (direita) */
+.trajetoria__infos .titulo-secao{
+  margin-top: 0;
+}
+
+/* Deixa as infos mais “arrumadas” no PC */
+.sessao--trajetoria .grade-informacoes{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 900px){
+  .sessao--trajetoria .trajetoria__grid{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .trajetoria__video{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .midia-hero--story{
+    width: min(420px, 100%);
+    border-radius: 26px;  /* mais “premium” no mobile */
+  }
+
+  .midia-hero--story .midia-hero__som{
+    top: 12px;
+    right: 12px;
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .trajetoria__infos{
+    width: 100%;
+  }
+}
+
+
+
+/* =========================================================
+   PATCH — SOBRE (PC): vídeo à esquerda + Informações à direita
+   Objetivo: coluna da direita com a MESMA altura do vídeo
+   (Cole no FINAL do estilos.css)
+   ========================================================= */
+
+/* 1) Corrige os "espaços enormes" do texto (mobile e PC)
+   (o culpado é text-align: justify em colunas estreitas) */
+.texto-secao,
+.cartao__texto,
+.info__texto,
+.hero__texto,
+.comercial__texto,
+.comercial__cta-texto{
+  text-align: left;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* 2) PC: layout 2 colunas (vídeo esquerda / infos direita) */
+:root{
+  --sobre-video-h: clamp(520px, 62vh, 680px); /* altura do vídeo no PC */
+  --sobre-video-w: min(420px, 36vw);          /* largura do vídeo no PC */
+}
+
+@media (min-width: 980px){
+
+  /* IMPORTANTE:
+     Isso assume que o bloco do vídeo (ex.: .video-story)
+     está DENTRO da mesma .miolo da seção de info (sessao--info),
+     antes do h2 e da .grade-informacoes. */
+  .sessao--info .miolo{
+    display: grid;
+    grid-template-columns: var(--sobre-video-w) 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+
+  /* vídeo ocupa a esquerda, do topo até embaixo */
+  .sessao--info .video-story{
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: var(--sobre-video-w);
+  }
+
+  /* garante altura fixa (não estica com o conteúdo da direita) */
+  .sessao--info .video-story,
+  .sessao--info .video-story__wrap{
+    height: var(--sobre-video-h);
+  }
+
+  /* deixa o vídeo SEM CORTAR (vertical completo) */
+  .sessao--info .video-story video{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;              /* <- sem crop */
+    background: rgba(0,0,0,.18);      /* “barra” discreta se sobrar espaço */
+    display: block;
+    border-radius: 22px;             /* premium */
+  }
+
+  /* título vai para a coluna da direita */
+  .sessao--info .titulo-secao{
+    grid-column: 2;
+    grid-row: 1;
+    margin: 6px 0 0 0;
+  }
+
+  /* a grade dos 3 cards fica travada na altura do vídeo */
+  .sessao--info .grade-informacoes{
+    grid-column: 2;
+    grid-row: 2;
+    height: var(--sobre-video-h);
+    margin-top: 18px;
+
+    display: grid;
+    grid-template-rows: repeat(3, 1fr); /* 3 cards dividindo a altura */
+    gap: 18px;
+  }
+
+  /* cada card ocupa sua “fatia” e centraliza melhor o conteúdo */
+  .sessao--info .cartao--info{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+
+/* =========================================
+   SOBRE — VÍDEO STORY + INFOS (PC)
+   - sem barras em cima/baixo
+   - sem corte
+   - título mais bonito
+   ========================================= */
+@media (min-width: 981px){
+
+  /* controla o tamanho do vídeo no PC */
+  .sessao--trajetoria{
+    --video-h: clamp(560px, 72vh, 760px);
+    --gap: 28px;
+  }
+
+  .sessao--trajetoria .trajetoria__grid{
+    display: grid;
+    grid-template-columns: minmax(320px, 460px) 1fr;
+    gap: var(--gap);
+    align-items: start;
+  }
+
+  /* ===== VÍDEO (sem “borda” e sem corte) ===== */
+  .sessao--trajetoria .trajetoria__video .midia-hero--story{
+    /* remove qualquer “card” grande atrás */
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+
+    /* o segredo: container com proporção de story */
+    height: var(--video-h);
+    aspect-ratio: 9 / 16;
+    width: auto;
+
+    border-radius: 26px;
+    overflow: hidden;
+
+    /* deixa o vídeo colado na esquerda, sem sobras */
+    display: block;
+  }
+
+  .sessao--trajetoria .trajetoria__video .midia-hero__video{
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* não corta NADA */
+    background: transparent; /* não cria “barras” escuras */
+    display: block;
+  }
+
+  /* botão som no canto (tamanho elegante) */
+  .sessao--trajetoria .trajetoria__video .midia-hero__som{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+  }
+
+  /* ===== COLUNA DIREITA (altura igual ao vídeo) ===== */
+  .sessao--trajetoria .trajetoria__infos{
+    height: var(--video-h);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* título sem quebra feia e com cara premium */
+  .sessao--trajetoria .trajetoria__infos .titulo-secao{
+    font-size: clamp(34px, 3vw, 52px);
+    line-height: 1.04;
+    letter-spacing: 0.2px;
+    margin: 0 0 16px 0;
+    max-width: 18ch; /* evita ficar “gigante” atravessando */
+  }
+
+  .sessao--trajetoria .trajetoria__infos .grade-informacoes{
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* cards um pouco menores pra caber na altura do vídeo */
+  .sessao--trajetoria .trajetoria__infos .cartao--info{
+    padding: 16px 18px;
+  }
+
+  /* se o último card for grande, ele rola por dentro (não estoura a altura) */
+  .sessao--trajetoria .trajetoria__infos .cartao--info:last-child{
+    min-height: 0;
+    overflow: auto;
+  }
+}
+
+
+/* =========================================================
+   SOBRE — CONTROLE FÁCIL DO BLOCO DA DIREITA (PC)
+   Autor: Pedro Max
+   Como usar:
+   - Ajuste --infos-w (largura do bloco da direita)
+   - Ajuste --gap (distância entre vídeo e infos)
+   - Ajuste --video-h (altura do vídeo e da coluna direita)
+   ========================================================= */
+
+@media (min-width: 981px){
+
+  /* 🔧 CONTROLES (mude aqui quando quiser) */
+  .sessao--trajetoria{
+    --video-h: 680px;         /* altura do vídeo e do bloco da direita */
+    --infos-w: 640px;         /* ✅ LARGURA DO BLOCO DA DIREITA (diminua aqui) */
+    --gap: 12px;              /* distância do vídeo para os textos */
+  }
+
+  /* grid: vídeo + infos */
+  .sessao--trajetoria .trajetoria__grid{
+    display: grid;
+    grid-template-columns: auto var(--infos-w);
+    gap: var(--gap);
+    align-items: start;
+  }
+
+  /* ✅ vídeo colado nos textos (sem sobras “card”) */
+  .sessao--trajetoria .trajetoria__video{
+    justify-self: end; /* encosta o vídeo para a direita do lado dele */
+  }
+
+  .sessao--trajetoria .trajetoria__video .midia-hero--story{
+    height: var(--video-h);
+    aspect-ratio: 9 / 16;
+    border-radius: 26px;
+    overflow: hidden;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    position: relative;
+  }
+
+  /* vídeo inteiro, sem cortar */
+  .sessao--trajetoria .trajetoria__video .midia-hero__video{
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* não corta */
+    display: block;
+    background: transparent;
+  }
+
+  /* ✅ bloco da direita com a MESMA altura do vídeo */
+  .sessao--trajetoria .trajetoria__infos{
+    height: var(--video-h);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* título normal (sem quebrar estranho) */
+  .sessao--trajetoria .trajetoria__infos .titulo-secao{
+    margin: 0 0 16px 0;
+    line-height: 1.05;
+    max-width: 22ch;
+  }
+
+  /* cards dentro da altura do vídeo */
+  .sessao--trajetoria .trajetoria__infos .grade-informacoes{
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* se estourar, rola por dentro (não passa da altura do vídeo) */
+  .sessao--trajetoria .trajetoria__infos .grade-informacoes{
+    overflow: auto;
+    padding-right: 6px;
+  }
+}
+
+/* =========================================================
+   SOBRE — FORÇAR TAMANHO DAS MOLDURAS (cards da direita)
+   Autor: Pedro Max
+   Ajuste aqui:
+   --infos-w  = largura do bloco da direita
+   --card-h   = altura das molduras
+   --card-pad = padding interno
+   ========================================================= */
+
+@media (min-width: 981px){
+  .sessao--trajetoria{
+    --infos-w: 560px;
+    --card-h: 110px;
+    --card-pad: 16px;
+    --gap: 16px;
+    --video-h: 680px;
+  }
+
+  /* grid geral */
+  .sessao--trajetoria .trajetoria__grid{
+    display: grid !important;
+    grid-template-columns: auto var(--infos-w) !important;
+    gap: var(--gap) !important;
+    align-items: start !important;
+  }
+
+  /* bloco da direita */
+  .sessao--trajetoria .trajetoria__infos{
+    width: var(--infos-w) !important;
+    max-width: var(--infos-w) !important;
+    height: var(--video-h) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+
+  /* grade vira 3 linhas com altura fixa */
+  .sessao--trajetoria .trajetoria__infos .grade-informacoes{
+    display: grid !important;
+    grid-template-rows: repeat(3, var(--card-h)) !important;
+    gap: 14px !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+
+  /* ✅ FORÇA tamanho real das molduras */
+  .sessao--trajetoria .trajetoria__infos .cartao.cartao--info{
+    height: var(--card-h) !important;
+    min-height: var(--card-h) !important;
+    max-height: var(--card-h) !important;
+
+    padding: var(--card-pad) !important;
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;       /* não deixa crescer */
+  }
+
+  /* título e texto não “esticarem” o card */
+  .sessao--trajetoria .trajetoria__infos .cartao__titulo{
+    margin: 0 0 10px 0 !important;
+    line-height: 1.15 !important;
+  }
+
+  .sessao--trajetoria .trajetoria__infos .cartao__texto{
+    margin: 0 !important;
+    line-height: 1.35 !important;
+
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 3 !important;  /* diminui o “alto” do texto */
+    overflow: hidden !important;
   }
 }

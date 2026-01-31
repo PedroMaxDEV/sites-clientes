@@ -71,7 +71,6 @@
   }
 
   function marcarMenuAtivo() {
-
     const caminhoAtual = window.location.pathname;
     const paginaAtual = caminhoAtual.split("/").pop() || "index.html";
 
@@ -110,7 +109,6 @@
       const assunto = limparTexto(document.getElementById("assunto")?.value);
       const mensagem = limparTexto(document.getElementById("mensagem")?.value);
 
-  
       const linhas = [
         "Olá, Dra. Samantha! Seguem meus dados para atendimento:",
         "",
@@ -122,7 +120,7 @@
 
       // Mensagem é opcional, então só incluo se a pessoa escreveu
       if (mensagem) {
-        linhas.push(`- Mensagem: ${mensagem}`);
+        linhas.push(`- Mensagem:l: ${mensagem}`);
       }
 
       const textoFinal = linhas.join("\n");
@@ -142,12 +140,8 @@
   document.addEventListener("DOMContentLoaded", init);
 })();
 
-
-
-
-
 /* =========================
-   HERO VÍDEO — TOGGLE SOM
+   HERO VÍDEO — TOGGLE SOM (sem atraso)
    Autor: Pedro Max
    ========================= */
 (function () {
@@ -167,37 +161,85 @@
     }
   }
 
+  function esperar(el, evento, timeoutMs = 2000) {
+    return new Promise((resolve) => {
+      let ok = false;
+      const done = () => {
+        if (ok) return;
+        ok = true;
+        el.removeEventListener(evento, on);
+        resolve();
+      };
+      const on = () => done();
+      el.addEventListener(evento, on, { once: true });
+      setTimeout(done, timeoutMs);
+    });
+  }
+
+  async function tocarDoZeroComSom(video) {
+    // pausa e força modo "carregar de verdade" (ajuda no sync)
+    try { video.pause(); } catch (e) {}
+
+    // garante que vai carregar dados (não só metadata)
+    try { video.preload = "auto"; } catch (e) {}
+
+    // volta pro começo
+    try { video.currentTime = 0; } catch (e) {}
+
+    // força o navegador a re-sincronizar áudio/vídeo
+    try { video.load(); } catch (e) {}
+
+    // espera ficar pronto pra tocar
+    await esperar(video, "canplay", 2500);
+
+    // liga som ANTES do play (evita “colar” áudio atrasado depois)
+    video.muted = false;
+    video.volume = 1;
+
+    // toca
+    try { await video.play(); } catch (e) {}
+
+    // segurança extra: alguns mobiles começam em 0.05~0.2s
+    // então garantimos 0 certinho e tocamos de novo
+    if (video.currentTime > 0.12) {
+      try { video.currentTime = 0; } catch (e) {}
+      await esperar(video, "seeked", 1500);
+      try { await video.play(); } catch (e) {}
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector(".midia-hero__video");
     const btn = document.querySelector(".js-toggle-som");
-
     if (!video || !btn) return;
 
-    // Por padrão, começa mudo (autoplay no mobile exige muted)
+    // autoplay no mobile exige muted
     video.muted = true;
     video.volume = 1;
 
     atualizarBotao(btn, video);
 
     btn.addEventListener("click", async () => {
-      // Se estiver pausado, tenta tocar (alguns browsers só liberam após interação)
-      if (video.paused) {
-        try { await video.play(); } catch (e) {}
+      const estaMudoAgora = video.muted || video.volume === 0;
+
+      // ✅ Se vai ATIVAR som: reinicia com sync perfeito
+      if (estaMudoAgora) {
+        btn.disabled = true; // evita clique duplo
+        await tocarDoZeroComSom(video);
+        btn.disabled = false;
+        atualizarBotao(btn, video);
+        return;
       }
 
-      // Alterna
-      video.muted = !video.muted;
-
-      // Se “desmutou”, garante volume audível
-      if (!video.muted && video.volume === 0) video.volume = 1;
-
+      // ✅ Se já está com som: só muta (sem reiniciar)
+      video.muted = true;
       atualizarBotao(btn, video);
     });
 
-    // Se alguém mudar o muted via devtools/outro script
     video.addEventListener("volumechange", () => atualizarBotao(btn, video));
   });
 })();
+
 
 /* =========================
    PRÉ-ATENDIMENTO WHATSAPP (CHATBOT)
@@ -378,24 +420,23 @@
     elEnviar.disabled = false;
   }
 
- // Abre o chatbot em QUALQUER botão com data-chatbot-abrir
-// e só “sequestra” o flutuante se você marcar com data-chatbot-flutuante
-document.addEventListener("click", function (ev) {
-  const btnChat = ev.target.closest("[data-chatbot-abrir]");
-  if (btnChat) {
-    ev.preventDefault();
-    abrir();
-    return;
-  }
+  // Abre o chatbot em QUALQUER botão com data-chatbot-abrir
+  // e só “sequestra” o flutuante se você marcar com data-chatbot-flutuante
+  document.addEventListener("click", function (ev) {
+    const btnChat = ev.target.closest("[data-chatbot-abrir]");
+    if (btnChat) {
+      ev.preventDefault();
+      abrir();
+      return;
+    }
 
-  // ✅ Flutuante abre o chatbot se tiver data-chatbot-flutuante OU data-whats-flutuante
-  const flutuante = ev.target.closest(".botao-whats-fixo[data-chatbot-flutuante], .botao-whats-fixo[data-whats-flutuante]");
-  if (flutuante) {
-    ev.preventDefault();
-    abrir();
-  }
-});
-
+    // ✅ Flutuante abre o chatbot se tiver data-chatbot-flutuante OU data-whats-flutuante
+    const flutuante = ev.target.closest(".botao-whats-fixo[data-chatbot-flutuante], .botao-whats-fixo[data-whats-flutuante]");
+    if (flutuante) {
+      ev.preventDefault();
+      abrir();
+    }
+  });
 
   // fechar
   botoesFechar.forEach(b => b.addEventListener("click", fechar));
@@ -424,10 +465,6 @@ document.addEventListener("click", function (ev) {
     habilitarInput();
     iniciar();
   });
-
-
-  
-
 })();
 
 /* =========================================
