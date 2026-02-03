@@ -166,7 +166,7 @@ const LISTA_CASES = [
     cliente: "Mastermind (Programas e imersões)",
     segmento: "Educação / Gestão",
     porte: "PMEs",
-    servicoPrincipal: "Desenvolvimento de Líderes",
+    servicoPrincipal: "Imersão em Liderança",
     desafioCurto: "PMEs com dificuldades na gestão empresarial e decisões sem base sólida.",
     resultadoPrincipal: "Otimização de resultados",
     destaque: false,
@@ -175,7 +175,7 @@ const LISTA_CASES = [
     imagemDestaque: "assets/img/cases/mastermind-destaque.jpg",
 
     resumo:
-      "Desenvolvimento de líderes e gestores com visão técnica e prática para decisões mais seguras, reduzindo riscos e melhorando performance.",
+      "Imersão em Liderança e gestores com visão técnica e prática para decisões mais seguras, reduzindo riscos e melhorando performance.",
     contexto:
       "Atuação com centenas de empresários e gestores em pequenas e médias empresas, com necessidades recorrentes de organização, liderança e segurança jurídica.",
     desafio:
@@ -198,4 +198,68 @@ const LISTA_CASES = [
       "Redução do contencioso trabalhista",
     ],
   },
+
+
+
+  
+{
+  id: "protecao-eficiencia-patrimonial",
+  cliente: "Proteção e Eficiência Patrimonial",
+  segmento: "imóveis",
+  porte: "Médio",
+  servicoPrincipal: "Holding Patrimonial (Lucro Presumido)",
+  desafioCurto: "Alta carga tributária, exposição fiscal e risco patrimonial em sucessão/fiscalização.",
+  resultadoPrincipal: "58% menos carga tributária",
+  destaque: true,
+
+  // imagens
+  imagemCard: "assets/img/cases/protecao-eficiencia.jpg",
+  imagemDestaque: "assets/img/cases/protecao-eficiencia-destaque.jpg",
+
+  // detalhes (case.html)
+  resumo:
+    "Regularização imobiliária e estruturação de Holding Patrimonial para reduzir carga tributária, blindar ativos e organizar sucessão com segurança jurídica.",
+  contexto:
+    "Investidor com 4 imóveis urbanos (valuation aproximado de R$ 1,6 milhão), operando como Pessoa Física, com tributação elevada sobre aluguéis e pendências de regularização fiscal.",
+  desafio:
+    "Cenário de alta exposição fiscal e ineficiência tributária, com risco de perda patrimonial em caso de sucessão ou fiscalização.",
+  oQueFoiFeito: [
+    "Diagnóstico completo e saneamento de passivos fiscais (regularização retroativa)",
+    "Implementação de Holding Patrimonial no Lucro Presumido",
+    "Integralização pelo valor histórico (Art. 23, Lei 9.249/95)",
+    "Estrutura societária com cláusulas de blindagem (impenhorabilidade e incomunicabilidade)",
+    "Planejamento sucessório por cotas com reserva de usufruto para manter controle com o patriarca",
+  ],
+  resultados: [
+    "Redução imediata e relevante da carga tributária sobre aluguéis",
+    "Patrimônio estruturado e protegido contra riscos civis e sucessórios",
+    "Maior conformidade e menor risco fiscal",
+    "Sucessão organizada com menor custo e mais previsibilidade",
+  ],
+  ganhos: [
+    "Imposto sobre aluguel: de 27,5% para ~11,33%",
+    "Redução de ~58% na carga tributária mensal",
+    "Inventário estimado: de R$ 160k para ~R$ 40k (via sucessão por cotas)",
+    "Patrimônio blindado + compliance total",
+  ],
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 ];
+
+
